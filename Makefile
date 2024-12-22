@@ -1,6 +1,8 @@
 # Compiler & Flags
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Wpedantic -g
+INC = -Iinclude -I$(MLX_DIR) -I$(LIBFT_DIR)
+LIB = -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lft -lm -lX11 -lXext
 
 # Directories
 LIBFT_DIR = lib/libft
@@ -14,10 +16,8 @@ vpath %.c $(SRC_DIR)
 SRC = $(foreach module, $(SRC_DIR), $(wildcard $(module)/*.c))
 OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
 HEADER = $(wildcard include/*.h) $(wildcard $(LIBFT_DIR)/*.h) $(wildcard $(MLX_DIR)/*.h)
-INC = -Iinclude -I$(MLX_DIR) -I$(LIBFT_DIR)
-MLX = libmlx.a
-LIBFT = libft.a
-BIN_LINK = -L. -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lft -lm -lX11 -lXext
+MLX = $(MLX_DIR)/libmlx.a
+LIBFT = $(LIBFT_DIR)/libft.a
 EXE = cub3D
 
 # # Debug
@@ -29,7 +29,7 @@ EXE = cub3D
 all : $(EXE)
 
 $(EXE) : $(MLX) $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(INC) $(OBJ) $(BIN_LINK) -o $(EXE)
+	$(CC) $(CFLAGS) $(INC) $(OBJ) $(LIB) -o $(EXE)
 
 $(OBJ_DIR)/%.o : %.c $(HEADER)
 	mkdir -p $(OBJ_DIR)
@@ -41,16 +41,23 @@ $(MLX) :
 $(LIBFT) :
 	make -C $(LIBFT_DIR)
 
+valgrind : $(EXE)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXE)
+
+fsan:
+	$(CC) $(CFLAGS) -fsanitize=address $(INC) $(OBJ) $(LIB) -o $(EXE)
+
+
 clean :
 	make -C $(LIBFT_DIR) clean
-	make -C $(MLX_DIR) clean
 	rm -f $(OBJ)
 
 fclean : clean
 	rm -f $(EXE)
 	rm -f $(MLX_DIR)/$(MLX)
+	make -C $(MLX_DIR) clean
 	make -C $(LIBFT_DIR) fclean
 
 re : fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all valgrind fsan clean fclean re
