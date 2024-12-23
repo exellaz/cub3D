@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/23 11:17:49 by we                #+#    #+#             */
-/*   Updated: 2024/12/23 22:17:47 by we               ###   ########.fr       */
+/*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
+/*   Updated: 2024/12/23 22:19:52 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef MAP_H
+# define MAP_H
 
-# include <math.h>
+char **load_map(char *file);
 
-# include <mlx.h>
-# include <Libft.h>
-
-# include "graphics.h"
-
-int		validate_arg(int argc, char *file);
-void	setup_mlx(t_mlx *m);
-
-#endif
+# endif

@@ -1,6 +1,7 @@
 # Project Specific
-cub3D
 .vscode
+cub3D
+noperm.cub
 
 # Prerequisites
 *.d
