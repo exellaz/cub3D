@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2024/12/23 22:35:20 by we               ###   ########.fr       */
+/*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
+/*   Updated: 2024/12/23 22:38:02 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#include <Libft.h>
 
-typedef struct s_list	t_list;
+#include "map.h"
 
-t_list	*load_file(int file);
+// takes a file descriptor as argument and returns a 2D array of strings
+t_list	*load_file(int file)
+{
+	t_list	*map;
+	char	*line;
 
-#endif
+	map = NULL;
+	line = get_next_line(file);
+	while (line)
+	{
+		ft_lstadd_back(&map, ft_lstnew(line));
+		line = get_next_line(file);
+	}
+	return (map);
+}
