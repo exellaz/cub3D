@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2024/12/24 15:59:57 by we               ###   ########.fr       */
+/*   Updated: 2024/12/26 21:39:59 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 typedef struct s_list	t_list;
 
 // `texture` is stored in N, S, E, W order
+// `ceiling` and `floor` are stored in R, G, B order
+// `texture` and `rgb` are optional
 typedef struct s_map
 {
 	t_list	*map;
@@ -24,8 +26,10 @@ typedef struct s_map
 	int		floor_rgb[3];
 }	t_map;
 
+t_map	*parse_map(int file);
 t_list	*load_file(int file);
-char	*parse_texture(char *line);
-int		*parse_rgb(char *line);
+int		get_texture_path(t_list *raw, char **texture_path);
+int		get_rgb(t_list *raw, int *rgb);
+int		get_map(t_list *raw, t_list **map);
 
 #endif

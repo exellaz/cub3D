@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:31:54 by we                #+#    #+#             */
-/*   Updated: 2024/12/23 22:48:34 by we               ###   ########.fr       */
+/*   Updated: 2024/12/26 15:17:19 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ void	print(void *content);
 
 int	main(int argc, char *argv[])
 {
-	t_list	*raw;
-	int		fd;
+	t_map	*map;
+	int		file;
 
-	fd = validate_arg(argc, argv[1]);
-	raw = load_file(fd);
-	ft_lstiter(raw, &print);
-	ft_lstclear(&raw, &free);
+	file = validate_arg(argc, argv[1]);
+	map = parse_map(file);
 
 	return (0);
 }
