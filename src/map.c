@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2024/12/27 15:13:24 by we               ###   ########.fr       */
+/*   Updated: 2024/12/27 15:59:03 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,22 @@
 
 #include "map.h"
 
+# define DEBUG printf
+
 t_map	*parse_map(int file)
 {
 	t_map	*map;
 	t_list	*raw;
+	t_list	*remain;
 
 	map = malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
 	raw = load_file(file);
-	get_map(raw, &map->map);
-	get_texture_path(raw, map->texture_path);
-	get_rgb(raw, map->ceiling_rgb);
-	get_rgb(raw, map->floor_rgb);
+	remain = get_texture_path(raw, map->texture_path);
+	remain = get_rgb(remain, map->ceiling_rgb);
+	remain = get_rgb(remain, map->floor_rgb);
+	get_map(remain, &map->map);
 	return (map);
 }
 
@@ -46,30 +49,35 @@ t_list	*load_file(int file)
 	return (map);
 }
 
-int	get_texture_path(t_list *raw, char **texture_path)
+t_list	*get_texture_path(t_list *raw, char **texture_path)
 {
 	int	i;
 
+	while (((char *)raw->content)[0] == '\n')
+		raw = raw->next;
 	i = -1;
 	while (++i < 4)
 	{
 		texture_path[i] = ft_split(raw->content, ' ')[1];
 		raw = raw->next;
 	}
-	return (0);
+	return (raw->next);
 }
 
-int	get_rgb(t_list *raw, int *rgb)
+t_list	*get_rgb(t_list *raw, int *rgb)
 {
-	int	i;
+	char	**split;
+	char	*line;
+	int		i;
 
+	while (((char *)raw->content)[0] == '\n')
+		raw = raw->next;
+	line = ft_substr(raw->content, 2, ft_strlen(raw->content) - 2);
+	split = ft_split(line, ',');
 	i = -1;
 	while (++i < 3)
-	{
-		rgb[i] = ft_atoi(ft_split(raw->content, ' ')[1]);
-		raw = raw->next;
-	}
-	return (0);
+		rgb[i] = ft_atoi(split[i]);
+	return (raw->next);
 }
 
 int	get_map(t_list *raw, t_list **map)

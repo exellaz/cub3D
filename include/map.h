@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2024/12/26 21:39:59 by we               ###   ########.fr       */
+/*   Updated: 2024/12/27 15:57:15 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct s_map
 
 t_map	*parse_map(int file);
 t_list	*load_file(int file);
-int		get_texture_path(t_list *raw, char **texture_path);
-int		get_rgb(t_list *raw, int *rgb);
+t_list	*get_texture_path(t_list *raw, char **texture_path);
+t_list	*get_rgb(t_list *raw, int *rgb);
 int		get_map(t_list *raw, t_list **map);
 
 #endif
