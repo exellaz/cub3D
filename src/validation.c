@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:55:33 by we                #+#    #+#             */
-/*   Updated: 2024/12/23 22:18:07 by we               ###   ########.fr       */
+/*   Updated: 2024/12/27 12:08:05 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ int	validate_arg(int argc, char *file)
 	else
 	{
 		fd = open(file, O_RDONLY);
-		if (fd == -1)
+		is_valid = fd != -1;
+		if (!is_valid)
 			perror("Error");
-		else
-			is_valid = true;
 	}
 	if (!is_valid)
 		exit(EXIT_FAILURE);

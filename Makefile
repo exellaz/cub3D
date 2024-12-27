@@ -44,9 +44,8 @@ $(LIBFT) :
 valgrind : $(EXE)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(EXE)
 
-fsan:
+fsan :
 	$(CC) $(CFLAGS) -fsanitize=address $(INC) $(OBJ) $(LIB) -o $(EXE)
-
 
 clean :
 	make -C $(LIBFT_DIR) clean

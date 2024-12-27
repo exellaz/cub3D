@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:31:54 by we                #+#    #+#             */
-/*   Updated: 2024/12/26 15:17:19 by we               ###   ########.fr       */
+/*   Updated: 2024/12/27 15:15:03 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ int	main(int argc, char *argv[])
 
 	file = validate_arg(argc, argv[1]);
 	map = parse_map(file);
+	for (int i = 0; i < 4; i++)
+		ft_printf("%s", map->texture_path[i]);
+	ft_printf("\n");
+	ft_printf("%d %d %d\n", map->ceiling_rgb[0], map->ceiling_rgb[1], map->ceiling_rgb[2]);
+	ft_printf("%d %d %d\n", map->floor_rgb[0], map->floor_rgb[1], map->floor_rgb[2]);
+	ft_lstiter(map->map, print);
 
 	return (0);
 }
