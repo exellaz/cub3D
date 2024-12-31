@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:23:14 by we                #+#    #+#             */
-/*   Updated: 2024/12/31 14:23:18 by we               ###   ########.fr       */
+/*   Updated: 2024/12/31 15:36:35 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,8 @@ void	mem_free(void *ptr)
 			block->isfreed = true;
 			break ;
 		}
-		if (!block->next)
-			break ;
-		block = block->next;
+		if (block->next)
+			block = block->next;
 	}
 }
 
