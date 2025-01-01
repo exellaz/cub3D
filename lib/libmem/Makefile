@@ -26,7 +26,7 @@ $(OBJ_DIR)/%.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean :
-	rmdir -f $(OBJ_DIR)
+	rm -f $(OBJ)
 
 fclean : clean
 	rm $(BIN)

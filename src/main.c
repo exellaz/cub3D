@@ -12,6 +12,7 @@ int	main(void)
 	ptr1 = ptr;
 	ptr2 = ptr1;
 	mem_free(ptr);
+	mem_free(ptr);
 	mem_debug();	printf("\n");
 	mem_free(ptr1);
 	mem_debug();	printf("\n");
