@@ -1,23 +1,39 @@
-# include "libmem.h"
+#include "libmem.h"
+#include "graphics.h"
+#include "events.h"
+#include "enum.h"
+#include "cub3D.h"
 
-int	main(void)
+void	put_pixel(int x, int y, int color, t_img *img)
 {
-	void	*ptr;
-	void	*ptr1;
-	void	*ptr2;
+	int	i;
 
-	ptr = mem_alloc(10);
-	ptr = mem_alloc(20);
-	ptr = mem_alloc(30);
-	ptr1 = ptr;
-	ptr2 = ptr1;
-	mem_free(ptr);
-	mem_free(ptr);
-	mem_debug();	printf("\n");
-	mem_free(ptr1);
-	mem_debug();	printf("\n");
-	mem_free(ptr2);
-	mem_debug();	printf("\n");
-	mem_clean();
-	return (0);
+	if (x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
+		return ;
+	i = y * img->line_length + x * img->bits_per_pixel / 8;
+	img->addr[i] = color & 0xFF;
+	img->addr[i + 2] = (color >> 8) & 0xFF;
+	img->addr[i + 3] = (color >> 16) & 0xFF;
+}
+
+void	draw_square(int x, int y, int size, int color, t_img *img)
+{
+	for (int i = 0; i < size; i++)
+		put_pixel(x + i, y, color, img);
+	for (int i = 0; i < size; i++)
+		put_pixel(x, y + i, color, img);
+	for (int i = 0; i < size; i++)
+		put_pixel(x + size, y + i, color, img);
+	for (int i = 0; i < size; i++)
+		put_pixel(x + i, y + size, color, img);
+}
+
+int	main(int ac, char **av)
+{
+	(void)ac, (void)av;
+	t_mlx	mlx;
+
+	setup_mlx(&mlx);
+	draw_square(WIN_WIDTH / 2, WIN_HEIGHT / 2, 10, 0x00FF00, &mlx.img);
+	mlx_loop(mlx.mlx);
 }
