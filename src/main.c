@@ -6,9 +6,11 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:31:54 by we                #+#    #+#             */
-/*   Updated: 2024/12/27 15:15:03 by we               ###   ########.fr       */
+/*   Updated: 2025/01/01 14:12:45 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+# include <libmem.h>
 
 # include "cub3D.h"
 # include "map.h"
@@ -28,6 +30,7 @@ int	main(int argc, char *argv[])
 	ft_printf("%d %d %d\n", map->ceiling_rgb[0], map->ceiling_rgb[1], map->ceiling_rgb[2]);
 	ft_printf("%d %d %d\n", map->floor_rgb[0], map->floor_rgb[1], map->floor_rgb[2]);
 	ft_lstiter(map->map, print);
+	mem_clean();
 
 	return (0);
 }

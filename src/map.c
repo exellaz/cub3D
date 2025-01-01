@@ -6,15 +6,18 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2024/12/27 15:59:03 by we               ###   ########.fr       */
+/*   Updated: 2025/01/01 14:14:53 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Libft.h>
+#include <libmem.h>
 
 #include "map.h"
 
+#ifndef DEBUG
 # define DEBUG printf
+#endif
 
 t_map	*parse_map(int file)
 {
@@ -22,7 +25,7 @@ t_map	*parse_map(int file)
 	t_list	*raw;
 	t_list	*remain;
 
-	map = malloc(sizeof(t_map));
+	map = mem_alloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
 	raw = load_file(file);
