@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tanjunyu8888@gmail.com>           +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 11:49:28 by tjun-yu           #+#    #+#             */
-/*   Updated: 2023/10/30 12:35:36 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/02 14:52:43 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ static size_t	count_digits(long n)
 	return (digits);
 }
 
-static void	*mem_alloc(char **num_str, long *num, size_t digits, int *i)
+static void	*m_alloc(char **num_str, long *num, size_t digits, int *i)
 {
 	if (*num >= 0)
 	{
-		*num_str = (char *)malloc((digits + 1) * sizeof(char));
+		*num_str = (char *)mem_alloc((digits + 1) * sizeof(char));
 		if (*num_str == NULL)
 			return (NULL);
 	}
 	else
 	{
-		*num_str = (char *)malloc((1 + digits + 1) * sizeof(char));
+		*num_str = (char *)mem_alloc((1 + digits + 1) * sizeof(char));
 		if (*num_str == NULL)
 			return (NULL);
 		*num_str[(*i)++] = '-';
@@ -71,7 +71,7 @@ char	*ft_itoa(int n)
 	num = (long)n;
 	digits = count_digits(num);
 	i = 0;
-	if (mem_alloc(&num_str, &num, digits, &i) == NULL)
+	if (m_alloc(&num_str, &num, digits, &i) == NULL)
 		return (NULL);
 	tens = count_tens(digits);
 	while (tens > 0)

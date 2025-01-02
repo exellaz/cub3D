@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tanjunyu8888@gmail.com>           +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 09:36:26 by tjun-yu           #+#    #+#             */
-/*   Updated: 2023/10/27 10:11:06 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/02 14:53:40 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*new_node;
 
-	new_node = (t_list *)malloc(sizeof(t_list));
+	new_node = (t_list *)mem_alloc(sizeof(t_list));
 	if (new_node == NULL)
 		return (NULL);
 	new_node->content = content;

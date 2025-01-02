@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tanjunyu8888@gmail.com>           +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 14:56:57 by tjun-yu           #+#    #+#             */
-/*   Updated: 2023/10/27 15:55:12 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/02 14:53:26 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	current = lst;
 	while (current != NULL)
 	{
-		new_node = (t_list *)malloc(sizeof(t_list));
+		new_node = (t_list *)mem_alloc(sizeof(t_list));
 		if (new_node == NULL)
 		{
 			ft_lstclear(&new_list, del);

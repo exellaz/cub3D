@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:23:14 by we                #+#    #+#             */
-/*   Updated: 2025/01/02 12:37:59 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/02 15:11:58 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	mem_free(void *ptr)
 }
 
 // use at the end of the program or when encouter error
+// should ONLY be called once
 void	mem_clean(void)
 {
 	t_mem	*block;

@@ -1,23 +1,32 @@
-# include "libmem.h"
+# include "Libft.h"
 
 int	main(void)
 {
-	void	*ptr;
-	void	*ptr1;
-	void	*ptr2;
+	// test split
+	{
+		char	**arr;
+		int		i;
 
-	ptr = mem_alloc(10);
-	ptr = mem_alloc(20);
-	ptr = mem_alloc(30);
-	ptr1 = ptr;
-	ptr2 = ptr1;
-	mem_free(ptr);
-	mem_free(ptr);
-	mem_debug();	printf("\n");
-	mem_free(ptr1);
-	mem_debug();	printf("\n");
-	mem_free(ptr2);
-	mem_debug();	printf("\n");
+		arr = ft_split("hello world", ' ');
+		i = 0;
+		while (arr[i])
+		{
+			printf("%s\n", arr[i]);
+			i++;
+		}
+		mem_free(arr);
+	}
+	// test get_next_line
+	{
+		int		fd;
+		char	*line;
+
+		fd = open("Makefile", O_RDONLY);
+		while ((line = get_next_line(fd)))
+			printf("%s\n", line);
+		mem_free(line);
+		close(fd);
+	}
 	mem_clean();
 	return (0);
 }

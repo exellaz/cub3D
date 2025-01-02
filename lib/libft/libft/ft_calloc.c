@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tanjunyu8888@gmail.com>           +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 08:44:10 by tjun-yu           #+#    #+#             */
-/*   Updated: 2023/10/30 13:02:02 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/02 14:52:13 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*ft_calloc(size_t num_elements, size_t element_size)
 	total_size = num_elements * element_size;
 	if (num_elements != 0 && total_size / num_elements != element_size)
 		return (NULL);
-	ptr = malloc(total_size);
+	ptr = mem_alloc(total_size);
 	if (ptr != NULL)
 		ft_memset(ptr, 0, total_size);
 	return (ptr);
