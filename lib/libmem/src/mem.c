@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:23:14 by we                #+#    #+#             */
-/*   Updated: 2024/12/31 15:36:35 by we               ###   ########.fr       */
+/*   Updated: 2025/01/02 12:37:59 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ void	mem_free(void *ptr)
 			block->isfreed = true;
 			break ;
 		}
-		if (block->next)
-			block = block->next;
+		if (!block->next)
+			break ;
+		block = block->next;
 	}
 }
 
