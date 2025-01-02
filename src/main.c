@@ -4,16 +4,15 @@
 #include "enum.h"
 #include "cub3D.h"
 
-void	put_pixel(int x, int y, int color, t_img *img)
+void put_pixel(int x, int y, int color, t_img *img)
 {
-	int	i;
+    if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
+        return;
 
-	if (x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
-		return ;
-	i = y * img->line_length + x * img->bits_per_pixel / 8;
-	img->addr[i] = color & 0xFF;
-	img->addr[i + 2] = (color >> 8) & 0xFF;
-	img->addr[i + 3] = (color >> 16) & 0xFF;
+    int index = y * img->line_length + x * img->bits_per_pixel / 8;
+    img->addr[index] = color & 0xFF;
+    img->addr[index + 1] = (color >> 8) & 0xFF;
+    img->addr[index + 2] = (color >> 16) & 0xFF;
 }
 
 void	draw_square(int x, int y, int size, int color, t_img *img)
@@ -34,6 +33,6 @@ int	main(int ac, char **av)
 	t_mlx	mlx;
 
 	setup_mlx(&mlx);
-	draw_square(WIN_WIDTH / 2, WIN_HEIGHT / 2, 10, 0x00FF00, &mlx.img);
+	draw_square(WIN_WIDTH / 2, WIN_HEIGHT / 2, 40, 0xFFFF00, &mlx.img);
 	mlx_loop(mlx.mlx);
 }
