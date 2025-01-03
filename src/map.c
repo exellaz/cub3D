@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/01/01 14:14:53 by we               ###   ########.fr       */
+/*   Updated: 2025/01/03 11:32:34 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Libft.h>
-#include <libmem.h>
 
+#include "error.h"
 #include "map.h"
-
-#ifndef DEBUG
-# define DEBUG printf
-#endif
 
 t_map	*parse_map(int file)
 {
@@ -54,14 +50,25 @@ t_list	*load_file(int file)
 
 t_list	*get_texture_path(t_list *raw, char **texture_path)
 {
-	int	i;
+	char	**split;
+	int		i;
 
 	while (((char *)raw->content)[0] == '\n')
 		raw = raw->next;
 	i = -1;
 	while (++i < 4)
 	{
-		texture_path[i] = ft_split(raw->content, ' ')[1];
+		split = ft_split(raw->content, ' ');
+		if (ft_strcmp(split[0], "NO") == 0)
+			texture_path[0] = split[1];
+		else if (ft_strcmp(split[0], "SO") == 0)
+			texture_path[1] = split[1];
+		else if (ft_strcmp(split[0], "WE") == 0)
+			texture_path[2] = split[1];
+		else if (ft_strcmp(split[0], "EA") == 0)
+			texture_path[3] = split[1];
+		else
+			error_exit("Invalid texture path");
 		raw = raw->next;
 	}
 	return (raw->next);
@@ -72,6 +79,7 @@ t_list	*get_rgb(t_list *raw, int *rgb)
 	char	**split;
 	char	*line;
 	int		i;
+	int		j;
 
 	while (((char *)raw->content)[0] == '\n')
 		raw = raw->next;
@@ -79,7 +87,13 @@ t_list	*get_rgb(t_list *raw, int *rgb)
 	split = ft_split(line, ',');
 	i = -1;
 	while (++i < 3)
+	{
+		j = -1;
+		while (split[i][++j])
+			if (!ft_isdigit(split[i][j]))
+				error_exit("Invalid RGB value");
 		rgb[i] = ft_atoi(split[i]);
+	}
 	return (raw->next);
 }
 
