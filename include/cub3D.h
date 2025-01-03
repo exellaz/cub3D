@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:49 by we                #+#    #+#             */
-/*   Updated: 2025/01/02 18:18:03 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/03 19:21:40 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # include "graphics.h"
 
-void	setup_mlx(t_mlx *m);
+void	setup_mlx(t_mlx *m, t_player *player);
+char	**get_map(void);
 
 #endif

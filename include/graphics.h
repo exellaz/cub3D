@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/02 17:31:57 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/03 19:22:13 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,19 @@ typedef struct s_img
 	int		offset;
 }				t_img;
 
+typedef struct s_player
+{
+	int	x;
+	int	y;
+}				t_player;
+
 typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
+	char	**map;
 	t_img	img;
+	t_player	*player;
 }				t_mlx;
 
 #endif
