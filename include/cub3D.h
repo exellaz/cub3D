@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:49 by we                #+#    #+#             */
-/*   Updated: 2024/12/23 11:58:33 by we               ###   ########.fr       */
+/*   Updated: 2024/12/23 22:17:47 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # include "graphics.h"
 
+int		validate_arg(int argc, char *file);
 void	setup_mlx(t_mlx *m);
 
 #endif

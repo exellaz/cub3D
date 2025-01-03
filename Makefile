@@ -47,7 +47,6 @@ valgrind : $(BIN)
 fsan:
 	$(CC) $(CFLAGS) -fsanitize=address $(INC) $(OBJ) $(LIB) -o $(BIN)
 
-
 clean :
 	make -C $(LIBFT_DIR) clean
 	rm -f $(OBJ)
