@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/01/03 13:10:02 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/03 15:02:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_map
 {
 	t_list	*map;
 	char	*texture_path[4];
-	int		cf_rgb[2][3];
+	int		fc_rgb[2][3];
 }	t_map;
 
 t_map	*parse_map(int file);

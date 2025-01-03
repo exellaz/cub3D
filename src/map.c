@@ -6,13 +6,14 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/01/03 14:11:59 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/03 15:05:28 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Libft.h>
 
 #include "error.h"
+#include "utils.h"
 #include "map.h"
 
 t_map	*parse_map(int file)
@@ -22,11 +23,9 @@ t_map	*parse_map(int file)
 	t_list	*remain;
 
 	map = mem_alloc(sizeof(t_map));
-	if (!map)
-		return (NULL);
 	raw = load_file(file);
 	remain = get_texture_path(raw, map->texture_path);
-	remain = get_rgb(remain, map->cf_rgb);
+	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map);
 	return (map);
 }
@@ -52,8 +51,7 @@ t_list	*get_texture_path(t_list *raw, char **texture_path)
 	char	**split;
 	int		i;
 
-	while (((char *)raw->content)[0] == '\n')
-		raw = raw->next;
+	raw = skip_empty_lines(raw);
 	i = -1;
 	while (++i < 4)
 	{
@@ -67,7 +65,7 @@ t_list	*get_texture_path(t_list *raw, char **texture_path)
 		else if (ft_strcmp(split[0], "EA") == 0)
 			texture_path[3] = split[1];
 		else
-			error_exit("Invalid texture path");
+			error_exit("Invalid texture identifier");
 		raw = raw->next;
 	}
 	i = -1;
@@ -80,20 +78,32 @@ t_list	*get_texture_path(t_list *raw, char **texture_path)
 t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 {
 	char	**split;
-	char	*line;
 	int		i;
 	int		j;
 
-	while (((char *)raw->content)[0] == '\n')
-		raw = raw->next;
+	raw = skip_empty_lines(raw);
 	i = -1;
 	while (++i < 2)
 	{
-		line = ft_substr(raw->content, 2, ft_strlen(raw->content) - 2);
-		split = ft_split(line, ',');
+		split = ft_split((char *)raw->content, '\n');
+		split = ft_split(split[0], ' ');
+		// TODO: change this
+		if (ft_strcmp(split[0], "F") == 0)
+			i = 0;
+		else if (ft_strcmp(split[0], "C") == 0)
+			i = 1;
+		else
+			error_exit("Invalid RGB identifier");
+		split = ft_split(split[1], ',');
 		j = -1;
 		while (++j < 3)
+		{
+			if (!is_num(split[j]))
+				error_exit("non-numeric RGB value");
 			rgb[i][j] = ft_atoi(split[j]);
+			if (rgb[i][j] < 0 || rgb[i][j] > 255)
+				error_exit("Invalid RGB value");
+		}
 		raw = raw->next;
 	}
 	return (raw);
