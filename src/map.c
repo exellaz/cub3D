@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/01/03 11:32:34 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/03 14:11:59 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ t_map	*parse_map(int file)
 		return (NULL);
 	raw = load_file(file);
 	remain = get_texture_path(raw, map->texture_path);
-	remain = get_rgb(remain, map->ceiling_rgb);
-	remain = get_rgb(remain, map->floor_rgb);
+	remain = get_rgb(remain, map->cf_rgb);
 	get_map(remain, &map->map);
 	return (map);
 }
@@ -71,10 +70,14 @@ t_list	*get_texture_path(t_list *raw, char **texture_path)
 			error_exit("Invalid texture path");
 		raw = raw->next;
 	}
+	i = -1;
+	while (++i < 4)
+		if (!texture_path[i])
+			error_exit("Missing texture path");
 	return (raw->next);
 }
 
-t_list	*get_rgb(t_list *raw, int *rgb)
+t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 {
 	char	**split;
 	char	*line;
@@ -83,18 +86,17 @@ t_list	*get_rgb(t_list *raw, int *rgb)
 
 	while (((char *)raw->content)[0] == '\n')
 		raw = raw->next;
-	line = ft_substr(raw->content, 2, ft_strlen(raw->content) - 2);
-	split = ft_split(line, ',');
 	i = -1;
-	while (++i < 3)
+	while (++i < 2)
 	{
+		line = ft_substr(raw->content, 2, ft_strlen(raw->content) - 2);
+		split = ft_split(line, ',');
 		j = -1;
-		while (split[i][++j])
-			if (!ft_isdigit(split[i][j]))
-				error_exit("Invalid RGB value");
-		rgb[i] = ft_atoi(split[i]);
+		while (++j < 3)
+			rgb[i][j] = ft_atoi(split[j]);
+		raw = raw->next;
 	}
-	return (raw->next);
+	return (raw);
 }
 
 int	get_map(t_list *raw, t_list **map)
