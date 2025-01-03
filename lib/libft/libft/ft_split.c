@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tanjunyu8888@gmail.com>           +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 08:48:12 by tjun-yu           #+#    #+#             */
-/*   Updated: 2023/10/30 12:37:27 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/02 14:53:58 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ char	**ft_split(char const *s, char c)
 	if (s == NULL || s == 0)
 		return (NULL);
 	str_count = count_str(s, c);
-	str_array = (char **)malloc((str_count + 1) * sizeof(char *));
+	str_array = (char **)mem_alloc((str_count + 1) * sizeof(char *));
 	if (str_array == NULL)
 		return (NULL);
 	s_ptr = s;
 	i = -1;
 	while (++i < (int)str_count)
 	{
-		str_array[i] = (char *)malloc(split_len(&s_ptr, c) + 1);
+		str_array[i] = (char *)mem_alloc(split_len(&s_ptr, c) + 1);
 		if (str_array[i] == NULL)
 			return (NULL);
 	}

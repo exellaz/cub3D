@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tanjunyu8888@gmail.com>           +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 10:33:59 by tjun-yu           #+#    #+#             */
-/*   Updated: 2023/10/24 09:48:18 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/02 14:54:37 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	total_size = ft_strlen(s1) + ft_strlen(s2) + 1;
-	new_str = (char *)malloc(total_size * sizeof(char));
+	new_str = (char *)mem_alloc(total_size * sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
 	ft_memmove(new_str, s1, ft_strlen(s1));

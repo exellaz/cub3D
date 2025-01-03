@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tanjunyu8888@gmail.com>           +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 09:53:13 by tjun-yu           #+#    #+#             */
-/*   Updated: 2023/10/30 12:31:35 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/02 14:55:15 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (start == (int)ft_strlen(s1))
 		return (ft_strdup(""));
 	end = trim_end_size(s1, set);
-	trimed_str = (char *)malloc(end - start + 2);
+	trimed_str = (char *)mem_alloc(end - start + 2);
 	if (trimed_str == NULL)
 		return (NULL);
 	i = -1;

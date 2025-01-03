@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:46:33 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/02/29 18:13:24 by we               ###   ########.fr       */
+/*   Updated: 2025/01/02 15:06:12 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (buffer[fd] == NULL)
 	{
-		buffer[fd] = (char *)malloc(1);
+		buffer[fd] = (char *)mem_alloc(1);
 		buffer[fd][0] = 0;
 	}
 	is_eof = read_line(fd, &buffer[fd]);
@@ -37,10 +37,10 @@ char	*get_next_line(int fd)
 	{
 		if (buffer[fd][0] == 0)
 		{
-			free(line);
+			mem_free(line);
 			line = NULL;
 		}
-		free(buffer[fd]);
+		mem_free(buffer[fd]);
 		buffer[fd] = NULL;
 	}
 	return (line);
@@ -66,12 +66,12 @@ static char	*put_line(const char *buffer, int is_eof)
 	if (is_eof != 0)
 	{
 		delimiter = '\n';
-		line = (char *)malloc(is_line(buffer) + 2);
+		line = (char *)mem_alloc(is_line(buffer) + 2);
 	}
 	else
 	{
 		delimiter = 0;
-		line = (char *)malloc(ft_strlen(buffer) + 1);
+		line = (char *)mem_alloc(ft_strlen(buffer) + 1);
 	}
 	if (line == NULL)
 		return (NULL);
@@ -92,7 +92,7 @@ static int	read_line(int fd, char **buffer)
 	bytes_read = 69420;
 	while (is_line(*buffer) == -1 && bytes_read != 0)
 	{
-		temp = (char *)malloc(BUFFER_SIZE + 1);
+		temp = (char *)mem_alloc(BUFFER_SIZE + 1);
 		if (temp == NULL)
 			return (-1);
 		bytes_read = read(fd, temp, BUFFER_SIZE);
@@ -103,7 +103,7 @@ static int	read_line(int fd, char **buffer)
 		else
 			temp[BUFFER_SIZE] = 0;
 		*buffer = c_strjoin(buffer, temp);
-		free(temp);
+		mem_free(temp);
 	}
 	return (bytes_read);
 }
@@ -115,7 +115,7 @@ static char	*remove_line(char **buffer)
 	int		j;
 
 	i = is_line(*buffer) + 1;
-	next_line = (char *)malloc(ft_strlen(*buffer + i) + 1);
+	next_line = (char *)mem_alloc(ft_strlen(*buffer + i) + 1);
 	if (next_line == NULL)
 		return (NULL);
 	j = -1;
@@ -125,6 +125,6 @@ static char	*remove_line(char **buffer)
 		++i;
 	}
 	next_line[j + 1] = 0;
-	free(*buffer);
+	mem_free(*buffer);
 	return (next_line);
 }

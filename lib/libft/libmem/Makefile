@@ -5,7 +5,7 @@ INC = -I.
 
 # Directories
 SRC_DIR = src
-OBJ_DIR = obj
+OBJ_DIR = ../obj
 
 vpath %.c $(SRC_DIR)
 
@@ -20,6 +20,8 @@ all : $(BIN)
 $(BIN) : $(OBJ)
 	ar rcs $@ $^
 	ranlib $@
+
+obj : $(OBJ)
 
 $(OBJ_DIR)/%.o : %.c $(HEADER)
 	mkdir -p $(OBJ_DIR)
