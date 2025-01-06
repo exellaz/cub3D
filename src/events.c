@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/01/06 09:08:42 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/06 13:12:36 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ int key_hook(int keycode, t_mlx *m)
 	}
 	if (keycode == KEY_A)
 	{
-		player->x += cos_angle * speed;
-		player->y -= sin_angle * speed;
+		player->x += sin_angle * speed;
+		player->y -= cos_angle * speed;
 	}
 	if (keycode == KEY_D)
 	{
-		player->x -= cos_angle * speed;
-		player->y += sin_angle * speed;
+		player->x -= sin_angle * speed;
+		player->y += cos_angle * speed;
 	}
 	if (keycode == KEY_LEFT)
 	{
