@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/06 08:48:51 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/06 13:56:59 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
 
+# define BLOCK_SIZE 64
 # define PI 3.14159
 
 # include <stdbool.h>

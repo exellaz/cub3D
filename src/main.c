@@ -10,14 +10,14 @@ char	**get_map(void)
 
 	map = malloc(sizeof(char *) * 11);
 	map[0] = "11111111111111";
-	map[1] = "10000000000001";
-	map[2] = "10000000000001";
-	map[3] = "10000000000001";
-	map[4] = "10000000000001";
-	map[5] = "10000000000001";
-	map[6] = "10000000000001";
-	map[7] = "10000000000001";
-	map[8] = "10000000000001";
+	map[1] = "10001000000001";
+	map[2] = "10001000000001";
+	map[3] = "10001000011111";
+	map[4] = "10000100000001";
+	map[5] = "10000100000001";
+	map[6] = "10000000010001";
+	map[7] = "10000000010001";
+	map[8] = "10000000010001";
 	map[9] = "11111111111111";
 	map[10] = NULL;
 	return (map);
@@ -76,7 +76,9 @@ void	draw_map(t_mlx *mlx)
 		while (map[y][x])
 		{
 			if (map[y][x] == '1')
-				draw_square(x * 64, y * 64, 64, color, &mlx->img);
+				draw_square(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, color, &mlx->img);
+			else
+				draw_square(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, 0x808080, &mlx->img);
 			x++;
 		}
 		y++;
@@ -85,27 +87,52 @@ void	draw_map(t_mlx *mlx)
 
 bool	ray_collision(float px, float py, t_mlx *mlx)
 {
-	int	x = px / 64;
-	int y = py / 64;
+	int	x = px / BLOCK_SIZE;
+	int y = py / BLOCK_SIZE;
 
-	if (x < 0 || y < 0 || x >= WIN_WIDTH / 64 || y >= WIN_HEIGHT / 64)
+	if (x < 0 || y < 0 || x >= WIN_WIDTH / BLOCK_SIZE || y >= WIN_HEIGHT / BLOCK_SIZE + 1)
 		return (true);
 	if (y < 10 && x < 14 && mlx->map[y][x] == '1') // Change 10 and 14 to width and height of map
 		return (true);
 	return (false);
 }
 
-int	draw_ray(t_player *player, t_mlx *mlx, float start_x)
+float	distance(float x, float y) // Calculates the distance with a fish-eye distortion
 {
-	float	ray_x = player->x + 32;
-	float	ray_y = player->y + 32;
+	return sqrt(x * x + y * y);
+}
+
+float fixed_dist(float x1, float y1, float x2, float y2, t_player *player)
+{
+	float delta_x = x2 - x1;
+	float delta_y = y2 - y1;
+	float angle = atan2(delta_y, delta_x) - player->angle;
+	float fix_dist = distance(delta_x, delta_y) * cos(angle);
+	return (fix_dist);
+}
+
+int	draw_ray(t_player *player, t_mlx *mlx, float start_x, int i)
+{
+	float	ray_x = player->x + 16;
+	float	ray_y = player->y + 16;
 	float	cos_angle = cos(start_x);
 	float	sin_angle = sin(start_x);
+	(void)i;
 	while (!ray_collision(ray_x, ray_y, mlx))
 	{
 		put_pixel(ray_x, ray_y, 0xFF0000, &mlx->img);
 		ray_x += cos_angle;
 		ray_y += sin_angle;
+	}
+	// float	dist = distance(ray_x - player->x, ray_y - player->y); // has fish-eye distortion
+	float dist = fixed_dist(player->x, player->y, ray_x, ray_y, player);
+	float	height = (BLOCK_SIZE / dist) * (WIN_WIDTH / 2);
+	int		start_y = (WIN_HEIGHT - height) / 2;
+	int		end = start_y + height;
+	while (start_y < end)
+	{
+		// put_pixel(i, start_y, 255, &mlx->img);
+		start_y++;
 	}
 	return (0);
 }
@@ -117,17 +144,16 @@ int	draw_loop(t_mlx	*mlx)
 	player = mlx->player;
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
 	draw_map(mlx);
-
-	float	fraction = PI / 3 / WIN_WIDTH;
+	float	fraction = (PI / 3 / WIN_WIDTH);
 	float	start_x = player->angle - PI / 6;
 	int		i = 0;
 	while (i < WIN_WIDTH)
 	{
-		draw_ray(player, mlx, start_x);
+		draw_ray(player, mlx, start_x, i);
 		start_x += fraction;
 		i++;
 	}
-	draw_square(player->x, player->y, 64, 0xFFFF00, &mlx->img);
+	draw_square(player->x, player->y, 32, 0xFFFF00, &mlx->img);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }
