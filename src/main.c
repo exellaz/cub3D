@@ -3,6 +3,9 @@
 #include "events.h"
 #include "enum.h"
 #include "cub3D.h"
+#include <time.h>
+
+int	frame_counter(t_fps *fps);
 
 char	**get_map(void)
 {
@@ -141,6 +144,8 @@ int	draw_loop(t_mlx	*mlx)
 {
 	t_player *player;
 
+	frame_counter(mlx->fps);
+
 	player = mlx->player;
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
 	draw_map(mlx);
@@ -158,12 +163,35 @@ int	draw_loop(t_mlx	*mlx)
 	return (0);
 }
 
+int	frame_counter(t_fps *fps)
+{
+	fps->frame_count++;
+
+	clock_t	current_time = clock();
+	float	elapsed_time = (float)(current_time - fps->start_time) / CLOCKS_PER_SEC;
+
+	if (elapsed_time >= 1.0)
+	{
+		fps->fps = fps->frame_count / elapsed_time;
+		printf("FPS: %.2f\n", fps->fps);
+		fps->frame_count = 0;
+		fps->start_time = current_time;
+	}
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	(void)ac, (void)av;
 	t_mlx		mlx;
 	t_player	player;
+	t_fps		fps;
 
+	fps.frame_count = 0;
+	fps.fps = 0.0;
+	fps.start_time = clock();
+
+	mlx.fps = &fps;
 	setup_mlx(&mlx, &player);
 	mlx_loop_hook(mlx.mlx, &draw_loop, &mlx);
 	mlx_loop(mlx.mlx);

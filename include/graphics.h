@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/06 13:56:59 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:55:19 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define PI 3.14159
 
 # include <stdbool.h>
+# include <time.h>
 
 typedef struct s_img
 {
@@ -44,6 +45,13 @@ typedef struct s_player
 	bool	right_rotate;
 }				t_player;
 
+typedef struct s_fps
+{
+	int	frame_count;
+	float	fps;
+	clock_t	start_time;
+}				t_fps;
+
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -51,6 +59,8 @@ typedef struct s_mlx
 	char	**map;
 	t_img	img;
 	t_player	*player;
+	t_fps	*fps;
 }				t_mlx;
+
 
 #endif
