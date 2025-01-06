@@ -9,16 +9,17 @@ char	**get_map(void)
 	char **map;
 
 	map = malloc(sizeof(char *) * 11);
-	map[0] = "1111111111";
-	map[1] = "1000000001";
-	map[2] = "1000000001";
-	map[3] = "1000000001";
-	map[4] = "1000000001";
-	map[5] = "1000000001";
-	map[6] = "1000000001";
-	map[7] = "1000000001";
-	map[8] = "1000000001";
-	map[9] = "1111111111";
+	map[0] = "11111111111111";
+	map[1] = "10000000000001";
+	map[2] = "10000000000001";
+	map[3] = "10000000000001";
+	map[4] = "10000000000001";
+	map[5] = "10000000000001";
+	map[6] = "10000000000001";
+	map[7] = "10000000000001";
+	map[8] = "10000000000001";
+	map[9] = "11111111111111";
+	map[10] = NULL;
 	return (map);
 }
 
@@ -82,14 +83,51 @@ void	draw_map(t_mlx *mlx)
 	}
 }
 
+bool	ray_collision(float px, float py, t_mlx *mlx)
+{
+	int	x = px / 64;
+	int y = py / 64;
+
+	if (x < 0 || y < 0 || x >= WIN_WIDTH / 64 || y >= WIN_HEIGHT / 64)
+		return (true);
+	if (y < 10 && x < 14 && mlx->map[y][x] == '1') // Change 10 and 14 to width and height of map
+		return (true);
+	return (false);
+}
+
+int	draw_ray(t_player *player, t_mlx *mlx, float start_x)
+{
+	float	ray_x = player->x + 32;
+	float	ray_y = player->y + 32;
+	float	cos_angle = cos(start_x);
+	float	sin_angle = sin(start_x);
+	while (!ray_collision(ray_x, ray_y, mlx))
+	{
+		put_pixel(ray_x, ray_y, 0xFF0000, &mlx->img);
+		ray_x += cos_angle;
+		ray_y += sin_angle;
+	}
+	return (0);
+}
+
 int	draw_loop(t_mlx	*mlx)
 {
 	t_player *player;
 
 	player = mlx->player;
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
-	draw_square(player->x, player->y, 64, 0xFFFF00, &mlx->img);
 	draw_map(mlx);
+
+	float	fraction = PI / 3 / WIN_WIDTH;
+	float	start_x = player->angle - PI / 6;
+	int		i = 0;
+	while (i < WIN_WIDTH)
+	{
+		draw_ray(player, mlx, start_x);
+		start_x += fraction;
+		i++;
+	}
+	draw_square(player->x, player->y, 64, 0xFFFF00, &mlx->img);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }

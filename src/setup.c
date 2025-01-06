@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/01/03 19:21:23 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/06 09:39:38 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	setup_mlx(t_mlx *m, t_player *player)
 	m->win = mlx_new_window(m->mlx, WIN_WIDTH, WIN_HEIGHT, "Hello world!");
 	m->img.img = mlx_new_image(m->mlx, WIN_WIDTH, WIN_HEIGHT);
 	m->img.addr = mlx_get_data_addr(m->img.img, &m->img.bits_per_pixel, &m->img.line_length, &m->img.endian);
-	player->x = (WIN_WIDTH - 64) / 2;
-	player->y = (WIN_HEIGHT - 64) / 2;
+	player->x = (WIN_WIDTH / 64) * 5;
+	player->y = (WIN_HEIGHT / 64) * 5;
+	player->angle = PI / 2;
 	m->player = player;
 	m->map = get_map();
 	mlx_put_image_to_window(m->mlx, m->win, m->img.img, 0, 0);

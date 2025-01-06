@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/03 19:22:13 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/06 08:48:51 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
 
+# define PI 3.14159
+
+# include <stdbool.h>
+
 typedef struct s_img
 {
 	void	*img;
@@ -32,8 +36,11 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	int	x;
-	int	y;
+	float	x;
+	float	y;
+	float	angle;
+	bool	left_rotate;
+	bool	right_rotate;
 }				t_player;
 
 typedef struct s_mlx

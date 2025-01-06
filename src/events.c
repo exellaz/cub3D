@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/01/03 18:56:25 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/06 09:08:42 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "graphics.h"
 #include "enum.h"
 #include "events.h"
+#include "math.h"
 
 int	quit(int keycode, t_mlx *m)
 {
@@ -28,15 +29,45 @@ int	quit(int keycode, t_mlx *m)
 
 int key_hook(int keycode, t_mlx *m)
 {
+	t_player *player = m->player;
+	int	speed = 5;
+	float	angle_speed = 0.1;
+	float	cos_angle = cos(player->angle);
+	float	sin_angle = sin(player->angle);
+
 	if (keycode == KEY_ESC)
 		quit(keycode, m);
+	if (player->angle > 2 * PI)
+		player->angle = 0;
+	if (player->angle < 0)
+		player->angle = 2 * PI;
 	if (keycode == KEY_W)
-		m->player->y -= 5;
+	{
+		player->x += cos_angle * speed;
+		player->y += sin_angle * speed;
+	}
 	if (keycode == KEY_S)
-		m->player->y += 5;
+	{
+		player->x -= cos_angle * speed;
+		player->y -= sin_angle * speed;
+	}
 	if (keycode == KEY_A)
-		m->player->x -= 5;
+	{
+		player->x += cos_angle * speed;
+		player->y -= sin_angle * speed;
+	}
 	if (keycode == KEY_D)
-		m->player->x += 5;
+	{
+		player->x -= cos_angle * speed;
+		player->y += sin_angle * speed;
+	}
+	if (keycode == KEY_LEFT)
+	{
+		player->angle -= angle_speed;
+	}
+	if (keycode == KEY_RIGHT)
+	{
+		player->angle += angle_speed;
+	}
 	return (0);
 }
