@@ -163,23 +163,6 @@ int	draw_loop(t_mlx	*mlx)
 	return (0);
 }
 
-int	frame_counter(t_fps *fps)
-{
-	fps->frame_count++;
-
-	clock_t	current_time = clock();
-	float	elapsed_time = (float)(current_time - fps->start_time) / CLOCKS_PER_SEC;
-
-	if (elapsed_time >= 1.0)
-	{
-		fps->fps = fps->frame_count / elapsed_time;
-		printf("FPS: %.2f\n", fps->fps);
-		fps->frame_count = 0;
-		fps->start_time = current_time;
-	}
-	return (0);
-}
-
 int	main(int ac, char **av)
 {
 	(void)ac, (void)av;
