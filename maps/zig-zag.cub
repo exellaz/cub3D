@@ -1,0 +1,13 @@
+NO assets/north-texture.xpm
+SO assets/south-texture.xpm
+WE assets/west-texture.xpm
+EA assets/east-texture.xpm
+
+F 255,0,0
+C 0,255,0
+
+1 1 1 1 1
+ 1010101
+100000001
+ 1010101
+1 1 1 1 1

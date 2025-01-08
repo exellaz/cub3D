@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/01/03 15:02:35 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/07 10:07:33 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 typedef struct s_list	t_list;
 
 // `texture` is stored in N, S, E, W order
-// `ceiling` and `floor` are stored in R, G, B order
+// `floor` and `ceiling` are stored in R, G, B order
 // `texture` and `rgb` are optional
 typedef struct s_map
 {
@@ -30,5 +30,9 @@ t_list	*load_file(int file);
 t_list	*get_texture_path(t_list *raw, char **texture_path);
 t_list	*get_rgb(t_list *raw, int (*rgb)[3]);
 int		get_map(t_list *raw, t_list **map);
+
+void	validate_map(t_list *map);
+bool	valid_iden(t_list *map);
+bool	valid_walls(t_list *map);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/01/03 15:05:28 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/07 09:33:21 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_list	*load_file(int file)
 	return (map);
 }
 
+// will discard extra paths
 t_list	*get_texture_path(t_list *raw, char **texture_path)
 {
 	char	**split;
@@ -75,9 +76,11 @@ t_list	*get_texture_path(t_list *raw, char **texture_path)
 	return (raw->next);
 }
 
+// will discard extra RGB values
 t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 {
 	char	**split;
+	int		fc;
 	int		i;
 	int		j;
 
@@ -87,11 +90,10 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 	{
 		split = ft_split((char *)raw->content, '\n');
 		split = ft_split(split[0], ' ');
-		// TODO: change this
 		if (ft_strcmp(split[0], "F") == 0)
-			i = 0;
+			fc = 0;
 		else if (ft_strcmp(split[0], "C") == 0)
-			i = 1;
+			fc = 1;
 		else
 			error_exit("Invalid RGB identifier");
 		split = ft_split(split[1], ',');
@@ -100,8 +102,8 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 		{
 			if (!is_num(split[j]))
 				error_exit("non-numeric RGB value");
-			rgb[i][j] = ft_atoi(split[j]);
-			if (rgb[i][j] < 0 || rgb[i][j] > 255)
+			rgb[fc][j] = ft_atoi(split[j]);
+			if (rgb[fc][j] < 0 || rgb[fc][j] > 255)
 				error_exit("Invalid RGB value");
 		}
 		raw = raw->next;
