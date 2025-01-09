@@ -1,67 +1,129 @@
-// FILE: src/test_main.c
+#include "graphics.h"
+#include "events.h"
+#include "enum.h"
+#include "cub3D.h"
+#include <time.h>
 
-#include <assert.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <string.h>
-#include "Libft.h"
-
-void test_ft_split(void)
+char	**get_map(void)
 {
-	char **arr = ft_split("hello world", ' ');
-	assert(arr != NULL);
-	assert(strcmp(arr[0], "hello") == 0);
-	assert(strcmp(arr[1], "world") == 0);
-	assert(arr[2] == NULL);
-	mem_free(arr);
+	char **map;
+
+	map = malloc(sizeof(char *) * 11);
+	map[0] = "11111111111111";
+	map[1] = "10001000000001";
+	map[2] = "10001000000001";
+	map[3] = "10001000011111";
+	map[4] = "10000100000001";
+	map[5] = "10000100000001";
+	map[6] = "10000000010001";
+	map[7] = "10000000010001";
+	map[8] = "10000000010001";
+	map[9] = "11111111111111";
+	map[10] = NULL;
+	return (map);
 }
 
-void test_get_next_line(void)
+void put_pixel(int x, int y, int color, t_img *img)
 {
-	int fd = open("Makefile", O_RDONLY);
-	assert(fd != -1);
-	char *line = get_next_line(fd);
-	assert(line != NULL);
-	printf("%s\n", line); // Optional: Print the line for visual verification
-	mem_free(line);
-	close(fd);
+    if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
+        return;
+
+    int index = y * img->line_length + x * img->bits_per_pixel / 8;
+    img->addr[index] = color & 0xFF;
+    img->addr[index + 1] = (color >> 8) & 0xFF;
+    img->addr[index + 2] = (color >> 16) & 0xFF;
 }
 
-void test_ft_substr(void)
+void	draw_square(int x, int y, int size, int color, t_img *img)
 {
-	char *str = ft_substr("hello world", 6, 5);
-	assert(str != NULL);
-	assert(strcmp(str, "world") == 0);
-	mem_free(str);
+	int	draw_x;
+	int	draw_y;
+
+	draw_y = 0;
+	while (draw_y < size)
+	{
+		draw_x = 0;
+		if (draw_y == 0 || draw_y == size - 1)
+		{
+			while (draw_x < size)
+			{
+				put_pixel(x + draw_x, y + draw_y, color, img);
+				draw_x++;
+			}
+		}
+		else
+		{
+			put_pixel(x, y + draw_y, color, img);
+			put_pixel(x + size - 1, y + draw_y, color, img);
+		}
+		draw_y++;
+	}
 }
 
-void test_lst(void)
+void	draw_map(t_mlx *mlx)
 {
-	t_list *lst = ft_lstnew("hello");
-	assert(lst != NULL);
-	ft_lstadd_front(&lst, ft_lstnew("world"));
-	ft_lstadd_back(&lst, ft_lstnew("42"));
+	char	**map;
+	int		color;
+	int		x;
+	int		y;
 
-	t_list *node = lst;
-	assert(strcmp((char *)node->content, "world") == 0);
-	node = node->next;
-	assert(strcmp((char *)node->content, "hello") == 0);
-	node = node->next;
-	assert(strcmp((char *)node->content, "42") == 0);
-	node = node->next;
-	assert(node == NULL);
-
-	// Clean up
-	ft_lstclear(&lst, mem_free);
+	map = mlx->map;
+	color = 0x0000FF;
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == '1')
+				draw_square(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, color, &mlx->img);
+			else
+				draw_square(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, 0x808080, &mlx->img);
+			x++;
+		}
+		y++;
+	}
 }
 
-int main(void)
+int	draw_loop(t_mlx	*mlx)
 {
-	test_ft_split();
-	test_get_next_line();
-	test_ft_substr();
-	test_lst();
-	mem_clean();
-	printf("All tests passed!\n");
-	return 0;
+	t_player *player;
+	float	fraction;
+	float	start_x;
+	int		i;
+
+	player = mlx->player;
+	fraction = (PI / 3 / WIN_WIDTH);
+	start_x = player->angle - PI / 6;
+	frame_counter(mlx->fps);
+	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
+	draw_map(mlx); // Draw Map in 2D
+	i = 0;
+	while (i < WIN_WIDTH)
+	{
+		draw_ray(player, mlx, start_x, i);
+		start_x += fraction;
+		i++;
+	}
+	draw_square(player->x, player->y, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
+	return (0);
+}
+
+int	main(int ac, char **av)
+{
+	(void)ac, (void)av;
+	t_mlx		mlx;
+	t_player	player;
+	t_fps		fps;
+
+	fps.frame_count = 0;
+	fps.fps = 0.0;
+	fps.start_time = clock();
+
+	mlx.fps = &fps;
+	setup_mlx(&mlx, &player);
+	mlx_loop_hook(mlx.mlx, &draw_loop, &mlx);
+	mlx_loop(mlx.mlx);
+	return (0);
 }
