@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:01:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/04/16 15:04:27 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/02 15:05:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+
+# include "libmem/libmem.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tanjunyu8888@gmail.com>           +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 11:36:31 by tjun-yu           #+#    #+#             */
-/*   Updated: 2023/10/26 13:50:12 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/02 14:55:02 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 
 	if (s == NULL)
 		return (NULL);
-	new_str = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	new_str = (char *)mem_alloc((ft_strlen(s) + 1) * sizeof(char));
 	if (new_str == NULL || f == NULL)
 		return (NULL);
 	i = -1;
