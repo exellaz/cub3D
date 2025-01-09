@@ -98,7 +98,7 @@ int	draw_loop(t_mlx	*mlx)
 	start_x = player->angle - PI / 6;
 	frame_counter(mlx->fps);
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
-	draw_map(mlx);
+	draw_map(mlx); // Draw Map in 2D
 	i = 0;
 	while (i < WIN_WIDTH)
 	{
@@ -106,7 +106,7 @@ int	draw_loop(t_mlx	*mlx)
 		start_x += fraction;
 		i++;
 	}
-	draw_square(player->x, player->y, 32, 0xFFFF00, &mlx->img);
+	draw_square(player->x, player->y, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/01/09 12:29:58 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/09 12:56:52 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	draw_ray(t_player *player, t_mlx *mlx, float start_x, int i)
 
 	while (!ray_collision(ray_x, ray_y, mlx))
 	{
-		put_pixel(ray_x, ray_y, 0xFF0000, &mlx->img);
+		put_pixel(ray_x, ray_y, 0xFF0000, &mlx->img); // Draw rays in 2D
 		ray_x += cos_angle;
 		ray_y += sin_angle;
 	}
@@ -59,7 +59,7 @@ int	draw_ray(t_player *player, t_mlx *mlx, float start_x, int i)
 	int		end = start_y + height;
 	while (start_y < end)
 	{
-		// put_pixel(i, start_y, 255, &mlx->img);
+		// put_pixel(i, start_y, 255, &mlx->img); // Render in 3D
 		start_y++;
 	}
 	return (0);
