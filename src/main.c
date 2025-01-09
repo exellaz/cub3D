@@ -5,8 +5,6 @@
 #include "cub3D.h"
 #include <time.h>
 
-int	frame_counter(t_fps *fps);
-
 char	**get_map(void)
 {
 	char **map;
@@ -88,70 +86,20 @@ void	draw_map(t_mlx *mlx)
 	}
 }
 
-bool	ray_collision(float px, float py, t_mlx *mlx)
-{
-	int	x = px / BLOCK_SIZE;
-	int y = py / BLOCK_SIZE;
-
-	if (x < 0 || y < 0 || x >= WIN_WIDTH / BLOCK_SIZE || y >= WIN_HEIGHT / BLOCK_SIZE + 1)
-		return (true);
-	if (y < 10 && x < 14 && mlx->map[y][x] == '1') // Change 10 and 14 to width and height of map
-		return (true);
-	return (false);
-}
-
-float	distance(float x, float y) // Calculates the distance with a fish-eye distortion
-{
-	return sqrt(x * x + y * y);
-}
-
-float fixed_dist(float x1, float y1, float x2, float y2, t_player *player)
-{
-	float delta_x = x2 - x1;
-	float delta_y = y2 - y1;
-	float angle = atan2(delta_y, delta_x) - player->angle;
-	float fix_dist = distance(delta_x, delta_y) * cos(angle);
-	return (fix_dist);
-}
-
-int	draw_ray(t_player *player, t_mlx *mlx, float start_x, int i)
-{
-	float	ray_x = player->x + 16;
-	float	ray_y = player->y + 16;
-	float	cos_angle = cos(start_x);
-	float	sin_angle = sin(start_x);
-	(void)i;
-	while (!ray_collision(ray_x, ray_y, mlx))
-	{
-		put_pixel(ray_x, ray_y, 0xFF0000, &mlx->img);
-		ray_x += cos_angle;
-		ray_y += sin_angle;
-	}
-	// float	dist = distance(ray_x - player->x, ray_y - player->y); // has fish-eye distortion
-	float dist = fixed_dist(player->x, player->y, ray_x, ray_y, player);
-	float	height = (BLOCK_SIZE / dist) * (WIN_WIDTH / 2);
-	int		start_y = (WIN_HEIGHT - height) / 2;
-	int		end = start_y + height;
-	while (start_y < end)
-	{
-		// put_pixel(i, start_y, 255, &mlx->img);
-		start_y++;
-	}
-	return (0);
-}
-
 int	draw_loop(t_mlx	*mlx)
 {
 	t_player *player;
-
-	frame_counter(mlx->fps);
+	float	fraction;
+	float	start_x;
+	int		i;
 
 	player = mlx->player;
+	fraction = (PI / 3 / WIN_WIDTH);
+	start_x = player->angle - PI / 6;
+	frame_counter(mlx->fps);
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
 	draw_map(mlx);
-	float	fraction = (PI / 3 / WIN_WIDTH);
-	float	start_x = player->angle - PI / 6;
-	int		i = 0;
+	i = 0;
 	while (i < WIN_WIDTH)
 	{
 		draw_ray(player, mlx, start_x, i);
