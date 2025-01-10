@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:31:54 by we                #+#    #+#             */
-/*   Updated: 2025/01/03 15:02:55 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/10 09:43:31 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char *argv[])
 	printf("[%d %d %d]\n", map->fc_rgb[0][0], map->fc_rgb[0][1], map->fc_rgb[0][2]);
 	printf("[%d %d %d]\n", map->fc_rgb[1][0], map->fc_rgb[1][1], map->fc_rgb[1][2]);
 	ft_lstiter(map->map, print);
+	printf("spawn: [%d %d %d]\n", map->spawn[0], map->spawn[1], map->spawn[2]);
 	mem_clean();
 
 	return (0);

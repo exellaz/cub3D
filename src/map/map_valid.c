@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map_valid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/01/07 10:38:14 by we               ###   ########.fr       */
+/*   Updated: 2025/01/10 09:44:52 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Libft.h>
 
+#include "error.h"
 #include "map.h"
 
 void	validate_map(t_list *map)
@@ -20,9 +21,8 @@ void	validate_map(t_list *map)
 	// check rgb
 	// check identifier
 	if (!valid_iden(map))
-		error("Invalid identifier in map");
+		error_exit("Invalid identifier in map");
 	// check walls
-	return (0);
 }
 
 bool	valid_iden(t_list *map)
@@ -47,5 +47,6 @@ bool	valid_iden(t_list *map)
 
 bool	valid_walls(t_list *map)
 {
+	(void)map;
 	return (true);
 }

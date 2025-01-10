@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/01/07 09:33:21 by we               ###   ########.fr       */
+/*   Updated: 2025/01/10 09:46:31 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_map	*parse_map(int file)
 	remain = get_texture_path(raw, map->texture_path);
 	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map);
+	get_spawn(map->map, map->spawn);
 	return (map);
 }
 
@@ -111,8 +112,35 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 	return (raw);
 }
 
-int	get_map(t_list *raw, t_list **map)
+void	get_map(t_list *raw, t_list **map)
 {
 	*map = raw;
-	return (0);
+}
+
+void	get_spawn(t_list *map, int *spawn)
+{
+	char	*line;
+	int		i;
+	int		j;
+
+	map = skip_empty_lines(map);
+	i = -1;
+	while (map)
+	{
+		i += 1;
+		line = map->content;
+		j = -1;
+		while (line[++j])
+		{
+			if (line[j] == 'N' || line[j] == 'S'
+				|| line[j] == 'E' || line[j] == 'W')
+			{
+				spawn[0] = i;
+				spawn[1] = j;
+				spawn[2] = line[j];
+				return ;
+			}
+		}
+		map = map->next;
+	}
 }
