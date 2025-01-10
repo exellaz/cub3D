@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/01/06 18:32:07 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:48:37 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "enum.h"
 #include "events.h"
 #include "math.h"
+#include "stdio.h"
 
 int	quit(int keycode, t_mlx *m)
 {
@@ -30,44 +31,48 @@ int	quit(int keycode, t_mlx *m)
 int key_hook(int keycode, t_mlx *m)
 {
 	t_player *player = m->player;
-	int	speed = 5;
-	float	angle_speed = 0.1;
-	float	cos_angle = cos(player->angle);
-	float	sin_angle = sin(player->angle);
+	float	speed = 0.1;
+	float	rot_speed = 0.1;
 
 	if (keycode == KEY_ESC)
 		quit(keycode, m);
-	if (player->angle > 2 * PI)
-		player->angle = 0;
-	if (player->angle < 0)
-		player->angle = 2 * PI;
 	if (keycode == KEY_W)
 	{
-		player->x += cos_angle * speed;
-		player->y += sin_angle * speed;
+		player->pos_x += player->dir_x * speed;
+		player->pos_y += player->dir_y * speed;
 	}
 	if (keycode == KEY_S)
 	{
-		player->x -= cos_angle * speed;
-		player->y -= sin_angle * speed;
+		player->pos_x -= player->dir_x * speed;
+		player->pos_y -= player->dir_y * speed;
 	}
 	if (keycode == KEY_A)
 	{
-		player->x += sin_angle * speed;
-		player->y -= cos_angle * speed;
+		player->pos_x -= player->dir_y * speed;
+		player->pos_y += player->dir_x * speed;
 	}
 	if (keycode == KEY_D)
 	{
-		player->x -= sin_angle * speed;
-		player->y += cos_angle * speed;
+		player->pos_x += player->dir_y * speed;
+		player->pos_y -= player->dir_x * speed;
 	}
 	if (keycode == KEY_LEFT)
 	{
-		player->angle -= angle_speed;
+		float	old_dir_x = player->dir_x;
+		player->dir_x = player->dir_x * cos(rot_speed) - player->dir_y * sin(rot_speed);
+		player->dir_y = old_dir_x * sin(rot_speed) + player->dir_y * cos(rot_speed);
+		float	old_plane_x = player->plane_x;
+		player->plane_x = player->plane_x * cos(rot_speed) - player->plane_y * sin(rot_speed);
+		player->plane_y = old_plane_x * sin(rot_speed) + player->plane_y * cos(rot_speed);
 	}
 	if (keycode == KEY_RIGHT)
 	{
-		player->angle += angle_speed;
+		float	old_dir_x = player->dir_x;
+		player->dir_x = player->dir_x * cos(-rot_speed) - player->dir_y * sin(-rot_speed);
+		player->dir_y = old_dir_x * sin(-rot_speed) + player->dir_y * cos(-rot_speed);
+		float	old_plane_x = player->plane_x;
+		player->plane_x = player->plane_x * cos(-rot_speed) - player->plane_y * sin(-rot_speed);
+		player->plane_y = old_plane_x * sin(-rot_speed) + player->plane_y * cos(-rot_speed);
 	}
 	return (0);
 }

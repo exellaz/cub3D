@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/08 16:34:18 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/10 18:52:52 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,18 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	float	x;
-	float	y;
-	float	angle;
-	bool	left_rotate;
-	bool	right_rotate;
+	// float	x;
+	// float	y;
+	// float	angle;
+	// bool	left_rotate;
+	// bool	right_rotate;
+
+	float	pos_x;
+	float	pos_y;
+	float	dir_x;
+	float	dir_y;
+	float	plane_x;
+	float	plane_y;
 }				t_player;
 
 typedef struct s_fps

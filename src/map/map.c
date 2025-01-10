@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/01/10 09:46:31 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/10 19:01:25 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 	return (raw);
 }
 
-void	get_map(t_list *raw, t_list **map)
-{
-	*map = raw;
-}
+// void	get_map(t_list *raw, t_list **map)
+// {
+// 	*map = raw;
+// }
 
 void	get_spawn(t_list *map, int *spawn)
 {

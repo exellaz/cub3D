@@ -85,27 +85,125 @@ void	draw_map(t_mlx *mlx)
 	}
 }
 
-int	draw_loop(t_mlx	*mlx)
+// int	draw_loop(t_mlx	*mlx)
+// {
+// 	t_player *player;
+// 	float	fraction;
+// 	float	start_x;
+// 	int		i;
+
+// 	player = mlx->player;
+// 	fraction = (PI / 3 / WIN_WIDTH);
+// 	// start_x = player->angle - PI / 6;
+// 	frame_counter(mlx->fps);
+// 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
+// 	draw_map(mlx); // Draw Map in 2D
+// 	i = 0;
+// 	while (i < WIN_WIDTH)
+// 	{
+// 		draw_ray(player, mlx, start_x, i);
+// 		start_x += fraction;
+// 		i++;
+// 	}
+// 	draw_square(player->x, player->y, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
+// 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
+// 	return (0);
+// }
+
+int	new_draw_loop(t_mlx	*mlx)
 {
 	t_player *player;
-	float	fraction;
-	float	start_x;
-	int		i;
 
-	player = mlx->player;
-	fraction = (PI / 3 / WIN_WIDTH);
-	start_x = player->angle - PI / 6;
 	frame_counter(mlx->fps);
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
-	draw_map(mlx); // Draw Map in 2D
-	i = 0;
-	while (i < WIN_WIDTH)
+	// draw_map(mlx); // Draw Map in 2D
+	player = mlx->player;
+	// float time = 0;
+	// float oldTime = 0;
+
+	for (int x = 0; x < WIN_WIDTH; x++)
 	{
-		draw_ray(player, mlx, start_x, i);
-		start_x += fraction;
-		i++;
+		float cameraX = 2 * x / (float)WIN_WIDTH - 1;
+		float rayDirX = player->dir_x + player->plane_x * cameraX;
+		float rayDirY = player->dir_y + player->plane_y * cameraX;
+
+		int	mapX = (int)player->pos_x;
+		int	mapY = (int)player->pos_y;
+
+		float	sideDistX;
+		float	sideDistY;
+
+		double	deltaDistX = fabs(1 / rayDirX);
+		double	deltaDistY = fabs(1 / rayDirY);
+		double	perpWallDist;
+
+		int	stepX;
+		int	stepY;
+
+		int	hit = 0;
+		int	side;
+
+		if (rayDirX < 0)
+		{
+			stepX = -1;
+			sideDistX = (player->pos_x - mapX) * deltaDistX;
+		}
+		else
+		{
+			stepX = 1;
+			sideDistX = (mapX + 1.0 - player->pos_x) * deltaDistX;
+		}
+		if (rayDirY < 0)
+		{
+			stepY = -1;
+			sideDistY = (player->pos_y - mapY) * deltaDistY;
+		}
+		else
+		{
+			stepY = 1;
+			sideDistY = (mapY + 1.0 - player->pos_y) * deltaDistY;
+		}
+		while (hit == 0)
+		{
+			if (sideDistX < sideDistY)
+			{
+				sideDistX += deltaDistX;
+				mapX += stepX;
+				side = 0;
+			}
+			else
+			{
+				sideDistY += deltaDistY;
+				mapY += stepY;
+				side = 1;
+			}
+			if (mapX > 10 || mapY > 14 || mapX < 0 || mapY < 0 || mlx->map[mapX][mapY] == '1')
+			{
+				hit = 1;
+			}
+		}
+		if (side == 0)
+			perpWallDist = (sideDistX - deltaDistX);
+		else
+			perpWallDist = (sideDistY - deltaDistY);
+
+		int line_height = (int)(WIN_HEIGHT / perpWallDist);
+
+		int	draw_start = -line_height / 2 + WIN_HEIGHT / 2;
+
+		if (draw_start < 0)
+			draw_start = 0;
+		int	draw_end = line_height / 2 + WIN_HEIGHT / 2;
+		if (draw_end >= WIN_HEIGHT)
+			draw_end = WIN_HEIGHT - 1;
+
+		while (draw_start < draw_end)
+		{
+			put_pixel(x, draw_start, 255, &mlx->img);
+			draw_start++;
+		}
 	}
-	draw_square(player->x, player->y, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
+	// draw_square(player->pos_x, player->pos_y, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }
@@ -123,7 +221,8 @@ int	main(int ac, char **av)
 
 	mlx.fps = &fps;
 	setup_mlx(&mlx, &player);
-	mlx_loop_hook(mlx.mlx, &draw_loop, &mlx);
+	// mlx_loop_hook(mlx.mlx, &draw_loop, &mlx);
+	mlx_loop_hook(mlx.mlx, &new_draw_loop, &mlx);
 	mlx_loop(mlx.mlx);
 	return (0);
 }
