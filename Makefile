@@ -7,7 +7,7 @@ LIB = -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lft -lm -lX11 -lXext
 # Directories
 LIBFT_DIR = lib/libft
 MLX_DIR = lib/minilibx-linux
-SRC_DIR = src
+SRC_DIR = src src/map
 OBJ_DIR = obj
 
 vpath %.c $(SRC_DIR)
@@ -46,7 +46,6 @@ valgrind : $(BIN)
 
 fsan:
 	$(CC) $(CFLAGS) -fsanitize=address $(INC) $(OBJ) $(LIB) -o $(BIN)
-
 
 clean :
 	make -C $(LIBFT_DIR) clean
