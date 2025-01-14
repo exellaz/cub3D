@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/10 18:52:52 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/14 08:55:50 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ typedef struct s_mlx
 	t_player	*player;
 	t_fps	*fps;
 }				t_mlx;
+
+typedef struct s_point
+{
+	float x;
+	float y;
+}				t_point;
 
 
 #endif

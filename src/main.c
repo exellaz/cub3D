@@ -4,6 +4,36 @@
 #include "cub3D.h"
 #include <time.h>
 
+#include <math.h>
+
+void draw_line(t_point start, t_point end, int color, t_img *img)
+{
+	int dx = fabs(end.x - start.x);
+	int dy = fabs(end.y - start.y);
+	int sx = (start.x < end.x) ? 1 : -1;
+	int sy = (start.y < end.y) ? 1 : -1;
+	int err = dx - dy;
+	int e2;
+
+	while (1)
+	{
+		put_pixel(start.x, start.y, color, img);
+		if (start.x == end.x && start.y == end.y)
+			break ;
+		e2 = 2 * err;
+		if (e2 > -dy)
+		{
+			err -= dy;
+			start.x += sx;
+		}
+		if (e2 < dx)
+		{
+			err += dx;
+			start.y += sy;
+		}
+	}
+}
+
 char	**get_map(void)
 {
 	char **map;
@@ -25,13 +55,13 @@ char	**get_map(void)
 
 void put_pixel(int x, int y, int color, t_img *img)
 {
-    if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
-        return;
+	if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
+		return;
 
-    int index = y * img->line_length + x * img->bits_per_pixel / 8;
-    img->addr[index] = color & 0xFF;
-    img->addr[index + 1] = (color >> 8) & 0xFF;
-    img->addr[index + 2] = (color >> 16) & 0xFF;
+	int index = y * img->line_length + x * img->bits_per_pixel / 8;
+	img->addr[index] = color & 0xFF;
+	img->addr[index + 1] = (color >> 8) & 0xFF;
+	img->addr[index + 2] = (color >> 16) & 0xFF;
 }
 
 void	draw_square(int x, int y, int size, int color, t_img *img)
@@ -116,7 +146,7 @@ int	new_draw_loop(t_mlx	*mlx)
 
 	frame_counter(mlx->fps);
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
-	// draw_map(mlx); // Draw Map in 2D
+	draw_map(mlx); // Draw Map in 2D
 	player = mlx->player;
 	// float time = 0;
 	// float oldTime = 0;
@@ -177,11 +207,17 @@ int	new_draw_loop(t_mlx	*mlx)
 				mapY += stepY;
 				side = 1;
 			}
-			if (mapX > 10 || mapY > 14 || mapX < 0 || mapY < 0 || mlx->map[mapX][mapY] == '1')
+			if (mapX > 13 || mapY > 10 || mapX < 0 || mapY < 0 || mlx->map[mapY][mapX] == '1')
 			{
 				hit = 1;
+				draw_square(mapX * BLOCK_SIZE, mapY * BLOCK_SIZE, BLOCK_SIZE, 0xFF0000, &mlx->img);
 			}
 		}
+
+		// t_point start = {round(player->pos_x * BLOCK_SIZE), round(player->pos_y * BLOCK_SIZE)};
+		// t_point end = {mapX * BLOCK_SIZE, mapY * BLOCK_SIZE};
+		// draw_line(start, end, 0xFF0000, &mlx->img);
+
 		if (side == 0)
 			perpWallDist = (sideDistX - deltaDistX);
 		else
@@ -199,11 +235,11 @@ int	new_draw_loop(t_mlx	*mlx)
 
 		while (draw_start < draw_end)
 		{
-			put_pixel(x, draw_start, 255, &mlx->img);
+			// put_pixel(x, draw_start, 255, &mlx->img);
 			draw_start++;
 		}
 	}
-	// draw_square(player->pos_x, player->pos_y, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
+	draw_square(player->pos_x * BLOCK_SIZE, player->pos_y * BLOCK_SIZE, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }
