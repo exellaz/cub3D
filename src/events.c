@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/01/10 19:48:37 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/14 11:06:26 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ int	quit(int keycode, t_mlx *m)
 int key_hook(int keycode, t_mlx *m)
 {
 	t_player *player = m->player;
-	float	speed = 0.1;
-	float	rot_speed = 0.1;
+	// float	speed = 0.1;
+	// float	rot_speed = 0.1;
+	float	speed = m->fps->frame_time * 5.0;
+	float	rot_speed = m->fps->frame_time * 3.0;
 
 	if (keycode == KEY_ESC)
 		quit(keycode, m);

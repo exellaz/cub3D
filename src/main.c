@@ -146,7 +146,7 @@ int	new_draw_loop(t_mlx	*mlx)
 
 	frame_counter(mlx->fps);
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
-	draw_map(mlx); // Draw Map in 2D
+	// draw_map(mlx); // Draw Map in 2D
 	player = mlx->player;
 	// float time = 0;
 	// float oldTime = 0;
@@ -210,7 +210,7 @@ int	new_draw_loop(t_mlx	*mlx)
 			if (mapX > 13 || mapY > 10 || mapX < 0 || mapY < 0 || mlx->map[mapY][mapX] == '1')
 			{
 				hit = 1;
-				draw_square(mapX * BLOCK_SIZE, mapY * BLOCK_SIZE, BLOCK_SIZE, 0xFF0000, &mlx->img);
+				// draw_square(mapX * BLOCK_SIZE, mapY * BLOCK_SIZE, BLOCK_SIZE, 0xFF0000, &mlx->img);
 			}
 		}
 
@@ -235,11 +235,11 @@ int	new_draw_loop(t_mlx	*mlx)
 
 		while (draw_start < draw_end)
 		{
-			// put_pixel(x, draw_start, 255, &mlx->img);
+			put_pixel(x, draw_start, 255, &mlx->img);
 			draw_start++;
 		}
 	}
-	draw_square(player->pos_x * BLOCK_SIZE, player->pos_y * BLOCK_SIZE, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
+	// draw_square(player->pos_x * BLOCK_SIZE, player->pos_y * BLOCK_SIZE, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }

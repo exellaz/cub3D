@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/14 08:55:50 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/14 11:04:19 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ typedef struct s_player
 
 typedef struct s_fps
 {
-	int	frame_count;
+	int		frame_count;
+	float	frame_time;
 	float	fps;
 	clock_t	start_time;
+	clock_t	last_frame_time;
 }				t_fps;
 
 typedef struct s_mlx
