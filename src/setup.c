@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/01/10 19:22:25 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/15 13:53:57 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "enum.h"
 #include "cub3D.h"
 
-void	setup_mlx(t_mlx *m, t_player *player)
+void	setup_mlx(t_vars *m, t_player *player)
 {
 	m->mlx = mlx_init();
 	m->win = mlx_new_window(m->mlx, WIN_WIDTH, WIN_HEIGHT, "Hello world!");
@@ -29,7 +29,10 @@ void	setup_mlx(t_mlx *m, t_player *player)
 	player->plane_y = 0.66;
 	m->player = player;
 	m->map = get_map();
+	m->keys = malloc(sizeof(bool) * 256);
+	ft_bzero(m->keys, sizeof(bool) * 256);
 	mlx_put_image_to_window(m->mlx, m->win, m->img.img, 0, 0);
 	mlx_hook(m->win, DESTROY_NOTIFY, NOT_EVENT_MASK, quit, m);
-	mlx_hook(m->win, KEY_PRESS, KEY_PRESS_MASK, key_hook, m);
+	mlx_hook(m->win, KEY_PRESS, KEY_PRESS_MASK, key_press_hook, m);
+	mlx_hook(m->win, KEY_RELEASE, KEY_RELEASE_MASK, key_release_hook, m);
 }

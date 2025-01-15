@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:49 by we                #+#    #+#             */
-/*   Updated: 2025/01/10 09:51:04 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/15 14:01:00 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # include "graphics.h"
 
 int		validate_arg(int argc, char *file);
-void	setup_mlx(t_mlx *m, t_player *player);
+void	setup_mlx(t_vars *m, t_player *player);
 char	**get_map(void);
-int		draw_ray(t_player *player, t_mlx *mlx, float start_x, int i);
+int		draw_ray(t_player *player, t_vars *mlx, float start_x, int i);
 void	put_pixel(int x, int y, int color, t_img *img);
 int		frame_counter(t_fps *fps);
 
