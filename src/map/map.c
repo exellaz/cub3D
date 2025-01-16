@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/01/16 10:18:36 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/16 14:58:43 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,19 +115,34 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 void	get_map(t_list *raw, t_list **map)
 {
 	t_list	*tmp;
+	char	*line;
+	int		max;
 	int		i;
 	
 	*map = skip_empty_lines(raw);
+	max = 0;
 	tmp = *map;
 	while (tmp)
 	{
-		i = -1;
-		while (((char *)tmp->content)[++i])
+		((char *)tmp->content)[ft_strlen(tmp->content) - 1] = '\0';
+		if (ft_strlen(tmp->content) > (size_t)max)
+			max = ft_strlen(tmp->content);
+		tmp = tmp->next;
+	}
+	i = -1;
+	tmp = *map;
+	while (tmp)
+	{
+		if (ft_strlen(tmp->content) < (size_t)max)
 		{
-			if (((char *)tmp->content)[i] == ' ')
-				((char *)tmp->content)[i] = '1';
+			line = mem_alloc(max + 1);
+			ft_strlcpy(line, (char *)tmp->content, max + 1);
+			i = ft_strlen(line);
+			while (i < max)
+				line[i++] = ' ';
+			line[max] = '\0';
+			tmp->content = line;
 		}
-		((char *)tmp->content)[i - 1] = '\0';
 		tmp = tmp->next;
 	}
 }
