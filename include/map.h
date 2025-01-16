@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/01/10 09:35:38 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/16 10:29:32 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ void	get_spawn(t_list *map, int *spawn);
 void	validate_map(t_list *map);
 bool	valid_iden(t_list *map);
 bool	valid_walls(t_list *map);
+
+void	print_map(t_list *map);
 
 #endif

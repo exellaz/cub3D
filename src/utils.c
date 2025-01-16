@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 14:23:53 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/01/16 10:11:23 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/16 11:28:31 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	**lst_to_arr(t_list *lst)
 	while (lst)
 	{
 		arr[++i] = lst->content;
-		arr[i][ft_strlen(arr[i]) - 1] = '\0';
 		lst = lst->next;
 	}
 	arr[++i] = NULL;
