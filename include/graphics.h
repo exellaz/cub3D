@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/15 14:32:32 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:21:40 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@
 # define BLUE 0x000000FF
 
 # define BLOCK_SIZE 64
+# define TEX_WIDTH 64
+# define TEX_HEIGHT 64
 # define PI 3.14159
 
 # include <stdbool.h>
 # include <time.h>
+# include <X11/keysym.h>
 
 typedef struct s_img
 {
@@ -50,6 +53,7 @@ typedef struct s_ray
 	int		step_x;
 	int		step_y;
 	float	perp_wall_dist;
+	int		wall_side;
 }				t_ray;
 
 typedef struct s_player
@@ -81,6 +85,7 @@ typedef struct s_vars
 	t_player	*player;
 	t_fps		*fps;
 	bool		*keys;
+	int			**texture;
 }				t_vars;
 
 typedef struct s_point
