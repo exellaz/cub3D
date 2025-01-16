@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/01/10 09:46:31 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/16 10:18:36 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,22 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 
 void	get_map(t_list *raw, t_list **map)
 {
-	*map = raw;
+	t_list	*tmp;
+	int		i;
+	
+	*map = skip_empty_lines(raw);
+	tmp = *map;
+	while (tmp)
+	{
+		i = -1;
+		while (((char *)tmp->content)[++i])
+		{
+			if (((char *)tmp->content)[i] == ' ')
+				((char *)tmp->content)[i] = '1';
+		}
+		((char *)tmp->content)[i - 1] = '\0';
+		tmp = tmp->next;
+	}
 }
 
 void	get_spawn(t_list *map, int *spawn)

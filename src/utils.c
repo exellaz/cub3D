@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 14:23:53 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/01/10 09:57:36 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/16 10:11:23 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,29 @@ char	**lst_to_arr(t_list *lst)
 
 t_list	*skip_empty_lines(t_list *raw)
 {
-	while (((char *)raw->content)[0] == '\n')
+	int	i;
+	
+	while (((char *)raw->content))
+	{
+		i = -1;
+		while (((char *)raw->content)[++i])
+			if (!is_whitespace(((char *)raw->content)[i]))
+				return (raw);
+		if (raw->next == NULL)
+			return (raw);
 		raw = raw->next;
+	}
 	return (raw);
+}
+
+bool	is_whitespace(char c)
+{
+	return (c == ' ' 
+		|| c == '\t'
+		|| c == '\n'
+		|| c == '\v'
+		|| c == '\f'
+		|| c == '\r');
 }
 
 bool	is_num(char *str)

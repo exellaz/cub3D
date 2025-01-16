@@ -1,10 +1,22 @@
 #include "graphics.h"
 #include "events.h"
 #include "enum.h"
+#include "map.h"
 #include "cub3D.h"
 #include <time.h>
 
-char	**get_map(void)
+int	main(int ac, char **av)
+{
+	t_map	*map;
+	int	fd;
+
+	fd = validate_arg(ac, av[1]);
+	map = parse_map(fd);
+	validate_map(map->map);
+	return (0);
+}
+
+char	**hardcode_map(void)
 {
 	char **map;
 
@@ -107,23 +119,5 @@ int	draw_loop(t_mlx	*mlx)
 	}
 	draw_square(player->x, player->y, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
-	return (0);
-}
-
-int	main(int ac, char **av)
-{
-	(void)ac, (void)av;
-	t_mlx		mlx;
-	t_player	player;
-	t_fps		fps;
-
-	fps.frame_count = 0;
-	fps.fps = 0.0;
-	fps.start_time = clock();
-
-	mlx.fps = &fps;
-	setup_mlx(&mlx, &player);
-	mlx_loop_hook(mlx.mlx, &draw_loop, &mlx);
-	mlx_loop(mlx.mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:49 by we                #+#    #+#             */
-/*   Updated: 2025/01/10 09:51:04 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/01/16 09:45:07 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 int		validate_arg(int argc, char *file);
 void	setup_mlx(t_mlx *m, t_player *player);
-char	**get_map(void);
+char	**hardcode_map(void);
 int		draw_ray(t_player *player, t_mlx *mlx, float start_x, int i);
 void	put_pixel(int x, int y, int color, t_img *img);
 int		frame_counter(t_fps *fps);
