@@ -4,7 +4,7 @@
 #include "cub3D.h"
 #include <time.h>
 
-char	**get_map(void)
+char	**hardcode_map(void)
 {
 	char **map;
 

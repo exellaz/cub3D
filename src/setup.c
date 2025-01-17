@@ -25,7 +25,7 @@ void	setup_mlx(t_mlx *m, t_player *player)
 	player->y = 2 * 64;
 	player->angle = PI / 2;
 	m->player = player;
-	m->map = get_map();
+	m->map = hardcode_map();
 	mlx_put_image_to_window(m->mlx, m->win, m->img.img, 0, 0);
 	mlx_hook(m->win, DESTROY_NOTIFY, NOT_EVENT_MASK, quit, m);
 	mlx_hook(m->win, KEY_PRESS, KEY_PRESS_MASK, key_hook, m);
