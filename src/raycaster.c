@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/01/16 19:58:37 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/17 14:45:14 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,28 +115,25 @@ void	do_dda(t_ray *ray, char **map, t_player *player, t_vars *mlx)
 	// draw_line(start, end, 0xFF0000, &mlx->img);
 }
 
-void	render_walls(int x, t_ray *ray, t_player* player, t_vars *mlx)
+void	render_walls(t_ray *ray)
 {
-	int	**texture = mlx->texture;
-
-	int	line_height;
-	int	draw_start;
-	int	draw_end;
-
 	if (ray->wall_side == 0)
 		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
 	else
 		ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
+	ray->line_height = (int)(WIN_HEIGHT / ray->perp_wall_dist);
+	ray->draw_start = -(ray->line_height) / 2 + WIN_HEIGHT / 2;
+	if (ray->draw_start < 0)
+		ray->draw_start = 0;
+	ray->draw_end = ray->line_height / 2 + WIN_HEIGHT / 2;
+	if (ray->draw_end >= WIN_HEIGHT)
+		ray->draw_end = WIN_HEIGHT - 1;
+}
 
-	line_height = (int)(WIN_HEIGHT / ray->perp_wall_dist);
-	draw_start = -line_height / 2 + WIN_HEIGHT / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = line_height / 2 + WIN_HEIGHT / 2;
-	if (draw_end >= WIN_HEIGHT)
-		draw_end = WIN_HEIGHT - 1;
-
-	int				texNum = mlx->map[ray->map_x][ray->map_y] - 48;
+void	get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
+{
+	int				texNum = mlx->map[ray->map_y][ray->map_x] - 49;
+	int				**texture = mlx->texture;
 	float			wallX;
 	int				texX;
 	float			step;
@@ -157,16 +154,12 @@ void	render_walls(int x, t_ray *ray, t_player* player, t_vars *mlx)
 	if (ray->wall_side == 1 && ray->dir_y < 0)
 		texX = TEX_WIDTH - texX - 1;
 
-	step = 1.0 * TEX_HEIGHT / line_height;
-	texPos = (draw_start - WIN_HEIGHT / 2 + line_height / 2) * step;
+	step = 1.0 * TEX_HEIGHT / ray->line_height;
+	texPos = (ray->draw_start - WIN_HEIGHT / 2 + ray->line_height / 2) * step;
 
-	// printf("texNum[1]:")
-	for (int y = draw_start; y < draw_end; y++)
+	for (int y = ray->draw_start; y < ray->draw_end; y++)
 	{
 		texY = (int)texPos & (TEX_HEIGHT - 1);
-		// printf("int: %d\n", texture[0][4062]);
-		// printf("%d\n", TEX_HEIGHT * texY + texX);
-		// printf("texPos: %f, texX: %d, texY: %d, texNum: %d\n",texPos, texX, texY, texNum);
 		texPos += step;
 		color = texture[texNum][TEX_HEIGHT * texY + texX];
 
@@ -190,7 +183,8 @@ void	raycast(t_vars *mlx)
 		init_ray(x, player, ray);
 		find_step_and_dist(ray, player);
 		do_dda(ray, mlx->map, player, mlx);
-		render_walls(x, ray, player, mlx);
+		render_walls(ray);
+		get_textures(x, ray, player, mlx);
 		x++;
 	}
 }

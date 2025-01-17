@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/16 15:21:40 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/17 14:44:13 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ typedef struct s_ray
 	int		step_y;
 	float	perp_wall_dist;
 	int		wall_side;
+	int		draw_start;
+	int		draw_end;
+	int		line_height;
 }				t_ray;
 
 typedef struct s_player

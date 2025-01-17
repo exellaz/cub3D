@@ -112,13 +112,18 @@ int	new_draw_loop(t_vars	*mlx)
 	}
 	if (mlx->keys[KEY_A] == true)
 	{
-		player->pos_x -= player->dir_y * speed;
-		player->pos_y += player->dir_x * speed;
+		// player->pos_x -= player->dir_y * speed;
+		// player->pos_y += player->dir_x * speed;
+		player->pos_x -= player->plane_x * speed;
+		player->pos_y -= player->plane_y * speed;
 	}
 	if (mlx->keys[KEY_D] == true)
 	{
-		player->pos_x += player->dir_y * speed;
-		player->pos_y -= player->dir_x * speed;
+		// player->pos_x += player->dir_y * speed;
+		// player->pos_y -= player->dir_x * speed;
+		player->pos_x += player->plane_x * speed;
+		player->pos_y += player->plane_y * speed;
+
 	}
 	if (mlx->keys[0] == true)
 	{
@@ -155,15 +160,13 @@ int	main(int ac, char **av)
 	fps.start_time = clock();
 
 	mlx.texture = malloc(sizeof(int *) * 2);
-	for (int x = 0; x < 4097; x++)
-		mlx.texture[x] = malloc(sizeof(int));
-	for(int x = 0; x < TEX_WIDTH; x++)
-		for(int y = 0; y < TEX_HEIGHT; y++)
+	for (int x = 0; x < 2; x++)
+		mlx.texture[x] = malloc(TEX_HEIGHT * TEX_WIDTH * sizeof(int));
+	for (int x = 0; x < TEX_WIDTH; x++)
+		for (int y = 0; y < TEX_HEIGHT; y++)
 		{
-			// int xycolor = y * 128 / TEX_HEIGHT + x * 128 / TEX_WIDTH;
-			// mlx.texture[0][TEX_WIDTH * y + x] = xycolor + 256 * xycolor + 65536 * xycolor; //sloped greyscale
-			mlx.texture[0][TEX_WIDTH * y + x] = 0xFF0000;
-			mlx.texture[1][TEX_WIDTH * y + x] = 0xFFFF00;
+			int xycolor = y * 128 / TEX_HEIGHT + x * 128 / TEX_WIDTH;
+			mlx.texture[0][TEX_WIDTH * y + x] = xycolor + 256 * xycolor + 65536 * xycolor;
 		}
 	mlx.fps = &fps;
 	setup_mlx(&mlx, &player);
