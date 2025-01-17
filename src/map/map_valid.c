@@ -52,21 +52,35 @@ bool	valid_iden(t_list *map)
 bool	valid_walls(t_list *map)
 {
 	char	**map_arr;
-	int rows = 0;
-	int cols = 0;
-	int i;
+	int		i;
+	int		j;
 
 	map_arr = lst_to_arr(map);
-	while (map_arr[rows])
-		rows++;
-	for (i = 0; i < rows; i++)
+	i = -1;
+	while (map_arr[++i])
 	{
-		cols = ft_strlen(map_arr[i]);
-		if (map_arr[i][0] != '1' || map_arr[i][cols - 1] != '1')
-			return false;
+		j = -1;
+		while (map_arr[i][++j] && is_whitespace(map_arr[i][j]))
+			;
+		if (map_arr[i][j] != '1')
+			return (false);
+		while (map_arr[i][j] && !is_whitespace(map_arr[i][j]))
+			j++;
+		if (map_arr[i][j - 1] != '1')
+			return (false);
 	}
-	for (i = 0; i < cols; i++)
-		if (map_arr[0][i] != '1' || map_arr[rows - 1][i] != '1')
-			return false;
+	i = -1;
+	while (map_arr[0][++i])
+	{
+		j = -1;
+		while (map_arr[++j] && is_whitespace(map_arr[j][i]))
+			;
+		if (map_arr[j][i] != '1')
+			return (false);
+		while (map_arr[j] && !is_whitespace(map_arr[j][i]))
+			j++;
+		if (map_arr[j - 1][i] != '1')
+			return (false);
+	}
 	return true;
 }
