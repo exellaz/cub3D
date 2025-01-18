@@ -33,7 +33,7 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3]);
 void	get_map(t_list *raw, t_list **map);
 void	get_spawn(t_list *map, int *spawn);
 
-void	validate_map(t_list *map);
+void	validate_map(t_map *map);
 bool	valid_iden(t_list *map);
 bool	valid_walls(t_list *map);
 

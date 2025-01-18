@@ -16,15 +16,15 @@
 #include "utils.h"
 #include "map.h"
 
-void	validate_map(t_list *map)
+void	validate_map(t_map *map)
 {
 	// check texture path
 	// check rgb
 	// check identifier
-	if (!valid_iden(map))
+	if (!valid_iden(map->map))
 		error_exit("Invalid identifier in map");
 	// check walls
-	if (!valid_walls(map))
+	if (!valid_walls(map->map))
 		error_exit("Invalid walls in map");
 }
 
@@ -32,11 +32,14 @@ bool	valid_iden(t_list *map)
 {
 	char	*iden;
 	char	*line;
+	int		spawn;
+	t_list	*tmp;
 
 	iden = " 01NSEW";
-	while (map)
+	tmp = map;
+	while (tmp)
 	{
-		line = (char *)map->content;
+		line = (char *)tmp->content;
 		printf("line: [%s]\n", line);
 		while (*line)
 		{
@@ -44,8 +47,19 @@ bool	valid_iden(t_list *map)
 				return (false);
 			line++;
 		}
-		map = map->next;
+		tmp = tmp->next;
 	}
+	spawn = 0;
+	tmp = map;
+	while (tmp)
+	{
+		if (ft_strchr(tmp->content, 'N') || ft_strchr(tmp->content, 'S')
+			|| ft_strchr(tmp->content, 'E') || ft_strchr(tmp->content, 'W'))
+			spawn++;
+		tmp = tmp->next;
+	}
+	if (spawn != 1)
+		return (false);
 	return (true);
 }
 

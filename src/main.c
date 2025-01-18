@@ -12,7 +12,7 @@ int	main(int ac, char **av)
 
 	fd = validate_arg(ac, av[1]);
 	map = parse_map(fd);
-	validate_map(map->map);
+	validate_map(map);
 	return (0);
 }
 

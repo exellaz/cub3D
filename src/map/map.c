@@ -47,7 +47,7 @@ t_list	*load_file(int file)
 	return (map);
 }
 
-// will discard extra paths
+// TODO: check if there are exactly 4 texture paths
 t_list	*get_texture_path(t_list *raw, char **texture_path)
 {
 	char	**split;
@@ -77,7 +77,7 @@ t_list	*get_texture_path(t_list *raw, char **texture_path)
 	return (raw->next);
 }
 
-// will discard extra RGB values
+// TODO: check if there are exactly 2 RGB values
 t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 {
 	char	**split;
@@ -118,7 +118,7 @@ void	get_map(t_list *raw, t_list **map)
 	char	*line;
 	int		max;
 	int		i;
-	
+
 	*map = skip_empty_lines(raw);
 	max = 0;
 	tmp = *map;
