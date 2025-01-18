@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/01/17 14:45:14 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:09:56 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	render_walls(t_ray *ray)
 		ray->draw_end = WIN_HEIGHT - 1;
 }
 
-void	get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
+void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 {
 	int				texNum = mlx->map[ray->map_y][ray->map_x] - 49;
 	int				**texture = mlx->texture;

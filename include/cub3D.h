@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:49 by we                #+#    #+#             */
-/*   Updated: 2025/01/15 14:01:00 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/18 20:12:53 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # include "graphics.h"
 
 int		validate_arg(int argc, char *file);
-void	setup_mlx(t_vars *m, t_player *player);
+void	setup_mlx(t_vars *vars);
+void	init_vars(t_vars *vars);
 char	**get_map(void);
 int		draw_ray(t_player *player, t_vars *mlx, float start_x, int i);
 void	put_pixel(int x, int y, int color, t_img *img);

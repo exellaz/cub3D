@@ -89,9 +89,9 @@ void	draw_map(t_vars *mlx)
 	}
 }
 
-int	new_draw_loop(t_vars	*mlx)
+int	new_draw_loop(t_vars *mlx)
 {
-	t_player *player;
+	t_player	*player;
 
 	frame_counter(mlx->fps);
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
@@ -112,15 +112,11 @@ int	new_draw_loop(t_vars	*mlx)
 	}
 	if (mlx->keys[KEY_A] == true)
 	{
-		// player->pos_x -= player->dir_y * speed;
-		// player->pos_y += player->dir_x * speed;
 		player->pos_x -= player->plane_x * speed;
 		player->pos_y -= player->plane_y * speed;
 	}
 	if (mlx->keys[KEY_D] == true)
 	{
-		// player->pos_x += player->dir_y * speed;
-		// player->pos_y -= player->dir_x * speed;
 		player->pos_x += player->plane_x * speed;
 		player->pos_y += player->plane_y * speed;
 
@@ -151,27 +147,10 @@ int	new_draw_loop(t_vars	*mlx)
 int	main(int ac, char **av)
 {
 	(void)ac, (void)av;
-	t_vars		mlx;
-	t_player	player;
-	t_fps		fps;
+	t_vars		vars;
 
-	fps.frame_count = 0;
-	fps.fps = 0.0;
-	fps.start_time = clock();
-
-	mlx.texture = malloc(sizeof(int *) * 2);
-	for (int x = 0; x < 2; x++)
-		mlx.texture[x] = malloc(TEX_HEIGHT * TEX_WIDTH * sizeof(int));
-	for (int x = 0; x < TEX_WIDTH; x++)
-		for (int y = 0; y < TEX_HEIGHT; y++)
-		{
-			int xycolor = y * 128 / TEX_HEIGHT + x * 128 / TEX_WIDTH;
-			mlx.texture[0][TEX_WIDTH * y + x] = xycolor + 256 * xycolor + 65536 * xycolor;
-		}
-	mlx.fps = &fps;
-	setup_mlx(&mlx, &player);
-	// mlx_loop_hook(mlx.mlx, &draw_loop, &mlx);
-	mlx_loop_hook(mlx.mlx, &new_draw_loop, &mlx);
-	mlx_loop(mlx.mlx);
+	init_vars(&vars);
+	mlx_loop_hook(vars.mlx, &new_draw_loop, &vars);
+	mlx_loop(vars.mlx);
 	return (0);
 }
