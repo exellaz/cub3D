@@ -6,12 +6,16 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:49 by we                #+#    #+#             */
-/*   Updated: 2025/01/18 20:12:53 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/20 15:57:48 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+# ifndef DEBUG
+#  define DEBUG 0
+# endif
 
 # include <math.h>
 
@@ -21,7 +25,6 @@
 # include "graphics.h"
 
 int		validate_arg(int argc, char *file);
-void	setup_mlx(t_vars *vars);
 void	init_vars(t_vars *vars);
 char	**get_map(void);
 int		draw_ray(t_player *player, t_vars *mlx, float start_x, int i);

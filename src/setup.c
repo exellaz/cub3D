@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/01/18 20:11:37 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/20 20:46:16 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 #include "enum.h"
 #include "cub3D.h"
 
-void	init_textures(t_vars *vars)
+static void	init_textures(t_vars *vars)
 {
 	int	x;
 	int	y;
 	int	xycolor;
+	(void)xycolor;
 
 	vars->texture = malloc(sizeof(int *) * 1);
 	vars->texture[0] = malloc(TEX_HEIGHT * TEX_WIDTH * sizeof(int));
@@ -30,15 +31,16 @@ void	init_textures(t_vars *vars)
 		while (y < TEX_HEIGHT)
 		{
 			xycolor = y * 128 / TEX_HEIGHT + x * 128 / TEX_WIDTH;
-			vars->texture[0][TEX_WIDTH * y + x] = xycolor + 256 \
-				* xycolor + 65536 * xycolor;
+			// vars->texture[0][TEX_WIDTH * y + x] = xycolor + 256
+			// 	* xycolor + 65536 * xycolor;
+			vars->texture[0][TEX_WIDTH * y + x] = 0xFFFFFF;
 			y++;
 		}
 		x++;
 	}
 }
 
-void	init_fps(t_vars *vars)
+static void	init_fps(t_vars *vars)
 {
 	t_fps	*fps;
 
@@ -49,21 +51,21 @@ void	init_fps(t_vars *vars)
 	vars->fps = fps;
 }
 
-void	init_player(t_vars *vars)
+static void	init_player(t_vars *vars)
 {
 	t_player	*player;
 
 	player = malloc(sizeof(t_player));
 	player->pos_x = 3;
 	player->pos_y = 3;
-	player->dir_x = -1;
+	player->dir_x = 1;
 	player->dir_y = 0;
 	player->plane_x = 0;
 	player->plane_y = 0.66;
 	vars->player = player;
 }
 
-void	setup_mlx(t_vars *vars)
+static void	setup_mlx(t_vars *vars)
 {
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
