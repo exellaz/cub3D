@@ -7,7 +7,7 @@
 #include <math.h>
 
 void	raycast(t_vars *mlx);
-void draw_line(t_point start, t_point end, int color, t_img *img);
+void	draw_line(t_point start, t_point end, int color, t_img *img);
 
 char	**get_map(void)
 {
@@ -100,20 +100,6 @@ int	draw_loop(t_vars *mlx)
 	raycast(mlx);
 	float	speed = mlx->fps->frame_time * 2.5;
 	float	rot_speed = mlx->fps->frame_time * 2.5;
-	if (mlx->keys[KEY_W] == true)
-	{
-		if (mlx->map[(int)player->pos_y][(int)(player->pos_x + player->dir_x * speed)] == '0')
-			player->pos_x += player->dir_x * speed;
-		if (mlx->map[(int)(player->pos_y + player->dir_y * speed)][(int)(player->pos_x)] == '0')
-			player->pos_y += player->dir_y * speed;
-	}
-	if (mlx->keys[KEY_S] == true)
-	{
-		if (mlx->map[(int)player->pos_y][(int)(player->pos_x - player->dir_x * speed)] == '0')
-			player->pos_x -= player->dir_x * speed;
-		if (mlx->map[(int)(player->pos_y - player->dir_y * speed)][(int)(player->pos_x)] == '0')
-			player->pos_y -= player->dir_y * speed;
-	}
 	if (mlx->keys[KEY_A] == true)
 	{
 		if (mlx->map[(int)player->pos_y][(int)(player->pos_x - player->plane_x * speed)] == '0')
@@ -127,6 +113,20 @@ int	draw_loop(t_vars *mlx)
 			player->pos_x += player->plane_x * speed;
 		if (mlx->map[(int)(player->pos_y + player->plane_y * speed)][(int)(player->pos_x)] == '0')
 			player->pos_y += player->plane_y * speed;
+	}
+	if (mlx->keys[KEY_W] == true)
+	{
+		if (mlx->map[(int)player->pos_y][(int)(player->pos_x + player->dir_x * speed)] == '0')
+			player->pos_x += player->dir_x * speed;
+		if (mlx->map[(int)(player->pos_y + player->dir_y * speed)][(int)(player->pos_x)] == '0')
+			player->pos_y += player->dir_y * speed;
+	}
+	if (mlx->keys[KEY_S] == true)
+	{
+		if (mlx->map[(int)player->pos_y][(int)(player->pos_x - player->dir_x * speed)] == '0')
+			player->pos_x -= player->dir_x * speed;
+		if (mlx->map[(int)(player->pos_y - player->dir_y * speed)][(int)(player->pos_x)] == '0')
+			player->pos_y -= player->dir_y * speed;
 	}
 	if (mlx->keys[0] == true)
 	{
@@ -145,14 +145,6 @@ int	draw_loop(t_vars *mlx)
 		float	old_plane_x = player->plane_x;
 		player->plane_x = player->plane_x * cos(rot_speed) - player->plane_y * sin(rot_speed);
 		player->plane_y = old_plane_x * sin(rot_speed) + player->plane_y * cos(rot_speed);
-	}
-	if (DEBUG == 1)
-	{
-		t_point start = {round(player->pos_x * BLOCK_SIZE) + 8, round(player->pos_y * BLOCK_SIZE) + 8};
-		t_point end = {round(player->pos_x * BLOCK_SIZE + (player->dir_x * 32)), round(player->pos_y * BLOCK_SIZE + (player->dir_y * 32))};
-		draw_line(start, end, 0xFF0000, &mlx->img);
-		draw_map(mlx); // Draw Map in 2D
-		draw_square(player->pos_x * BLOCK_SIZE, player->pos_y * BLOCK_SIZE, 16, 0xFFFF00, &mlx->img); // Draw Player in 2D
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
