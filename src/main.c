@@ -9,7 +9,12 @@
 void	raycast(t_vars *mlx);
 void	draw_line(t_point start, t_point end, int color, t_img *img);
 
-char	**get_map(void)
+#include <math.h>
+
+void	raycast(t_vars *mlx);
+void	draw_line(t_point start, t_point end, int color, t_img *img);
+
+char	**hardcode_map(void)
 {
 	char **map;
 
