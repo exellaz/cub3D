@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/01/21 15:13:18 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:16:23 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "events.h"
 #include "enum.h"
 #include "cub3D.h"
+
+char	**hardcode_map(void);
 
 static void	init_textures(t_vars *vars)
 {
@@ -84,6 +86,6 @@ void	init_vars(t_vars *vars)
 	init_player(vars);
 	init_fps(vars);
 	setup_mlx(vars);
-	vars->map = get_map();
+	vars->map = hardcode_map();
 	vars->keys = ft_calloc(256, sizeof(bool));
 }
