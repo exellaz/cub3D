@@ -6,13 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/01/20 21:07:23 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:35:53 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	draw_square(int x, int y, int size, int color, t_img *img);
 
 void draw_line(t_point start, t_point end, int color, t_img *img)
 {
@@ -42,7 +40,7 @@ void draw_line(t_point start, t_point end, int color, t_img *img)
 	}
 }
 
-void	init_ray(int x, t_player *player, t_ray *ray)
+static void	init_ray(int x, t_player *player, t_ray *ray)
 {
 	ray->camera_x = 2 * x / (float)WIN_WIDTH - 1;
 	ray->dir_x = player->dir_x + player->plane_x * ray->camera_x;
@@ -59,7 +57,7 @@ void	init_ray(int x, t_player *player, t_ray *ray)
 		ray->delta_dist_y = fabs(1 / ray->dir_y);
 }
 
-void	find_step_and_dist(t_ray *ray, t_player *player)
+static void	find_step_and_dist(t_ray *ray, t_player *player)
 {
 	if (ray->dir_x < 0)
 	{
@@ -83,9 +81,8 @@ void	find_step_and_dist(t_ray *ray, t_player *player)
 	}
 }
 
-void	do_dda(t_ray *ray, char **map, t_player *player, t_vars *mlx)
+static void	do_dda(t_ray *ray, char **map)
 {
-	(void)player, (void)mlx;
 	int	hit;
 
 	hit = 0;
@@ -104,18 +101,11 @@ void	do_dda(t_ray *ray, char **map, t_player *player, t_vars *mlx)
 			ray->wall_side = 1;
 		}
 		if (ray->map_x > 13 || ray->map_y > 10 || ray->map_x < 0 || ray->map_y < 0 || map[ray->map_y][ray->map_x] == '1')
-		{
 			hit = 1;
-			// draw_square(ray->map_x * BLOCK_SIZE, ray->map_y * BLOCK_SIZE, BLOCK_SIZE, 0xFF0000, &mlx->img);
-		}
 	}
-
-	// t_point start = {round(player->pos_x * BLOCK_SIZE), round(player->pos_y * BLOCK_SIZE)};
-	// t_point end = {ray->map_x * BLOCK_SIZE, ray->map_y * BLOCK_SIZE};
-	// draw_line(start, end, 0xFF0000, &mlx->img);
 }
 
-void	render_walls(t_ray *ray)
+static void	render_walls(t_ray *ray)
 {
 	if (ray->wall_side == 0)
 		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
@@ -130,7 +120,7 @@ void	render_walls(t_ray *ray)
 		ray->draw_end = WIN_HEIGHT - 1;
 }
 
-void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
+static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 {
 	int				texNum = mlx->map[ray->map_y][ray->map_x] - 49;
 	int				**texture = mlx->texture;
@@ -182,7 +172,7 @@ void	raycast(t_vars *mlx)
 	{
 		init_ray(x, player, ray);
 		find_step_and_dist(ray, player);
-		do_dda(ray, mlx->map, player, mlx);
+		do_dda(ray, mlx->map);
 		render_walls(ray);
 		get_textures(x, ray, player, mlx);
 		x++;

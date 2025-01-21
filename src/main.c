@@ -97,30 +97,36 @@ int	draw_loop(t_vars *mlx)
 	player = mlx->player;
 	frame_counter(mlx->fps);
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
-	// printf("%d\n", DEBUG);
 	raycast(mlx);
 	float	speed = mlx->fps->frame_time * 2.5;
 	float	rot_speed = mlx->fps->frame_time * 2.5;
 	if (mlx->keys[KEY_W] == true)
 	{
-		player->pos_x += player->dir_x * speed;
-		player->pos_y += player->dir_y * speed;
+		if (mlx->map[(int)player->pos_y][(int)(player->pos_x + player->dir_x * speed)] == '0')
+			player->pos_x += player->dir_x * speed;
+		if (mlx->map[(int)(player->pos_y + player->dir_y * speed)][(int)(player->pos_x)] == '0')
+			player->pos_y += player->dir_y * speed;
 	}
 	if (mlx->keys[KEY_S] == true)
 	{
-		player->pos_x -= player->dir_x * speed;
-		player->pos_y -= player->dir_y * speed;
+		if (mlx->map[(int)player->pos_y][(int)(player->pos_x - player->dir_x * speed)] == '0')
+			player->pos_x -= player->dir_x * speed;
+		if (mlx->map[(int)(player->pos_y - player->dir_y * speed)][(int)(player->pos_x)] == '0')
+			player->pos_y -= player->dir_y * speed;
 	}
 	if (mlx->keys[KEY_A] == true)
 	{
-		player->pos_x -= player->plane_x * speed;
-		player->pos_y -= player->plane_y * speed;
+		if (mlx->map[(int)player->pos_y][(int)(player->pos_x - player->plane_x * speed)] == '0')
+			player->pos_x -= player->plane_x * speed;
+		if (mlx->map[(int)(player->pos_y - player->plane_y * speed)][(int)(player->pos_x)] == '0')
+			player->pos_y -= player->plane_y * speed;
 	}
 	if (mlx->keys[KEY_D] == true)
 	{
-		player->pos_x += player->plane_x * speed;
-		player->pos_y += player->plane_y * speed;
-
+		if (mlx->map[(int)player->pos_y][(int)(player->pos_x + player->plane_x * speed)] == '0')
+			player->pos_x += player->plane_x * speed;
+		if (mlx->map[(int)(player->pos_y + player->plane_y * speed)][(int)(player->pos_x)] == '0')
+			player->pos_y += player->plane_y * speed;
 	}
 	if (mlx->keys[0] == true)
 	{
