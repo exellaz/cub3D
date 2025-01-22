@@ -9,11 +9,6 @@
 void	raycast(t_vars *mlx);
 void	draw_line(t_point start, t_point end, int color, t_img *img);
 
-#include <math.h>
-
-void	raycast(t_vars *mlx);
-void	draw_line(t_point start, t_point end, int color, t_img *img);
-
 char	**hardcode_map(void)
 {
 	char **map;
@@ -70,6 +65,24 @@ void	draw_square(int x, int y, int size, int color, t_img *img)
 	}
 }
 
+void	draw_full_square(int x, int y, int size, int color, t_img *img)
+{
+	int	draw_x;
+	int	draw_y;
+
+	draw_y = 0;
+	while (draw_y < size)
+	{
+		draw_x = 0;
+		while (draw_x < size)
+		{
+			put_pixel(x + draw_x, y + draw_y, color, img);
+			draw_x++;
+		}
+		draw_y++;
+	}
+}
+
 void	draw_map(t_vars *mlx)
 {
 	char	**map;
@@ -94,6 +107,8 @@ void	draw_map(t_vars *mlx)
 		y++;
 	}
 }
+
+void render_minimap(float px, float py, float dir, char **map, t_vars *vars);
 
 int	draw_loop(t_vars *mlx)
 {
@@ -151,6 +166,9 @@ int	draw_loop(t_vars *mlx)
 		player->plane_x = player->plane_x * cos(rot_speed) - player->plane_y * sin(rot_speed);
 		player->plane_y = old_plane_x * sin(rot_speed) + player->plane_y * cos(rot_speed);
 	}
+	// draw_map(mlx);
+	// draw_square(player->pos_x * BLOCK_SIZE - (BLOCK_SIZE / 4), player->pos_y * BLOCK_SIZE - (BLOCK_SIZE / 4), 16, 0xFF0000, &mlx->img);
+	render_minimap(player->pos_x, player->pos_y, atan2(player->dir_x, player->dir_y), mlx->map, mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }
