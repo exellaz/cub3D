@@ -4,6 +4,16 @@
 #include "cub3D.h"
 #include <time.h>
 
+#include <math.h>
+
+void	raycast(t_vars *mlx);
+void	draw_line(t_point start, t_point end, int color, t_img *img);
+
+#include <math.h>
+
+void	raycast(t_vars *mlx);
+void	draw_line(t_point start, t_point end, int color, t_img *img);
+
 char	**hardcode_map(void)
 {
 	char **map;
@@ -25,13 +35,13 @@ char	**hardcode_map(void)
 
 void put_pixel(int x, int y, int color, t_img *img)
 {
-    if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
-        return;
+	if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
+		return;
 
-    int index = y * img->line_length + x * img->bits_per_pixel / 8;
-    img->addr[index] = color & 0xFF;
-    img->addr[index + 1] = (color >> 8) & 0xFF;
-    img->addr[index + 2] = (color >> 16) & 0xFF;
+	int index = y * img->line_length + x * img->bits_per_pixel / 8;
+	img->addr[index] = color & 0xFF;
+	img->addr[index + 1] = (color >> 8) & 0xFF;
+	img->addr[index + 2] = (color >> 16) & 0xFF;
 }
 
 void	draw_square(int x, int y, int size, int color, t_img *img)
@@ -60,7 +70,7 @@ void	draw_square(int x, int y, int size, int color, t_img *img)
 	}
 }
 
-void	draw_map(t_mlx *mlx)
+void	draw_map(t_vars *mlx)
 {
 	char	**map;
 	int		color;
@@ -85,27 +95,62 @@ void	draw_map(t_mlx *mlx)
 	}
 }
 
-int	draw_loop(t_mlx	*mlx)
+int	draw_loop(t_vars *mlx)
 {
-	t_player *player;
-	float	fraction;
-	float	start_x;
-	int		i;
+	t_player	*player;
 
 	player = mlx->player;
-	fraction = (PI / 3 / WIN_WIDTH);
-	start_x = player->angle - PI / 6;
 	frame_counter(mlx->fps);
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
-	draw_map(mlx); // Draw Map in 2D
-	i = 0;
-	while (i < WIN_WIDTH)
+	raycast(mlx);
+	float	speed = mlx->fps->frame_time * 2.5;
+	float	rot_speed = mlx->fps->frame_time * 2.5;
+	if (mlx->keys[KEY_A] == true)
 	{
-		draw_ray(player, mlx, start_x, i);
-		start_x += fraction;
-		i++;
+		if (mlx->map[(int)player->pos_y][(int)(player->pos_x - player->plane_x * speed)] == '0')
+			player->pos_x -= player->plane_x * speed;
+		if (mlx->map[(int)(player->pos_y - player->plane_y * speed)][(int)(player->pos_x)] == '0')
+			player->pos_y -= player->plane_y * speed;
 	}
-	draw_square(player->x, player->y, 32, 0xFFFF00, &mlx->img); // Draw Player in 2D
+	if (mlx->keys[KEY_D] == true)
+	{
+		if (mlx->map[(int)player->pos_y][(int)(player->pos_x + player->plane_x * speed)] == '0')
+			player->pos_x += player->plane_x * speed;
+		if (mlx->map[(int)(player->pos_y + player->plane_y * speed)][(int)(player->pos_x)] == '0')
+			player->pos_y += player->plane_y * speed;
+	}
+	if (mlx->keys[KEY_W] == true)
+	{
+		if (mlx->map[(int)player->pos_y][(int)(player->pos_x + player->dir_x * speed)] == '0')
+			player->pos_x += player->dir_x * speed;
+		if (mlx->map[(int)(player->pos_y + player->dir_y * speed)][(int)(player->pos_x)] == '0')
+			player->pos_y += player->dir_y * speed;
+	}
+	if (mlx->keys[KEY_S] == true)
+	{
+		if (mlx->map[(int)player->pos_y][(int)(player->pos_x - player->dir_x * speed)] == '0')
+			player->pos_x -= player->dir_x * speed;
+		if (mlx->map[(int)(player->pos_y - player->dir_y * speed)][(int)(player->pos_x)] == '0')
+			player->pos_y -= player->dir_y * speed;
+	}
+	if (mlx->keys[0] == true)
+	{
+		float	old_dir_x = player->dir_x;
+		player->dir_x = player->dir_x * cos(-rot_speed) - player->dir_y * sin(-rot_speed);
+		player->dir_y = old_dir_x * sin(-rot_speed) + player->dir_y * cos(-rot_speed);
+		float	old_plane_x = player->plane_x;
+		player->plane_x = player->plane_x * cos(-rot_speed) - player->plane_y * sin(-rot_speed);
+		player->plane_y = old_plane_x * sin(-rot_speed) + player->plane_y * cos(-rot_speed);
+	}
+	if (mlx->keys[1] == true)
+	{
+		float	old_dir_x = player->dir_x;
+		player->dir_x = player->dir_x * cos(rot_speed) - player->dir_y * sin(rot_speed);
+		player->dir_y = old_dir_x * sin(rot_speed) + player->dir_y * cos(rot_speed);
+		float	old_plane_x = player->plane_x;
+		player->plane_x = player->plane_x * cos(rot_speed) - player->plane_y * sin(rot_speed);
+		player->plane_y = old_plane_x * sin(rot_speed) + player->plane_y * cos(rot_speed);
+	}
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }
@@ -113,17 +158,10 @@ int	draw_loop(t_mlx	*mlx)
 int	main(int ac, char **av)
 {
 	(void)ac, (void)av;
-	t_mlx		mlx;
-	t_player	player;
-	t_fps		fps;
+	t_vars		vars;
 
-	fps.frame_count = 0;
-	fps.fps = 0.0;
-	fps.start_time = clock();
-
-	mlx.fps = &fps;
-	setup_mlx(&mlx, &player);
-	mlx_loop_hook(mlx.mlx, &draw_loop, &mlx);
-	mlx_loop(mlx.mlx);
+	init_vars(&vars);
+	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
+	mlx_loop(vars.mlx);
 	return (0);
 }
