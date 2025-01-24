@@ -59,6 +59,8 @@ bool	is_whitespace(char c)
 
 bool	is_num(char *str)
 {
+	if (*str == '-')
+		str++;
 	while (*str)
 	{
 		if (!ft_isdigit(*str))

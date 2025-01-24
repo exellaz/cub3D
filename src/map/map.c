@@ -62,7 +62,7 @@ t_list	*get_texture_path(t_list *raw, char **texture_path)
 		tmp = tmp->next;
 	}
 	if (i != 4)
-		error_exit("texture path is not 4");
+		error_exit("texture path count is not 4");
 	i = -1;
 	while (++i < 4)
 	{
@@ -86,15 +86,24 @@ t_list	*get_texture_path(t_list *raw, char **texture_path)
 	return (raw->next);
 }
 
-// TODO: check if there are exactly 2 RGB values
 t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 {
 	char	**split;
+	t_list	*tmp;
 	int		fc;
 	int		i;
 	int		j;
 
 	raw = skip_empty_lines(raw);
+	tmp = raw;
+	i = 0;
+	while (!is_whitespace(((char *)tmp->content)[0]))
+	{
+		i += 1;
+		tmp = tmp->next;
+	}
+	if (i != 2)
+		error_exit("RGB value count is not 2");
 	i = -1;
 	while (++i < 2)
 	{
