@@ -19,5 +19,6 @@ char	**lst_to_arr(t_list *lst);
 t_list	*skip_empty_lines(t_list *raw);
 bool	is_whitespace(char c);
 bool	is_num(char *str);
+void	print_arr(char **arr);
 
 #endif

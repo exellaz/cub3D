@@ -33,7 +33,7 @@ char	**lst_to_arr(t_list *lst)
 t_list	*skip_empty_lines(t_list *raw)
 {
 	int	i;
-	
+
 	while (((char *)raw->content))
 	{
 		i = -1;
@@ -49,7 +49,7 @@ t_list	*skip_empty_lines(t_list *raw)
 
 bool	is_whitespace(char c)
 {
-	return (c == ' ' 
+	return (c == ' '
 		|| c == '\t'
 		|| c == '\n'
 		|| c == '\v'
@@ -66,4 +66,13 @@ bool	is_num(char *str)
 		str++;
 	}
 	return (true);
+}
+
+void	print_arr(char **arr)
+{
+	while (*arr)
+	{
+		ft_putendl_fd(*arr, 1);
+		arr++;
+	}
 }

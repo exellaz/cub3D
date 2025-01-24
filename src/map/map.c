@@ -47,13 +47,22 @@ t_list	*load_file(int file)
 	return (map);
 }
 
-// TODO: check if there are exactly 4 texture paths
 t_list	*get_texture_path(t_list *raw, char **texture_path)
 {
 	char	**split;
+	t_list	*tmp;
 	int		i;
 
 	raw = skip_empty_lines(raw);
+	i = 0;
+	tmp = raw;
+	while (!is_whitespace(((char *)tmp->content)[0]))
+	{
+		i += 1;
+		tmp = tmp->next;
+	}
+	if (i != 4)
+		error_exit("texture path is not 4");
 	i = -1;
 	while (++i < 4)
 	{
