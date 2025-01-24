@@ -108,7 +108,7 @@ void	draw_map(t_vars *mlx)
 	}
 }
 
-void render_minimap(float px, float py, float dir, char **map, t_vars *vars);
+void render_minimap(float px, float py, t_vars *vars);
 
 int	draw_loop(t_vars *mlx)
 {
@@ -168,7 +168,7 @@ int	draw_loop(t_vars *mlx)
 	}
 	// draw_map(mlx);
 	// draw_square(player->pos_x * BLOCK_SIZE - (BLOCK_SIZE / 4), player->pos_y * BLOCK_SIZE - (BLOCK_SIZE / 4), 16, 0xFF0000, &mlx->img);
-	render_minimap(player->pos_x, player->pos_y, atan2(player->dir_x, player->dir_y), mlx->map, mlx);
+	render_minimap(player->pos_x, player->pos_y, mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }
@@ -179,6 +179,9 @@ int	main(int ac, char **av)
 	t_vars		vars;
 
 	init_vars(&vars);
+	vars.map_width = 14;
+	vars.map_height = 10;
+	vars.minimap_tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);
 	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
 	mlx_loop(vars.mlx);
 	return (0);

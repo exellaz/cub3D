@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/20 17:08:29 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:09:49 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define BLOCK_SIZE 32
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
+# define MINIMAP_SIZE 360
+# define VISIBLE_RANGE 4
 # define PI 3.14159
 
 # include <stdbool.h>
@@ -89,6 +91,9 @@ typedef struct s_vars
 	t_fps		*fps;
 	bool		*keys;
 	int			**texture;
+	int			map_width;
+	int			map_height;
+	int			minimap_tile_size;
 }				t_vars;
 
 typedef struct s_point
