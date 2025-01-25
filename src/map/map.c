@@ -109,6 +109,8 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 	{
 		split = ft_split((char *)raw->content, '\n');
 		split = ft_split(split[0], ' ');
+		if (count_arr(split) != 2)
+			error_exit("RGB count is not 2");
 		if (ft_strcmp(split[0], "F") == 0)
 			fc = 0;
 		else if (ft_strcmp(split[0], "C") == 0)
@@ -116,6 +118,8 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 		else
 			error_exit("Invalid RGB identifier");
 		split = ft_split(split[1], ',');
+		if (count_arr(split) != 3)
+			error_exit("RGB value count is not 3");
 		j = -1;
 		while (++j < 3)
 		{

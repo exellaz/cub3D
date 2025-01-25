@@ -20,5 +20,6 @@ t_list	*skip_empty_lines(t_list *raw);
 bool	is_whitespace(char c);
 bool	is_num(char *str);
 void	print_arr(char **arr);
+int		count_arr(char **arr);
 
 #endif
