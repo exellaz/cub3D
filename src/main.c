@@ -65,7 +65,7 @@ void	draw_square(int x, int y, int size, int color, t_img *img)
 	}
 }
 
-void	draw_full_square(int x, int y, int size, int color, t_img *img)
+void	draw_tile(int x, int y, int size, int color, t_img *img)
 {
 	int	draw_x;
 	int	draw_y;
@@ -77,6 +77,27 @@ void	draw_full_square(int x, int y, int size, int color, t_img *img)
 		while (draw_x < size)
 		{
 			put_pixel(x + draw_x, y + draw_y, color, img);
+			draw_x++;
+		}
+		draw_y++;
+	}
+}
+
+void	draw_border(int x, int y, int size, int border_thickness, int border_color, t_img *img)
+{
+	int	draw_x;
+	int	draw_y;
+	int	border_end;
+
+	border_end = size + (border_thickness * 2);
+	draw_y = 0;
+	while (draw_y < border_end)
+	{
+		draw_x = 0;
+		while (draw_x < border_end)
+		{
+			if (draw_y < border_thickness || draw_y >= size || draw_x < border_thickness || draw_x >= size)
+				put_pixel(x + draw_x, y + draw_y, border_color, img);
 			draw_x++;
 		}
 		draw_y++;
@@ -107,8 +128,6 @@ void	draw_map(t_vars *mlx)
 		y++;
 	}
 }
-
-void render_minimap(float px, float py, t_vars *vars);
 
 int	draw_loop(t_vars *mlx)
 {
@@ -168,7 +187,7 @@ int	draw_loop(t_vars *mlx)
 	}
 	// draw_map(mlx);
 	// draw_square(player->pos_x * BLOCK_SIZE - (BLOCK_SIZE / 4), player->pos_y * BLOCK_SIZE - (BLOCK_SIZE / 4), 16, 0xFF0000, &mlx->img);
-	render_minimap(player->pos_x, player->pos_y, mlx);
+	render_minimap(player, mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }
@@ -181,7 +200,7 @@ int	main(int ac, char **av)
 	init_vars(&vars);
 	vars.map_width = 14;
 	vars.map_height = 10;
-	vars.minimap_tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);
+	vars.tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);
 	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
 	mlx_loop(vars.mlx);
 	return (0);

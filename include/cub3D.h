@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:49 by we                #+#    #+#             */
-/*   Updated: 2025/01/21 15:11:23 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/26 19:36:30 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ char	**get_map(void);
 int		draw_ray(t_player *player, t_vars *mlx, float start_x, int i);
 void	put_pixel(int x, int y, int color, t_img *img);
 int		frame_counter(t_fps *fps);
+void	render_minimap(t_player *player, t_vars *vars);
+void	draw_border(int x, int y, int size, int border_thickness, int border_color, t_img *img); //Refactor to 4 param
+void	draw_tile(int x, int y, int size, int color, t_img *img);
 
 #endif
