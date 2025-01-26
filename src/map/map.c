@@ -26,7 +26,7 @@ t_map	*parse_map(int file)
 	raw = load_file(file);
 	remain = get_texture_path(raw, map->texture_path);
 	remain = get_rgb(remain, map->fc_rgb);
-	get_map(remain, &map->map);
+	get_map(remain, &map->map, &map->width, &map->height);
 	get_spawn(map->map, map->spawn);
 	return (map);
 }
@@ -134,7 +134,7 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 	return (raw);
 }
 
-void	get_map(t_list *raw, t_list **map)
+void	get_map(t_list *raw, t_list **map, int *width, int *height)
 {
 	t_list	*tmp;
 	char	*line;
@@ -151,7 +151,9 @@ void	get_map(t_list *raw, t_list **map)
 			max = ft_strlen(tmp->content);
 		tmp = tmp->next;
 	}
+	*width = max;
 	i = -1;
+	*height = 0;
 	tmp = *map;
 	while (tmp)
 	{
@@ -165,6 +167,7 @@ void	get_map(t_list *raw, t_list **map)
 			line[max] = '\0';
 			tmp->content = line;
 		}
+		*height += 1;
 		tmp = tmp->next;
 	}
 }

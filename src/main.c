@@ -13,6 +13,7 @@ int	main(int ac, char **av)
 	fd = validate_arg(ac, av[1]);
 	map = parse_map(fd);
 	validate_map(map);
+	printf("Size: %d x %d\n", map->width, map->height);
 	return (0);
 }
 
