@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/01/26 22:15:08 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/26 22:33:28 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	draw_player(t_player *player, int map_x, int map_y, t_vars *vars)
 	int	tile_size;
 	int	player_offset;
 
-	tile_size = vars->minimap_tile_size;
+	tile_size = vars->tile_size;
 	player_screen_x = (player->pos_x - map_x) * tile_size;
 	player_screen_y = (player->pos_y - map_y) * tile_size;
 	player_offset = tile_size / 4 - MINIMAP_OFFSET;
