@@ -169,7 +169,7 @@ int	draw_loop(t_vars *mlx)
 		if (mlx->map[(int)(player->pos_y - player->dir_y * speed)][(int)(player->pos_x)] == '0')
 			player->pos_y -= player->dir_y * speed;
 	}
-	if (mlx->keys[0] == true)
+	if (mlx->keys[KEY_LEFT] == true)
 	{
 		float	old_dir_x = player->dir_x;
 		player->dir_x = player->dir_x * cos(-rot_speed) - player->dir_y * sin(-rot_speed);
@@ -178,7 +178,7 @@ int	draw_loop(t_vars *mlx)
 		player->plane_x = player->plane_x * cos(-rot_speed) - player->plane_y * sin(-rot_speed);
 		player->plane_y = old_plane_x * sin(-rot_speed) + player->plane_y * cos(-rot_speed);
 	}
-	if (mlx->keys[1] == true)
+	if (mlx->keys[KEY_RIGHT] == true)
 	{
 		float	old_dir_x = player->dir_x;
 		player->dir_x = player->dir_x * cos(rot_speed) - player->dir_y * sin(rot_speed);

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:33:35 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/01/17 13:30:09 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:53:15 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	frame_counter(t_fps *fps)
 	if (elapsed_time >= 1.0)
 	{
 		fps->fps = fps->frame_count / elapsed_time;
-		printf("FPS: %.2f\n", fps->fps);
+		// printf("FPS: %.2f\n", fps->fps);
 		fps->frame_count = 0;
 		fps->start_time = current_time;
 	}
