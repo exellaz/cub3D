@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/01/28 12:08:46 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:36:58 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include "math.h"
 #include "stdio.h"
 #include <X11/Xlib.h>
+
+void	rotate_player(float angle, t_player *player);
 
 int	quit(int keycode, t_vars *m)
 {
@@ -147,36 +149,33 @@ int	mouse_hook(int x, int y, t_vars *vars)
 {
 	(void)y;
 	int		delta_x;
-
 	float	delta_theta;
 	t_player *player;
 
 	player = vars->player;
-
 	delta_x = x - vars->prev_mouse_x;
+	if (delta_x == 0)
+		return (0);
 	delta_theta = delta_x * MOUSE_SPEED;
+	rotate_player(delta_theta, player);
+	mlx_mouse_move(vars->mlx, vars->win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	vars->prev_mouse_x = WIN_WIDTH / 2;
+	return (0);
+}
 
+void	rotate_player(float angle, t_player *player)
+{
 	float	old_dir_x;
 	float	old_dir_y;
-
-	old_dir_x = player->dir_x;
-	old_dir_y = player->dir_y;
-
-	player->dir_x = old_dir_x * cos(delta_theta) - old_dir_y * sin(delta_theta);
-	player->dir_y = old_dir_x * sin(delta_theta) + old_dir_y * cos(delta_theta);
-
 	float	old_plane_x;
 	float	old_plane_y;
 
+	old_dir_x = player->dir_x;
+	old_dir_y = player->dir_y;
 	old_plane_x = player->plane_x;
 	old_plane_y = player->plane_y;
-
-	player->plane_x = old_plane_x * cos(delta_theta) - old_plane_y * sin(delta_theta);
-	player->plane_y = old_plane_x * sin(delta_theta) + old_plane_y * cos(delta_theta);
-
-	// mlx_mouse_move(vars->mlx, vars->win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
-	vars->prev_mouse_x = x;
-	vars->prev_mouse_y = y;
-
-	return (0);
+	player->dir_x = old_dir_x * cos(angle) - old_dir_y * sin(angle);
+	player->dir_y = old_dir_x * sin(angle) + old_dir_y * cos(angle);
+	player->plane_x = old_plane_x * cos(angle) - old_plane_y * sin(angle);
+	player->plane_y = old_plane_x * sin(angle) + old_plane_y * cos(angle);
 }

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:49 by we                #+#    #+#             */
-/*   Updated: 2025/01/26 23:32:00 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:36:28 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void	render_minimap(t_player *player, t_vars *vars);
 void	draw_border(int x, int y, int size, int border_thickness, int border_color, t_img *img); //Refactor to 4 param
 void	draw_tile(int x, int y, int size, int color, t_img *img);
 int		mouse_hook(int x, int y, t_vars *vars);
+void	rotate_player(float angle, t_player *player);
 
 #endif
