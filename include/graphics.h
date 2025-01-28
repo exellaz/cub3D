@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/26 22:15:52 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/27 00:06:24 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define MINIMAP_OFFSET 4
 # define VISIBLE_RANGE 4
 # define PI 3.14159
+# define MOUSE_SPEED 0.008
 
 # include <stdbool.h>
 # include <time.h>
@@ -95,6 +96,9 @@ typedef struct s_vars
 	int			map_width;
 	int			map_height;
 	int			tile_size;
+	bool		mouse_move;
+	int			prev_mouse_x;
+	int			prev_mouse_y;
 }				t_vars;
 
 typedef struct s_minimap

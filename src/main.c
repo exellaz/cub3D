@@ -6,6 +6,7 @@
 
 #include <math.h>
 
+
 void	raycast(t_vars *mlx);
 void	draw_line(t_point start, t_point end, int color, t_img *img);
 
@@ -137,6 +138,7 @@ int	draw_loop(t_vars *mlx)
 	frame_counter(mlx->fps);
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
 	raycast(mlx);
+	// printf("dir_x: %f, dir_y: %f\n", player->dir_x, player->dir_y);
 	float	speed = mlx->fps->frame_time * 2.5;
 	float	rot_speed = mlx->fps->frame_time * 2.5;
 	if (mlx->keys[KEY_A] == true)
@@ -185,6 +187,10 @@ int	draw_loop(t_vars *mlx)
 		player->plane_x = player->plane_x * cos(rot_speed) - player->plane_y * sin(rot_speed);
 		player->plane_y = old_plane_x * sin(rot_speed) + player->plane_y * cos(rot_speed);
 	}
+	// if (mlx->mouse_move == true)
+	// {
+	// 	player->dir_x += mlx->mouse_delta * MOUSE_SPEED;
+	// }
 	// draw_map(mlx);
 	// draw_square(player->pos_x * BLOCK_SIZE - (BLOCK_SIZE / 4), player->pos_y * BLOCK_SIZE - (BLOCK_SIZE / 4), 16, 0xFF0000, &mlx->img);
 	render_minimap(player, mlx);
@@ -201,6 +207,9 @@ int	main(int ac, char **av)
 	vars.map_width = 14;
 	vars.map_height = 10;
 	vars.tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);
+	// mlx_mouse_move(vars.mlx, vars.win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	vars.prev_mouse_x = WIN_WIDTH / 2;
+	vars.prev_mouse_y = WIN_HEIGHT / 2;
 	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
 	mlx_loop(vars.mlx);
 	return (0);

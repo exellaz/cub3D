@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/01/15 13:53:49 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:08:46 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "events.h"
 #include "math.h"
 #include "stdio.h"
+#include <X11/Xlib.h>
 
 int	quit(int keycode, t_vars *m)
 {
@@ -139,5 +140,43 @@ int key_release_hook(int keycode, t_vars *m)
 		// player->plane_x = player->plane_x * cos(-rot_speed) - player->plane_y * sin(-rot_speed);
 		// player->plane_y = old_plane_x * sin(-rot_speed) + player->plane_y * cos(-rot_speed);
 	}
+	return (0);
+}
+
+int	mouse_hook(int x, int y, t_vars *vars)
+{
+	(void)y;
+	int		delta_x;
+
+	float	delta_theta;
+	t_player *player;
+
+	player = vars->player;
+
+	delta_x = x - vars->prev_mouse_x;
+	delta_theta = delta_x * MOUSE_SPEED;
+
+	float	old_dir_x;
+	float	old_dir_y;
+
+	old_dir_x = player->dir_x;
+	old_dir_y = player->dir_y;
+
+	player->dir_x = old_dir_x * cos(delta_theta) - old_dir_y * sin(delta_theta);
+	player->dir_y = old_dir_x * sin(delta_theta) + old_dir_y * cos(delta_theta);
+
+	float	old_plane_x;
+	float	old_plane_y;
+
+	old_plane_x = player->plane_x;
+	old_plane_y = player->plane_y;
+
+	player->plane_x = old_plane_x * cos(delta_theta) - old_plane_y * sin(delta_theta);
+	player->plane_y = old_plane_x * sin(delta_theta) + old_plane_y * cos(delta_theta);
+
+	// mlx_mouse_move(vars->mlx, vars->win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	vars->prev_mouse_x = x;
+	vars->prev_mouse_y = y;
+
 	return (0);
 }
