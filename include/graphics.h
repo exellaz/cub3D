@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/28 13:19:35 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:58:38 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ typedef struct s_player
 	float	dir_y;
 	float	plane_x;
 	float	plane_y;
+	bool	move_forward;
+	bool	move_backward;
+	bool	move_left;
+	bool	move_right;
+	bool	pan_left;
+	bool	pan_right;
 	t_ray	ray;
 }				t_player;
 
@@ -91,7 +97,6 @@ typedef struct s_vars
 	char		**map;
 	t_player	*player;
 	t_fps		*fps;
-	bool		*keys;
 	int			**texture;
 	int			map_width;
 	int			map_height;
