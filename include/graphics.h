@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/02/01 14:58:38 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:40:59 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,8 @@ typedef struct s_vars
 	bool		mouse_move;
 	int			prev_mouse_x;
 	int			prev_mouse_y;
+	bool		minimap_toggle;
 }				t_vars;
-
-typedef struct s_minimap
-{
-
-}				t_minimap;
 
 typedef struct s_point
 {

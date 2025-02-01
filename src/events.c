@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/02/01 14:45:49 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:13:21 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ int	key_press_hook(int keycode, t_vars *vars)
 	player = vars->player;
 	if (keycode == XK_Escape)
 		quit(keycode, vars);
+	if (keycode == XK_m && vars->minimap_toggle == false)
+		vars->minimap_toggle = true;
+	else if (keycode == XK_m)
+		vars->minimap_toggle = false;
 	if (keycode == XK_w)
 		player->move_forward = true;
 	if (keycode == XK_s)

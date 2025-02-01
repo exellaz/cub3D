@@ -139,7 +139,8 @@ int	draw_loop(t_vars *mlx)
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
 	handle_player_controls(mlx->map, player, mlx->fps);
 	raycast(mlx);
-	render_minimap(player, mlx);
+	if (mlx->minimap_toggle == true)
+		render_minimap(player, mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	return (0);
 }
