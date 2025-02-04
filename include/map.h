@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 16:12:34 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 16:22:19 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_texture
 	int		height;
 }	t_texture;
 
-// `texture` is stored in N, S, E, W order
+// `texture` is stored in N, S, E, W, D order
 // `floor` and `ceiling` are stored in R, G, B order
 // `spawn` is stored in x, y, direction order
 typedef struct s_map
@@ -33,6 +33,7 @@ typedef struct s_map
 	t_texture	texture[4];
 	int			fc_rgb[2][3];
 	int			spawn[3];
+	int			*door[2];
 	int			width;
 	int			height;
 }	t_map;
