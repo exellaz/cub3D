@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/01/21 15:16:23 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:01:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	init_fps(t_vars *vars)
 {
 	t_fps	*fps;
 
-	fps = malloc(sizeof(t_fps));
+	fps = ft_calloc(1, sizeof(t_fps));
 	fps->frame_count = 0;
 	fps->fps = 0.0;
 	fps->start_time = clock();
@@ -57,7 +57,7 @@ static void	init_player(t_vars *vars)
 {
 	t_player	*player;
 
-	player = malloc(sizeof(t_player));
+	player = ft_calloc(1, sizeof(t_player));
 	player->pos_x = 3;
 	player->pos_y = 3;
 	player->dir_x = 1;
@@ -78,6 +78,7 @@ static void	setup_mlx(t_vars *vars)
 	mlx_hook(vars->win, DESTROY_NOTIFY, NOT_EVENT_MASK, quit, vars);
 	mlx_hook(vars->win, KEY_PRESS, KEY_PRESS_MASK, key_press_hook, vars);
 	mlx_hook(vars->win, KEY_RELEASE, KEY_RELEASE_MASK, key_release_hook, vars);
+	mlx_hook(vars->win, MOTION_NOTIFY, POINTER_MOTION_MASK, mouse_hook, vars);
 }
 
 void	init_vars(t_vars *vars)
@@ -87,5 +88,4 @@ void	init_vars(t_vars *vars)
 	init_fps(vars);
 	setup_mlx(vars);
 	vars->map = hardcode_map();
-	vars->keys = ft_calloc(256, sizeof(bool));
 }

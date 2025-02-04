@@ -6,15 +6,15 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/01/26 22:15:52 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:40:59 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GRAPHICS_H
 # define GRAPHICS_H
 
-# define WIN_WIDTH 800
-# define WIN_HEIGHT 600
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 # define WHITE 0x00FFFFFF
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
@@ -23,10 +23,11 @@
 # define BLOCK_SIZE 32
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
-# define MINIMAP_SIZE 180
+# define MINIMAP_SIZE 360
 # define MINIMAP_OFFSET 4
 # define VISIBLE_RANGE 4
 # define PI 3.14159
+# define MOUSE_SPEED 0.0005
 
 # include <stdbool.h>
 # include <time.h>
@@ -70,6 +71,12 @@ typedef struct s_player
 	float	dir_y;
 	float	plane_x;
 	float	plane_y;
+	bool	move_forward;
+	bool	move_backward;
+	bool	move_left;
+	bool	move_right;
+	bool	pan_left;
+	bool	pan_right;
 	t_ray	ray;
 }				t_player;
 
@@ -90,17 +97,15 @@ typedef struct s_vars
 	char		**map;
 	t_player	*player;
 	t_fps		*fps;
-	bool		*keys;
 	int			**texture;
 	int			map_width;
 	int			map_height;
 	int			tile_size;
+	bool		mouse_move;
+	int			prev_mouse_x;
+	int			prev_mouse_y;
+	bool		minimap_toggle;
 }				t_vars;
-
-typedef struct s_minimap
-{
-
-}				t_minimap;
 
 typedef struct s_point
 {

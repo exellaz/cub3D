@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/01/15 13:53:49 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:13:21 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 #include "events.h"
 #include "math.h"
 #include "stdio.h"
+#include "cub3D.h"
+#include <X11/keysym.h>
+
+void	rotate_player(float angle, t_player *player);
 
 int	quit(int keycode, t_vars *m)
 {
@@ -28,116 +32,66 @@ int	quit(int keycode, t_vars *m)
 	return (0);
 }
 
-int key_press_hook(int keycode, t_vars *m)
+int	key_press_hook(int keycode, t_vars *vars)
 {
-	// t_player *player = m->player;
-	// float	speed = 0.1;
-	// float	rot_speed = 0.1;
-	// float	speed = m->fps->frame_time * 5.0;
-	// float	rot_speed = m->fps->frame_time * 3.0;
+	t_player	*player;
 
-	if (keycode == KEY_ESC)
-		quit(keycode, m);
-	if (keycode == KEY_W)
-	{
-		m->keys[keycode] = true;
-		// player->pos_x += player->dir_x * speed;
-		// player->pos_y += player->dir_y * speed;
-	}
-	if (keycode == KEY_S)
-	{
-		m->keys[keycode] = true;
-		// player->pos_x -= player->dir_x * speed;
-		// player->pos_y -= player->dir_y * speed;
-	}
-	if (keycode == KEY_A)
-	{
-		m->keys[keycode] = true;
-		// player->pos_x -= player->dir_y * speed;
-		// player->pos_y += player->dir_x * speed;
-	}
-	if (keycode == KEY_D)
-	{
-		m->keys[keycode] = true;
-		// player->pos_x += player->dir_y * speed;
-		// player->pos_y -= player->dir_x * speed;
-	}
-	if (keycode == KEY_LEFT)
-	{
-		// float	old_dir_x = player->dir_x;
-		// player->dir_x = player->dir_x * cos(rot_speed) - player->dir_y * sin(rot_speed);
-		// player->dir_y = old_dir_x * sin(rot_speed) + player->dir_y * cos(rot_speed);
-		// float	old_plane_x = player->plane_x;
-		// player->plane_x = player->plane_x * cos(rot_speed) - player->plane_y * sin(rot_speed);
-		// player->plane_y = old_plane_x * sin(rot_speed) + player->plane_y * cos(rot_speed);
-		m->keys[0] = true;
-	}
-	if (keycode == KEY_RIGHT)
-	{
-		// float	old_dir_x = player->dir_x;
-		// player->dir_x = player->dir_x * cos(-rot_speed) - player->dir_y * sin(-rot_speed);
-		// player->dir_y = old_dir_x * sin(-rot_speed) + player->dir_y * cos(-rot_speed);
-		// float	old_plane_x = player->plane_x;
-		// player->plane_x = player->plane_x * cos(-rot_speed) - player->plane_y * sin(-rot_speed);
-		// player->plane_y = old_plane_x * sin(-rot_speed) + player->plane_y * cos(-rot_speed);
-		m->keys[1] = true;
-	}
+	player = vars->player;
+	if (keycode == XK_Escape)
+		quit(keycode, vars);
+	if (keycode == XK_m && vars->minimap_toggle == false)
+		vars->minimap_toggle = true;
+	else if (keycode == XK_m)
+		vars->minimap_toggle = false;
+	if (keycode == XK_w)
+		player->move_forward = true;
+	if (keycode == XK_s)
+		player->move_backward = true;
+	if (keycode == XK_a)
+		player->move_left = true;
+	if (keycode == XK_d)
+		player->move_right = true;
+	if (keycode == XK_Left)
+		player->pan_left = true;
+	if (keycode == XK_Right)
+		player->pan_right = true;
 	return (0);
 }
 
-int key_release_hook(int keycode, t_vars *m)
+int	key_release_hook(int keycode, t_vars *vars)
 {
-	// t_player *player = m->player;
-	// float	speed = 0.1;
-	// float	rot_speed = 0.1;
-	// float	speed = m->fps->frame_time * 5.0;
-	// float	rot_speed = m->fps->frame_time * 3.0;
+	t_player	*player;
 
-	if (keycode == KEY_ESC)
-		quit(keycode, m);
-	if (keycode == KEY_W)
-	{
-		m->keys[keycode] = false;
-		// player->pos_x += player->dir_x * speed;
-		// player->pos_y += player->dir_y * speed;
-	}
-	if (keycode == KEY_S)
-	{
-		m->keys[keycode] = false;
-		// player->pos_x -= player->dir_x * speed;
-		// player->pos_y -= player->dir_y * speed;
-	}
-	if (keycode == KEY_A)
-	{
-		m->keys[keycode] = false;
-		// player->pos_x -= player->dir_y * speed;
-		// player->pos_y += player->dir_x * speed;
-	}
-	if (keycode == KEY_D)
-	{
-		m->keys[keycode] = false;
-		// player->pos_x += player->dir_y * speed;
-		// player->pos_y -= player->dir_x * speed;
-	}
-	if (keycode == KEY_LEFT)
-	{
-		m->keys[0] = false;
-		// float	old_dir_x = player->dir_x;
-		// player->dir_x = player->dir_x * cos(rot_speed) - player->dir_y * sin(rot_speed);
-		// player->dir_y = old_dir_x * sin(rot_speed) + player->dir_y * cos(rot_speed);
-		// float	old_plane_x = player->plane_x;
-		// player->plane_x = player->plane_x * cos(rot_speed) - player->plane_y * sin(rot_speed);
-		// player->plane_y = old_plane_x * sin(rot_speed) + player->plane_y * cos(rot_speed);
-	}
-	if (keycode == KEY_RIGHT)
-	{
-		m->keys[1] = false;
-		// float	old_dir_x = player->dir_x;
-		// player->dir_x = player->dir_x * cos(-rot_speed) - player->dir_y * sin(-rot_speed);
-		// player->dir_y = old_dir_x * sin(-rot_speed) + player->dir_y * cos(-rot_speed);
-		// float	old_plane_x = player->plane_x;
-		// player->plane_x = player->plane_x * cos(-rot_speed) - player->plane_y * sin(-rot_speed);
-		// player->plane_y = old_plane_x * sin(-rot_speed) + player->plane_y * cos(-rot_speed);
-	}
+	player = vars->player;
+	if (keycode == XK_w)
+		player->move_forward = false;
+	if (keycode == XK_s)
+		player->move_backward = false;
+	if (keycode == XK_a)
+		player->move_left = false;
+	if (keycode == XK_d)
+		player->move_right = false;
+	if (keycode == XK_Left)
+		player->pan_left = false;
+	if (keycode == XK_Right)
+		player->pan_right = false;
+	return (0);
+}
+
+int	mouse_hook(int x, int y, t_vars *vars)
+{
+	int			delta_x;
+	float		delta_theta;
+	t_player	*player;
+
+	(void)y;
+	player = vars->player;
+	delta_x = x - vars->prev_mouse_x;
+	if (delta_x == 0)
+		return (0);
+	delta_theta = delta_x * MOUSE_SPEED;
+	rotate_player(delta_theta, player);
+	mlx_mouse_move(vars->mlx, vars->win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	vars->prev_mouse_x = WIN_WIDTH / 2;
 	return (0);
 }
