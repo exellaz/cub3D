@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 14:36:09 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 15:58:48 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_list	*load_file(int file)
 		ft_lstadd_back(&map, ft_lstnew(line));
 		line = get_next_line(file);
 	}
+	if (!map)
+		error_exit("Empty file");
 	return (map);
 }
 
