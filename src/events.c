@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/01/06 18:32:07 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:13:21 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@
 #include "enum.h"
 #include "events.h"
 #include "math.h"
+#include "stdio.h"
+#include "cub3D.h"
+#include <X11/keysym.h>
 
-int	quit(int keycode, t_mlx *m)
+void	rotate_player(float angle, t_player *player);
+
+int	quit(int keycode, t_vars *m)
 {
 	(void)keycode;
 	mlx_destroy_window(m->mlx, m->win);
@@ -27,47 +32,66 @@ int	quit(int keycode, t_mlx *m)
 	return (0);
 }
 
-int key_hook(int keycode, t_mlx *m)
+int	key_press_hook(int keycode, t_vars *vars)
 {
-	t_player *player = m->player;
-	int	speed = 5;
-	float	angle_speed = 0.1;
-	float	cos_angle = cos(player->angle);
-	float	sin_angle = sin(player->angle);
+	t_player	*player;
 
-	if (keycode == KEY_ESC)
-		quit(keycode, m);
-	if (player->angle > 2 * PI)
-		player->angle = 0;
-	if (player->angle < 0)
-		player->angle = 2 * PI;
-	if (keycode == KEY_W)
-	{
-		player->x += cos_angle * speed;
-		player->y += sin_angle * speed;
-	}
-	if (keycode == KEY_S)
-	{
-		player->x -= cos_angle * speed;
-		player->y -= sin_angle * speed;
-	}
-	if (keycode == KEY_A)
-	{
-		player->x += sin_angle * speed;
-		player->y -= cos_angle * speed;
-	}
-	if (keycode == KEY_D)
-	{
-		player->x -= sin_angle * speed;
-		player->y += cos_angle * speed;
-	}
-	if (keycode == KEY_LEFT)
-	{
-		player->angle -= angle_speed;
-	}
-	if (keycode == KEY_RIGHT)
-	{
-		player->angle += angle_speed;
-	}
+	player = vars->player;
+	if (keycode == XK_Escape)
+		quit(keycode, vars);
+	if (keycode == XK_m && vars->minimap_toggle == false)
+		vars->minimap_toggle = true;
+	else if (keycode == XK_m)
+		vars->minimap_toggle = false;
+	if (keycode == XK_w)
+		player->move_forward = true;
+	if (keycode == XK_s)
+		player->move_backward = true;
+	if (keycode == XK_a)
+		player->move_left = true;
+	if (keycode == XK_d)
+		player->move_right = true;
+	if (keycode == XK_Left)
+		player->pan_left = true;
+	if (keycode == XK_Right)
+		player->pan_right = true;
+	return (0);
+}
+
+int	key_release_hook(int keycode, t_vars *vars)
+{
+	t_player	*player;
+
+	player = vars->player;
+	if (keycode == XK_w)
+		player->move_forward = false;
+	if (keycode == XK_s)
+		player->move_backward = false;
+	if (keycode == XK_a)
+		player->move_left = false;
+	if (keycode == XK_d)
+		player->move_right = false;
+	if (keycode == XK_Left)
+		player->pan_left = false;
+	if (keycode == XK_Right)
+		player->pan_right = false;
+	return (0);
+}
+
+int	mouse_hook(int x, int y, t_vars *vars)
+{
+	int			delta_x;
+	float		delta_theta;
+	t_player	*player;
+
+	(void)y;
+	player = vars->player;
+	delta_x = x - vars->prev_mouse_x;
+	if (delta_x == 0)
+		return (0);
+	delta_theta = delta_x * MOUSE_SPEED;
+	rotate_player(delta_theta, player);
+	mlx_mouse_move(vars->mlx, vars->win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	vars->prev_mouse_x = WIN_WIDTH / 2;
 	return (0);
 }

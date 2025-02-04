@@ -1,6 +1,6 @@
 # Compiler & Flags
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -g
+CC = clang
+CFLAGS = -Wall -Wextra -Werror -g -O3
 INC = -Iinclude -I$(MLX_DIR) -I$(LIBFT_DIR)
 LIB = -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lft -lm -lX11 -lXext
 
@@ -47,7 +47,8 @@ valgrind : $(BIN)
 fsan:
 	$(CC) $(CFLAGS) -fsanitize=address $(INC) $(OBJ) $(LIB) -o $(BIN)
 
-# TODO: test
+debug: CFLAGS := -D DEBUG=1
+debug: $(BIN)
 
 clean :
 	make -C $(LIBFT_DIR) clean

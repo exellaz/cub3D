@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/01/16 09:45:14 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/01 15:01:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,77 @@
 #include "enum.h"
 #include "cub3D.h"
 
-void	setup_mlx(t_mlx *m, t_player *player)
+char	**hardcode_map(void);
+
+static void	init_textures(t_vars *vars)
 {
-	m->mlx = mlx_init();
-	m->win = mlx_new_window(m->mlx, WIN_WIDTH, WIN_HEIGHT, "Hello world!");
-	m->img.img = mlx_new_image(m->mlx, WIN_WIDTH, WIN_HEIGHT);
-	m->img.addr = mlx_get_data_addr(m->img.img, &m->img.bits_per_pixel, &m->img.line_length, &m->img.endian);
-	player->x = 2 * 64;
-	player->y = 2 * 64;
-	player->angle = PI / 2;
-	m->player = player;
-	m->map = hardcode_map();
-	mlx_put_image_to_window(m->mlx, m->win, m->img.img, 0, 0);
-	mlx_hook(m->win, DESTROY_NOTIFY, NOT_EVENT_MASK, quit, m);
-	mlx_hook(m->win, KEY_PRESS, KEY_PRESS_MASK, key_hook, m);
+	int	x;
+	int	y;
+	int	xycolor;
+	(void)xycolor;
+
+	vars->texture = malloc(sizeof(int *) * 1);
+	vars->texture[0] = malloc(TEX_HEIGHT * TEX_WIDTH * sizeof(int));
+	x = 0;
+	while (x < TEX_WIDTH)
+	{
+		y = 0;
+		while (y < TEX_HEIGHT)
+		{
+			xycolor = y * 128 / TEX_HEIGHT + x * 128 / TEX_WIDTH;
+			// vars->texture[0][TEX_WIDTH * y + x] = xycolor + 256
+			// 	* xycolor + 65536 * xycolor;
+			vars->texture[0][TEX_WIDTH * y + x] = 0xFFFFFF;
+			y++;
+		}
+		x++;
+	}
+}
+
+static void	init_fps(t_vars *vars)
+{
+	t_fps	*fps;
+
+	fps = ft_calloc(1, sizeof(t_fps));
+	fps->frame_count = 0;
+	fps->fps = 0.0;
+	fps->start_time = clock();
+	vars->fps = fps;
+}
+
+static void	init_player(t_vars *vars)
+{
+	t_player	*player;
+
+	player = ft_calloc(1, sizeof(t_player));
+	player->pos_x = 3;
+	player->pos_y = 3;
+	player->dir_x = 1;
+	player->dir_y = 0;
+	player->plane_x = 0;
+	player->plane_y = 0.66;
+	vars->player = player;
+}
+
+static void	setup_mlx(t_vars *vars)
+{
+	vars->mlx = mlx_init();
+	vars->win = mlx_new_window(vars->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
+	vars->img.img = mlx_new_image(vars->mlx, WIN_WIDTH, WIN_HEIGHT);
+	vars->img.addr = mlx_get_data_addr(vars->img.img, \
+		&vars->img.bits_per_pixel, &vars->img.line_length, &vars->img.endian);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
+	mlx_hook(vars->win, DESTROY_NOTIFY, NOT_EVENT_MASK, quit, vars);
+	mlx_hook(vars->win, KEY_PRESS, KEY_PRESS_MASK, key_press_hook, vars);
+	mlx_hook(vars->win, KEY_RELEASE, KEY_RELEASE_MASK, key_release_hook, vars);
+	mlx_hook(vars->win, MOTION_NOTIFY, POINTER_MOTION_MASK, mouse_hook, vars);
+}
+
+void	init_vars(t_vars *vars)
+{
+	init_textures(vars);
+	init_player(vars);
+	init_fps(vars);
+	setup_mlx(vars);
+	vars->map = hardcode_map();
 }
