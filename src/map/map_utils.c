@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 10:29:44 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/04 11:34:09 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 14:37:04 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 
 #include "map.h"
 
-void	print_texture_path(char **texture_path)
+void	print_texture_path(t_texture *texture)
 {
 	int	i;
 
 	i = -1;
 	while (++i < 4)
-		printf("%s\n", texture_path[i]);
+		printf("%s\n", texture[i].path);
 	printf("\n");
 }
 

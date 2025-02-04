@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 11:40:03 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 14:10:15 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,24 @@
 
 void	validate_map(t_map *map)
 {
-	valid_texture_path(map->texture_path);
+	valid_texture_path(map->texture);
 	valid_iden(map->map);
 	valid_walls(map->map);
 }
 
-void	valid_texture_path(char **texture_path)
+void	valid_texture_path(t_texture *texture)
 {
-	int	fd;
-	int	i;
+	char	*path;
+	int		fd;
+	int		i;
 
 	i = -1;
 	while (++i < 4)
 	{
-		if (ft_strncmp(texture_path[i] + ft_strlen(texture_path[i]) - 4, ".xpm", 4))
+		path = texture[i].path;
+		if (ft_strncmp(path + ft_strlen(path) - 4, ".xpm", 4))
 			error_exit("Invalid texture extension");
-		fd = open(texture_path[i], O_RDONLY);
+		fd = open(path, O_RDONLY);
 		if (fd < 0)
 			error_exit(strerror(errno));
 		close(fd);

@@ -6,17 +6,19 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 11:29:13 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 14:36:09 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <mlx.h>
 #include <Libft.h>
 
 #include "error.h"
 #include "utils.h"
+#include "graphics.h"
 #include "map.h"
 
-t_map	*parse_map(int file)
+t_map	*parse_map(int file,  void *mlx)
 {
 	t_map	*map;
 	t_list	*raw;
@@ -24,11 +26,12 @@ t_map	*parse_map(int file)
 
 	map = mem_alloc(sizeof(t_map));
 	raw = load_file(file);
-	remain = get_texture_path(raw, map->texture_path);
+	remain = get_texture_path(raw, map->texture);
 	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map, &map->width, &map->height);
 	get_spawn(map->map, map->spawn);
 	validate_map(map);
+	load_textures(map->texture, mlx);
 	return (map);
 }
 
@@ -48,7 +51,7 @@ t_list	*load_file(int file)
 	return (map);
 }
 
-t_list	*get_texture_path(t_list *raw, char **texture_path)
+t_list	*get_texture_path(t_list *raw, t_texture *texture)
 {
 	char	**split;
 	t_list	*tmp;
@@ -70,20 +73,20 @@ t_list	*get_texture_path(t_list *raw, char **texture_path)
 		split = ft_split(raw->content, '\n');
 		split = ft_split(split[0], ' ');
 		if (ft_strcmp(split[0], "NO") == 0)
-			texture_path[0] = split[1];
+			texture[0].path = split[1];
 		else if (ft_strcmp(split[0], "SO") == 0)
-			texture_path[1] = split[1];
+			texture[1].path = split[1];
 		else if (ft_strcmp(split[0], "WE") == 0)
-			texture_path[2] = split[1];
+			texture[2].path = split[1];
 		else if (ft_strcmp(split[0], "EA") == 0)
-			texture_path[3] = split[1];
+			texture[3].path = split[1];
 		else
 			error_exit("Invalid texture identifier");
 		raw = raw->next;
 	}
 	i = -1;
 	while (++i < 4)
-		if (!texture_path[i])
+		if (!texture[i].path)
 			error_exit("Missing texture path");
 	return (raw->next);
 }
@@ -199,5 +202,23 @@ void	get_spawn(t_list *map, int *spawn)
 			}
 		}
 		map = map->next;
+	}
+}
+
+void	load_textures(t_texture *texture, void *mlx)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		texture[i].img = mem_alloc(sizeof(t_img));
+		texture[i].img->img = mlx_xpm_file_to_image(mlx, texture[i].path,
+				&texture[i].width, &texture[i].height);
+		if (!texture[i].img->img)
+			error_exit("Invalid texture");
+		texture[i].img->addr = mlx_get_data_addr(texture[i].img->img,
+				&texture[i].img->bits_per_pixel, &texture[i].img->line_length,
+				&texture[i].img->endian);
 	}
 }

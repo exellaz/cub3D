@@ -1,18 +1,23 @@
+#include <time.h>
+
+#include <mlx.h>
+
 #include "graphics.h"
 #include "events.h"
 #include "enum.h"
 #include "map.h"
 #include "cub3D.h"
-#include <time.h>
 
 int	main(int ac, char **av)
 {
+	t_mlx	*mlx;
 	t_map	*map;
 	int	fd;
 
 	fd = validate_arg(ac, av[1]);
-	map = parse_map(fd);
-	print_texture_path(map->texture_path);
+	mlx = mlx_init();
+	map = parse_map(fd, mlx);
+	print_texture_path(map->texture);
 	print_rgb(map->fc_rgb);
 	print_spawn(map->spawn);
 	print_map(map->map);
