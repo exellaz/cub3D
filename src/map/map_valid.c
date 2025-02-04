@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   map_valid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/01/16 14:27:55 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/04 10:51:07 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <string.h>
+#include <errno.h>
 
 #include <Libft.h>
 
@@ -18,19 +21,12 @@
 
 void	validate_map(t_map *map)
 {
-	// check texture path
-	if (!valid_texture_path(map->texture_path))
-		error_exit("Invalid texture path");
-	// check rgb
-	// check identifier
-	if (!valid_iden(map->map))
-		error_exit("Invalid identifier in map");
-	// check walls
-	if (!valid_walls(map->map))
-		error_exit("Invalid walls in map");
+	valid_texture_path(map->texture_path, map->texture_fd);
+	valid_iden(map->map);
+	valid_walls(map->map);
 }
 
-bool	valid_texture_path(char **texture_path)
+void	valid_texture_path(char **texture_path, int *texture_fd)
 {
 	int	fd;
 	int	i;
@@ -38,21 +34,16 @@ bool	valid_texture_path(char **texture_path)
 	i = -1;
 	while (++i < 4)
 	{
-	// is texture path exist ?
-	fd = open(texture_path[i], O_RDONLY);
-	if (fd < 0)
-	{
-		perror(texture_path[i]);
-		return (false);
+		if (ft_strncmp(texture_path[i] + ft_strlen(texture_path[i]) - 4, ".xpm", 4))
+			error_exit("Invalid texture extension");
+		fd = open(texture_path[i], O_RDONLY);
+		if (fd < 0)
+			error_exit(strerror(errno));
+		texture_fd[i] = fd;
 	}
-	close(fd);
-	// does texture path have correct extension ?
-	// does texture path have correct permission ?
-	}
-	return (true);
 }
 
-bool	valid_iden(t_list *map)
+void	valid_iden(t_list *map)
 {
 	char	*iden;
 	char	*line;
@@ -64,11 +55,10 @@ bool	valid_iden(t_list *map)
 	while (tmp)
 	{
 		line = (char *)tmp->content;
-		printf("line: [%s]\n", line);
 		while (*line)
 		{
 			if (!ft_strchr(iden, *line))
-				return (false);
+				error_exit("Invalid identifier");
 			line++;
 		}
 		tmp = tmp->next;
@@ -83,11 +73,10 @@ bool	valid_iden(t_list *map)
 		tmp = tmp->next;
 	}
 	if (spawn != 1)
-		return (false);
-	return (true);
+		error_exit("Invalid spawn point");
 }
 
-bool	valid_walls(t_list *map)
+void	valid_walls(t_list *map)
 {
 	char	**map_arr;
 	int		i;
@@ -101,11 +90,11 @@ bool	valid_walls(t_list *map)
 		while (map_arr[i][++j] && is_whitespace(map_arr[i][j]))
 			;
 		if (map_arr[i][j] != '1')
-			return (false);
+			error_exit("Invalid wall");
 		while (map_arr[i][j] && !is_whitespace(map_arr[i][j]))
 			j++;
 		if (map_arr[i][j - 1] != '1')
-			return (false);
+			error_exit("Invalid wall");
 	}
 	i = -1;
 	while (map_arr[0][++i])
@@ -114,11 +103,10 @@ bool	valid_walls(t_list *map)
 		while (map_arr[++j] && is_whitespace(map_arr[j][i]))
 			;
 		if (map_arr[j][i] != '1')
-			return (false);
+			error_exit("Invalid wall");
 		while (map_arr[j] && !is_whitespace(map_arr[j][i]))
 			j++;
 		if (map_arr[j - 1][i] != '1')
-			return (false);
+			error_exit("Invalid wall");
 	}
-	return true;
 }

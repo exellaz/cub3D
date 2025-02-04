@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/01/16 14:58:43 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/04 10:50:27 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ t_list	*get_texture_path(t_list *raw, char **texture_path)
 	i = -1;
 	while (++i < 4)
 	{
-		split = ft_split(raw->content, ' ');
+		split = ft_split(raw->content, '\n');
+		split = ft_split(split[0], ' ');
 		if (ft_strcmp(split[0], "NO") == 0)
 			texture_path[0] = split[1];
 		else if (ft_strcmp(split[0], "SO") == 0)
