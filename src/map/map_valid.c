@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 10:51:07 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 11:40:03 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 
 void	validate_map(t_map *map)
 {
-	valid_texture_path(map->texture_path, map->texture_fd);
+	valid_texture_path(map->texture_path);
 	valid_iden(map->map);
 	valid_walls(map->map);
 }
 
-void	valid_texture_path(char **texture_path, int *texture_fd)
+void	valid_texture_path(char **texture_path)
 {
 	int	fd;
 	int	i;
@@ -39,7 +39,7 @@ void	valid_texture_path(char **texture_path, int *texture_fd)
 		fd = open(texture_path[i], O_RDONLY);
 		if (fd < 0)
 			error_exit(strerror(errno));
-		texture_fd[i] = fd;
+		close(fd);
 	}
 }
 

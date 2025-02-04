@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 11:31:57 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 11:40:41 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct s_map
 {
 	t_list	*map;
 	char	*texture_path[4];
-	int		texture_fd[4];
 	int		fc_rgb[2][3];
 	int		spawn[3];
 	int		width;
@@ -37,7 +36,7 @@ void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
 
 void	validate_map(t_map *map);
-void	valid_texture_path(char **texture_path, int *texture_fd);
+void	valid_texture_path(char **texture_path);
 void	valid_iden(t_list *map);
 void	valid_walls(t_list *map);
 
