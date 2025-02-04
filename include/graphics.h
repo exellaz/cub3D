@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/02/01 15:40:59 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:15:13 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include <stdbool.h>
 # include <time.h>
 # include <X11/keysym.h>
+
+typedef struct s_list	t_list;
 
 typedef struct s_img
 {
@@ -77,6 +79,8 @@ typedef struct s_player
 	bool	move_right;
 	bool	pan_left;
 	bool	pan_right;
+	bool	interact;
+	bool	interact_held;
 	t_ray	ray;
 }				t_player;
 
@@ -88,6 +92,13 @@ typedef struct s_fps
 	clock_t	start_time;
 	clock_t	last_frame_time;
 }				t_fps;
+
+typedef struct s_door
+{
+	int		x;
+	int		y;
+	bool	is_open;
+}				t_door;
 
 typedef struct s_vars
 {
@@ -105,6 +116,7 @@ typedef struct s_vars
 	int			prev_mouse_x;
 	int			prev_mouse_y;
 	bool		minimap_toggle;
+	t_door		*doors;
 }				t_vars;
 
 typedef struct s_point

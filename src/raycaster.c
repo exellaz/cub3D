@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/01/24 15:56:30 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/02 15:49:47 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void	do_dda(t_ray *ray, char **map)
 			ray->map_y += ray->step_y;
 			ray->wall_side = 1;
 		}
-		if (ray->map_x > 13 || ray->map_y > 10 || ray->map_x < 0 || ray->map_y < 0 || map[ray->map_y][ray->map_x] == '1')
+		if (ray->map_x > 13 || ray->map_y > 10 || ray->map_x < 0 || ray->map_y < 0 || map[ray->map_y][ray->map_x] != '0')
 			hit = 1;
 	}
 }
@@ -133,6 +133,7 @@ static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 	int				texY;
 	unsigned int	color;
 
+	// printf("texNum: %d\n", texNum);
 	if (ray->wall_side == 0)
 		wallX = player->pos_y + ray->perp_wall_dist * ray->dir_y;
 	else
@@ -157,6 +158,12 @@ static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 
 		if (ray->wall_side == 1)
 			color = (color >> 1) & 8355711;
+		// float	distance;
+		// float	opacity;
+
+		// distance = sqrt(pow(ray->map_x - player->pos_x, 2) + pow(ray->map_y - player->pos_y, 2));
+		// opacity = fmax(0.0, 1.0 - (distance / VISIBLE_RANGE));
+		// color = apply_opacity(color, opacity);
 		put_pixel(x, y, color, &mlx->img);
 	}
 }

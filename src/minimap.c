@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/01 15:40:09 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/02 15:45:02 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	draw_minimap(t_player *player, int map_x, int map_y, t_vars *vars);
 static void	draw_player(t_player *player, int map_x, int map_y, t_vars *vars);
 static int	get_tile_color(t_player *player, int x, int y, char **map);
-static int	apply_opacity(int color, float opacity);
+int	apply_opacity(int color, float opacity);
 
 void	render_minimap(t_player *player, t_vars *vars)
 {

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/02/01 16:13:21 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/02 13:57:02 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	key_press_hook(int keycode, t_vars *vars)
 		player->pan_left = true;
 	if (keycode == XK_Right)
 		player->pan_right = true;
+	if (keycode == XK_e)
+		player->interact = true;
 	return (0);
 }
 
@@ -75,6 +77,8 @@ int	key_release_hook(int keycode, t_vars *vars)
 		player->pan_left = false;
 	if (keycode == XK_Right)
 		player->pan_right = false;
+	if (keycode == XK_e)
+		player->interact = false;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/01 15:01:10 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:17:35 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ static void	init_textures(t_vars *vars)
 	int	xycolor;
 	(void)xycolor;
 
-	vars->texture = malloc(sizeof(int *) * 1);
+	vars->texture = malloc(sizeof(int *) * 2);
 	vars->texture[0] = malloc(TEX_HEIGHT * TEX_WIDTH * sizeof(int));
+	vars->texture[1] = malloc(TEX_HEIGHT * TEX_WIDTH * sizeof(int));
+	// vars->texture[2] = malloc(TEX_HEIGHT * TEX_WIDTH * sizeof(int));
 	x = 0;
 	while (x < TEX_WIDTH)
 	{
@@ -36,6 +38,7 @@ static void	init_textures(t_vars *vars)
 			// vars->texture[0][TEX_WIDTH * y + x] = xycolor + 256
 			// 	* xycolor + 65536 * xycolor;
 			vars->texture[0][TEX_WIDTH * y + x] = 0xFFFFFF;
+			vars->texture[1][TEX_WIDTH * y + x] = 0xFF0000;
 			y++;
 		}
 		x++;
@@ -81,6 +84,21 @@ static void	setup_mlx(t_vars *vars)
 	mlx_hook(vars->win, MOTION_NOTIFY, POINTER_MOTION_MASK, mouse_hook, vars);
 }
 
+void	init_doors(char **map, t_vars *vars)
+{
+	t_door	*doors;
+
+	(void)map;
+	doors = malloc(sizeof(t_door) * 4);
+	doors[0].x = 4;
+	doors[0].y = 2;
+	doors[0].is_open = false;
+	doors[1].x = -1;
+	doors[1].y = -1;
+	doors[0].is_open = false;
+	vars->doors = doors;
+}
+
 void	init_vars(t_vars *vars)
 {
 	init_textures(vars);
@@ -88,4 +106,5 @@ void	init_vars(t_vars *vars)
 	init_fps(vars);
 	setup_mlx(vars);
 	vars->map = hardcode_map();
+	init_doors(vars->map, vars);
 }

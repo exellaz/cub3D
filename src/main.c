@@ -15,16 +15,16 @@ char	**hardcode_map(void)
 	char **map;
 
 	map = malloc(sizeof(char *) * 11);
-	map[0] = "11111111111111";
-	map[1] = "10001000000001";
-	map[2] = "10001000000001";
-	map[3] = "10001000011111";
-	map[4] = "10000100000001";
-	map[5] = "10000100000001";
-	map[6] = "10000000010001";
-	map[7] = "10000000010001";
-	map[8] = "10000000010001";
-	map[9] = "11111111111111";
+	map[0] = ft_strdup("11111111111111");
+	map[1] = ft_strdup("10001000000001");
+	map[2] = ft_strdup("10002000000001");
+	map[3] = ft_strdup("10001000011111");
+	map[4] = ft_strdup("10000100000001");
+	map[5] = ft_strdup("10000100000001");
+	map[6] = ft_strdup("10000000010001");
+	map[7] = ft_strdup("10000000010001");
+	map[8] = ft_strdup("10000000010001");
+	map[9] = ft_strdup("11111111111111");
 	map[10] = NULL;
 	return (map);
 }
@@ -137,8 +137,12 @@ int	draw_loop(t_vars *mlx)
 	player = mlx->player;
 	frame_counter(mlx->fps);
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
-	handle_player_controls(mlx->map, player, mlx->fps);
+	handle_player_controls(mlx->map, player, mlx->fps, mlx->doors);
 	raycast(mlx);
+	if (mlx->doors[0].is_open == true)
+		mlx->map[mlx->doors[0].y][mlx->doors[0].x] = '0';
+	else if (mlx->doors[0].is_open == false)
+		mlx->map[mlx->doors[0].y][mlx->doors[0].x] = '2';
 	if (mlx->minimap_toggle == true)
 		render_minimap(player, mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
