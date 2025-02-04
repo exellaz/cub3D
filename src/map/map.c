@@ -32,6 +32,7 @@ t_map	*parse_map(int file,  void *mlx)
 	get_spawn(map->map, map->spawn);
 	validate_map(map);
 	load_textures(map->texture, mlx);
+	close(file);
 	return (map);
 }
 
