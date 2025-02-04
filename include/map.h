@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 10:16:28 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 11:31:57 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	valid_texture_path(char **texture_path, int *texture_fd);
 void	valid_iden(t_list *map);
 void	valid_walls(t_list *map);
 
+void	print_texture_path(char **texture_path);
+void	print_rgb(int (*rgb)[3]);
+void	print_spawn(int *spawn);
 void	print_map(t_list *map);
 
 #endif

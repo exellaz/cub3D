@@ -12,8 +12,10 @@ int	main(int ac, char **av)
 
 	fd = validate_arg(ac, av[1]);
 	map = parse_map(fd);
-	validate_map(map);
-	printf("Size: %d x %d\n", map->width, map->height);
+	print_texture_path(map->texture_path);
+	print_rgb(map->fc_rgb);
+	print_spawn(map->spawn);
+	print_map(map->map);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 10:50:27 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 11:29:13 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_map	*parse_map(int file)
 	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map, &map->width, &map->height);
 	get_spawn(map->map, map->spawn);
+	validate_map(map);
 	return (map);
 }
 
