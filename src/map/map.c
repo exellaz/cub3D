@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 15:58:48 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 16:17:51 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,13 @@ t_list	*load_file(int file)
 t_list	*get_texture_path(t_list *raw, t_texture *texture)
 {
 	char	**split;
-	t_list	*tmp;
 	int		i;
 
-	raw = skip_empty_lines(raw);
-	i = 0;
-	tmp = raw;
-	while (!is_whitespace(((char *)tmp->content)[0]))
-	{
-		i += 1;
-		tmp = tmp->next;
-	}
-	if (i != 4)
-		error_exit("texture path count is not 4");
+	count_cfg(raw, 4, "Texture count is not 4");
 	i = -1;
 	while (++i < 4)
 	{
-		split = ft_split(raw->content, '\n');
-		split = ft_split(split[0], ' ');
+		split = split_cfg(raw->content);
 		if (ft_strcmp(split[0], "NO") == 0)
 			texture[0].path = split[1];
 		else if (ft_strcmp(split[0], "SO") == 0)
@@ -96,26 +85,15 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture)
 t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 {
 	char	**split;
-	t_list	*tmp;
 	int		fc;
 	int		i;
 	int		j;
 
-	raw = skip_empty_lines(raw);
-	tmp = raw;
-	i = 0;
-	while (!is_whitespace(((char *)tmp->content)[0]))
-	{
-		i += 1;
-		tmp = tmp->next;
-	}
-	if (i != 2)
-		error_exit("RGB value count is not 2");
+	count_cfg(raw, 2, "RGB count is not 2");
 	i = -1;
 	while (++i < 2)
 	{
-		split = ft_split((char *)raw->content, '\n');
-		split = ft_split(split[0], ' ');
+		split = split_cfg(raw->content);
 		if (count_arr(split) != 2)
 			error_exit("RGB count is not 2");
 		if (ft_strcmp(split[0], "F") == 0)
