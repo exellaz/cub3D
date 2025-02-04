@@ -19,6 +19,8 @@
 void	validate_map(t_map *map)
 {
 	// check texture path
+	if (!valid_texture_path(map->texture_path))
+		error_exit("Invalid texture path");
 	// check rgb
 	// check identifier
 	if (!valid_iden(map->map))
@@ -26,6 +28,28 @@ void	validate_map(t_map *map)
 	// check walls
 	if (!valid_walls(map->map))
 		error_exit("Invalid walls in map");
+}
+
+bool	valid_texture_path(char **texture_path)
+{
+	int	fd;
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+	{
+	// is texture path exist ?
+	fd = open(texture_path[i], O_RDONLY);
+	if (fd < 0)
+	{
+		perror(texture_path[i]);
+		return (false);
+	}
+	close(fd);
+	// does texture path have correct extension ?
+	// does texture path have correct permission ?
+	}
+	return (true);
 }
 
 bool	valid_iden(t_list *map)

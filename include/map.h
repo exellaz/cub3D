@@ -36,6 +36,7 @@ void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
 
 void	validate_map(t_map *map);
+bool	valid_texture_path(char **texture_path);
 bool	valid_iden(t_list *map);
 bool	valid_walls(t_list *map);
 
