@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 11:40:41 by we               ###   ########.fr       */
+/*   Updated: 2025/02/04 11:49:18 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MAP_H
 
 typedef struct s_list	t_list;
+typedef struct s_img	t_img;
 
 // `texture` is stored in N, S, E, W order
 // `floor` and `ceiling` are stored in R, G, B order
@@ -21,6 +22,7 @@ typedef struct s_list	t_list;
 typedef struct s_map
 {
 	t_list	*map;
+	t_img	*texture[4];
 	char	*texture_path[4];
 	int		fc_rgb[2][3];
 	int		spawn[3];
