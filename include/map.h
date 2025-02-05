@@ -27,6 +27,7 @@ typedef struct s_texture
 // `texture` is stored in N, S, E, W, D order
 // `floor` and `ceiling` are stored in R, G, B order
 // `spawn` is stored in x, y, direction order
+// `door` is stored in x, y order
 typedef struct s_map
 {
 	t_list		*map;
@@ -44,6 +45,7 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture);
 t_list	*get_rgb(t_list *raw, int (*rgb)[3]);
 void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
+void	get_doors(t_list *map, int (*door)[2]);
 void	load_textures(t_texture *texture, void *mlx);
 
 void	validate_map(t_map *map);

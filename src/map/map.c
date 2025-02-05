@@ -30,6 +30,7 @@ t_map	*parse_map(int file,  void *mlx)
 	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map, &map->width, &map->height);
 	get_spawn(map->map, map->spawn);
+	get_doors(map->map, map->door);
 	validate_map(map);
 	load_textures(map->texture, mlx);
 	close(file);
@@ -183,6 +184,37 @@ void	get_spawn(t_list *map, int *spawn)
 			}
 		}
 		map = map->next;
+	}
+}
+
+// TODO: get_doors
+void	get_doors(t_list *map, int (*door)[2])
+{
+	(void)map;
+	(void)door;
+	t_list	*tmp;
+	int		i;
+
+	tmp = map;
+	i = 0;
+	while (tmp)
+	{
+		if (ft_strchr(tmp->content, 'D'))
+			i++;
+		tmp = tmp->next;
+	}
+	door = mem_alloc(sizeof(int) * i);
+	tmp = map;
+	i = 0;
+	while (tmp)
+	{
+		if (ft_strchr(tmp->content, 'D'))
+		{
+			door[i][0] = tmp->content;
+			door[i][1] = ft_strchr(tmp->content, 'D');
+			i++;
+		}
+		tmp = tmp->next;
 	}
 }
 
