@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/05 11:44:49 by we               ###   ########.fr       */
+/*   Updated: 2025/02/05 16:22:19 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,10 +187,11 @@ void	get_spawn(t_list *map, int *spawn)
 	}
 }
 
-void	get_doors(t_list *map, int (*door)[2], int *count)
+void	get_doors(t_list *map, int *door[2], int *count)
 {
 	t_list	*tmp;
 	int		i;
+	int		j;
 
 	tmp = map;
 	i = 0;
@@ -206,11 +207,16 @@ void	get_doors(t_list *map, int (*door)[2], int *count)
 	i = 0;
 	while (tmp)
 	{
-		if (ft_strchr(tmp->content, 'D'))
+		DEBUG("[%s]\n", (char *)tmp->content);
+		j = -1;
+		while (((char *)tmp->content)[++j])
 		{
-			door[i][0] = tmp->content;
-			door[i][1] = ft_strchr(tmp->content, 'D');
-			i++;
+			if (((char *)tmp->content)[j] == 'D')
+			{
+				door[i][0] = j;
+				door[i][1] = i;
+				i++;
+			}
 		}
 		tmp = tmp->next;
 	}

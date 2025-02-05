@@ -23,7 +23,10 @@ int	main(int ac, char **av)
 	fd = validate_arg(ac, av[1]);
 	mlx = mlx_init();
 	map = parse_map(fd, mlx);
-	print_map(map->map);
+	for (int i = 0; i < map->door_count; i++)
+	{
+		printf("Door %d: %d, %d\n", i, map->door[i][0], map->door[i][1]);
+	}
 	return (0);
 }
 
