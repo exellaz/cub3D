@@ -6,14 +6,16 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 15:17:35 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/05 17:04:18 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics.h"
 #include "events.h"
 #include "enum.h"
+#include "map.h"
 #include "cub3D.h"
+#include "utils.h"
 
 char	**hardcode_map(void);
 
@@ -56,13 +58,15 @@ static void	init_fps(t_vars *vars)
 	vars->fps = fps;
 }
 
-static void	init_player(t_vars *vars)
+static void	init_player(t_vars *vars, t_map *map_data)
 {
 	t_player	*player;
 
 	player = ft_calloc(1, sizeof(t_player));
-	player->pos_x = 3;
-	player->pos_y = 3;
+	player->pos_x = map_data->spawn[1];
+	player->pos_y = map_data->spawn[0];
+	printf("player->pos_x: %f\n", player->pos_x);
+	printf("player->pos_y: %f\n", player->pos_y);
 	player->dir_x = 1;
 	player->dir_y = 0;
 	player->plane_x = 0;
@@ -99,12 +103,21 @@ void	init_doors(char **map, t_vars *vars)
 	vars->doors = doors;
 }
 
-void	init_vars(t_vars *vars)
+void	init_vars(t_vars *vars, int fd)
 {
-	init_textures(vars);
-	init_player(vars);
-	init_fps(vars);
+	t_map	*map_data;
+	// t_list	*list
+
 	setup_mlx(vars);
-	vars->map = hardcode_map();
-	init_doors(vars->map, vars);
+	map_data = parse_map(fd, vars->mlx);
+	init_fps(vars);
+	init_textures(vars);
+	init_player(vars, map_data);
+	// vars->map = hardcode_map();
+	vars->map = lst_to_arr(map_data->map);
+	vars->map_data = map_data;
+	vars->map_width = map_data->width;
+	vars->map_height = map_data->height;
+	vars->tile_size = MINIMAP_SIZE / 9;
+	// init_doors(vars->map, vars);
 }

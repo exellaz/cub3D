@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:31:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/04 15:15:51 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:34:03 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,11 @@ void	move_player(float move_x, float move_y, char **map, t_player *player, t_doo
 
 bool	is_passable(int x, int y, char **map, t_door *doors)
 {
+	(void)doors;
 	if (map[y][x] != '0' && map[y][x] != '2')
 		return (false);
-	if (doors[0].x == x && doors[0].y == y && doors[0].is_open == false)
-		return (false);
+	// if (doors[0].x == x && doors[0].y == y && doors[0].is_open == false)
+	// 	return (false);
 	return (true);
 }
 

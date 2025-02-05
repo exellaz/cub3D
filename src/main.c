@@ -16,14 +16,18 @@ int		draw_loop(t_vars *mlx);
 
 int	main(int ac, char **av)
 {
-	void	*mlx;
-	t_map	*map;
+	// void	*mlx;
+	// t_map	*map;
+	t_vars	vars;
 	int		fd;
 
 	fd = validate_arg(ac, av[1]);
-	mlx = mlx_init();
-	map = parse_map(fd, mlx);
-	print_map(map->map);
+	// mlx = mlx_init();
+	// map = parse_map(fd, vars.mlx);
+	init_vars(&vars, fd);
+	// print_map(map->map);
+	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
+	mlx_loop(vars.mlx);
 	return (0);
 }
 
@@ -156,10 +160,10 @@ int	draw_loop(t_vars *mlx)
 	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
 	handle_player_controls(mlx->map, player, mlx->fps, mlx->doors);
 	raycast(mlx);
-	if (mlx->doors[0].is_open == true)
-		mlx->map[mlx->doors[0].y][mlx->doors[0].x] = '0';
-	else if (mlx->doors[0].is_open == false)
-		mlx->map[mlx->doors[0].y][mlx->doors[0].x] = '2';
+	// if (mlx->doors[0].is_open == true)
+	// 	mlx->map[mlx->doors[0].y][mlx->doors[0].x] = '0';
+	// else if (mlx->doors[0].is_open == false)
+	// 	mlx->map[mlx->doors[0].y][mlx->doors[0].x] = '2';
 	if (mlx->minimap_toggle == true)
 		render_minimap(player, mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);

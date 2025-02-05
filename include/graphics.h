@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 15:15:13 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:59:26 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <stdbool.h>
 # include <time.h>
 # include <X11/keysym.h>
+# include "map.h"
 
 typedef struct s_list	t_list;
 
@@ -117,6 +118,7 @@ typedef struct s_vars
 	int			prev_mouse_y;
 	bool		minimap_toggle;
 	t_door		*doors;
+	t_map		*map_data;
 }				t_vars;
 
 typedef struct s_point

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/02 15:49:47 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:59:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	find_step_and_dist(t_ray *ray, t_player *player)
 	}
 }
 
-static void	do_dda(t_ray *ray, char **map)
+static void	do_dda(t_ray *ray, t_map *map_data, char **map)
 {
 	int	hit;
 
@@ -100,7 +100,7 @@ static void	do_dda(t_ray *ray, char **map)
 			ray->map_y += ray->step_y;
 			ray->wall_side = 1;
 		}
-		if (ray->map_x > 13 || ray->map_y > 10 || ray->map_x < 0 || ray->map_y < 0 || map[ray->map_y][ray->map_x] != '0')
+		if (ray->map_x > map_data->width || ray->map_y > map_data->width || ray->map_x < 0 || ray->map_y < 0 || map[ray->map_y][ray->map_x] != '0')
 			hit = 1;
 	}
 }
@@ -154,7 +154,10 @@ static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 	{
 		texY = (int)texPos & (TEX_HEIGHT - 1);
 		texPos += step;
+		// printf("%c\n", mlx->map[ray->map_y][ray->map_x]);
+		// printf("%d\n", texNum);
 		color = texture[texNum][TEX_HEIGHT * texY + texX];
+		// color = 0xFFFFFF;
 
 		if (ray->wall_side == 1)
 			color = (color >> 1) & 8355711;
@@ -181,7 +184,7 @@ void	raycast(t_vars *mlx)
 	{
 		init_ray(x, player, ray);
 		find_step_and_dist(ray, player);
-		do_dda(ray, mlx->map);
+		do_dda(ray, mlx->map_data, mlx->map);
 		render_walls(ray);
 		get_textures(x, ray, player, mlx);
 		x++;
