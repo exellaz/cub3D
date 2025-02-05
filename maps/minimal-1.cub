@@ -1,7 +1,7 @@
-NO ./assets/north-texture.xpm
-SO ./assets/south-texture.xpm
-WE ./assets/west-texture.xpm
-EA ./assets/east-texture.xpm
+NO ./assets/n.xpm
+SO ./assets/s.xpm
+WE ./assets/w.xpm
+EA ./assets/e.xpm
 
 F 220,100,0
 C 225,30,0
