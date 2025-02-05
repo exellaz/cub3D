@@ -26,7 +26,6 @@
 
 int		validate_arg(int argc, char *file);
 void	init_vars(t_vars *vars);
-char	**get_map(void);
 int		draw_ray(t_player *player, t_vars *mlx, float start_x, int i);
 void	put_pixel(int x, int y, int color, t_img *img);
 int		frame_counter(t_fps *fps);

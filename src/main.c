@@ -1,14 +1,31 @@
+#include <time.h>
+#include <math.h>
+
+#include <mlx.h>
+
 #include "graphics.h"
 #include "events.h"
 #include "enum.h"
+#include "map.h"
 #include "cub3D.h"
-#include <time.h>
-
-#include <math.h>
-
 
 void	raycast(t_vars *mlx);
 void	draw_line(t_point start, t_point end, int color, t_img *img);
+int		draw_loop(t_vars *mlx);
+
+
+int	main(int ac, char **av)
+{
+	void	*mlx;
+	t_map	*map;
+	int		fd;
+
+	fd = validate_arg(ac, av[1]);
+	mlx = mlx_init();
+	map = parse_map(fd, mlx);
+	print_map(map->map);
+	return (0);
+}
 
 char	**hardcode_map(void)
 {
@@ -146,19 +163,5 @@ int	draw_loop(t_vars *mlx)
 	if (mlx->minimap_toggle == true)
 		render_minimap(player, mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
-	return (0);
-}
-
-int	main(int ac, char **av)
-{
-	(void)ac, (void)av;
-	t_vars		vars;
-
-	init_vars(&vars);
-	vars.map_width = 14;
-	vars.map_height = 10;
-	vars.tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);
-	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
-	mlx_loop(vars.mlx);
 	return (0);
 }
