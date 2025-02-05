@@ -16,14 +16,10 @@ int		draw_loop(t_vars *mlx);
 
 int	main(int ac, char **av)
 {
-	// void	*mlx;
-	// t_map	*map;
 	t_vars	vars;
 	int		fd;
 
 	fd = validate_arg(ac, av[1]);
-	// mlx = mlx_init();
-	// map = parse_map(fd, vars.mlx);
 	init_vars(&vars, fd);
 	// print_map(map->map);
 	mlx_loop_hook(vars.mlx, &draw_loop, &vars);

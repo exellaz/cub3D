@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/05 16:56:59 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/05 21:46:05 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,10 +178,10 @@ void	get_spawn(t_list *map, int *spawn)
 			if (line[j] == 'N' || line[j] == 'S'
 				|| line[j] == 'E' || line[j] == 'W')
 			{
-				line[j] = '0';
 				spawn[0] = i;
 				spawn[1] = j;
 				spawn[2] = line[j];
+				line[j] = '0';
 				return ;
 			}
 		}

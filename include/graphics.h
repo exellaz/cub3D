@@ -6,15 +6,15 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/02/05 16:59:26 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/05 21:19:26 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GRAPHICS_H
 # define GRAPHICS_H
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 600
 # define WHITE 0x00FFFFFF
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
@@ -23,7 +23,7 @@
 # define BLOCK_SIZE 32
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
-# define MINIMAP_SIZE 360
+# define MINIMAP_SIZE 120
 # define MINIMAP_OFFSET 4
 # define VISIBLE_RANGE 4
 # define PI 3.14159

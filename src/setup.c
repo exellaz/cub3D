@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/05 17:04:18 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/05 21:49:36 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,30 @@ static void	init_fps(t_vars *vars)
 	vars->fps = fps;
 }
 
+static void	init_player_dir(t_player *player, char dir)
+{
+	if (dir == 'N')
+	{
+		player->dir_y = -1;
+		player->plane_x = 0.66;
+	}
+	else if (dir == 'S')
+	{
+		player->dir_y = 1;
+		player->plane_x = -0.66;
+	}
+	else if (dir == 'E')
+	{
+		player->dir_x = 1;
+		player->plane_y = 0.66;
+	}
+	else if (dir == 'W')
+	{
+		player->dir_x = -1;
+		player->plane_y = -0.66;
+	}
+}
+
 static void	init_player(t_vars *vars, t_map *map_data)
 {
 	t_player	*player;
@@ -67,10 +91,12 @@ static void	init_player(t_vars *vars, t_map *map_data)
 	player->pos_y = map_data->spawn[0];
 	printf("player->pos_x: %f\n", player->pos_x);
 	printf("player->pos_y: %f\n", player->pos_y);
-	player->dir_x = 1;
-	player->dir_y = 0;
-	player->plane_x = 0;
-	player->plane_y = 0.66;
+	// player->dir_x = 1;
+	// player->dir_y = 0;
+	// player->plane_x = 0;
+	// player->plane_y = 0.66;
+	init_player_dir(player, map_data->spawn[2]);
+	printf("%c\n", map_data->spawn[2]);
 	vars->player = player;
 }
 
@@ -106,10 +132,9 @@ void	init_doors(char **map, t_vars *vars)
 void	init_vars(t_vars *vars, int fd)
 {
 	t_map	*map_data;
-	// t_list	*list
 
-	setup_mlx(vars);
 	map_data = parse_map(fd, vars->mlx);
+	setup_mlx(vars);
 	init_fps(vars);
 	init_textures(vars);
 	init_player(vars, map_data);
