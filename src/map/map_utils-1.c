@@ -39,10 +39,12 @@ void	count_cfg(t_list *raw, int count, char *msg)
 char	**split_cfg(char *line)
 {
 	char	**split;
+	char	**tmp;
 
-	split = ft_split(line, '\n');
-	split = ft_split(split[0], ' ');
+	tmp = ft_split(line, '\n');
+	split = ft_split(tmp[0], ' ');
 	if (!split)
 		error_exit(strerror(errno));
+	mem_free_arr(tmp);
 	return (split);
 }
