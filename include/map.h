@@ -6,12 +6,14 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 12:16:53 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/06 12:20:49 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_H
 # define MAP_H
+
+# define VALID_IDEN " 01NSEWD"
 
 typedef struct s_list	t_list;
 typedef struct s_img	t_img;
