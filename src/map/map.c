@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/05 16:22:19 by we               ###   ########.fr       */
+/*   Updated: 2025/02/06 12:18:42 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ void	get_spawn(t_list *map, int *spawn)
 	}
 }
 
-void	get_doors(t_list *map, int *door[2], int *count)
+void	get_doors(t_list *map, t_door *door, int *count)
 {
 	t_list	*tmp;
 	int		i;
@@ -207,14 +207,14 @@ void	get_doors(t_list *map, int *door[2], int *count)
 	i = 0;
 	while (tmp)
 	{
-		DEBUG("[%s]\n", (char *)tmp->content);
 		j = -1;
 		while (((char *)tmp->content)[++j])
 		{
 			if (((char *)tmp->content)[j] == 'D')
 			{
-				door[i][0] = j;
-				door[i][1] = i;
+				door[i].x = j;
+				door[i].y = i;
+				door[i].is_open = false;
 				i++;
 			}
 		}

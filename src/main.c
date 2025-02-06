@@ -25,7 +25,7 @@ int	main(int ac, char **av)
 	map = parse_map(fd, mlx);
 	for (int i = 0; i < map->door_count; i++)
 	{
-		printf("Door %d: %d, %d\n", i, map->door[i][0], map->door[i][1]);
+		printf("Door %d: x = %d, y = %d, is_open = %d\n", i, map->door[i].x, map->door[i].y, map->door[i].is_open);
 	}
 	return (0);
 }
