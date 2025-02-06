@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 12:18:42 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/06 14:35:20 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_map	*parse_map(int file,  void *mlx)
 	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map, &map->width, &map->height);
 	get_spawn(map->map, map->spawn);
-	get_doors(map->map, map->door, &map->door_count);
+	get_doors(map->map, &map->door, &map->door_count);
 	validate_map(map);
 	load_textures(map->texture, mlx);
 	close(file);
@@ -187,11 +187,12 @@ void	get_spawn(t_list *map, int *spawn)
 	}
 }
 
-void	get_doors(t_list *map, t_door *door, int *count)
+void	get_doors(t_list *map, t_door **door, int *count)
 {
 	t_list	*tmp;
 	int		i;
 	int		j;
+	int		k;
 
 	tmp = map;
 	i = 0;
@@ -201,10 +202,11 @@ void	get_doors(t_list *map, t_door *door, int *count)
 			i++;
 		tmp = tmp->next;
 	}
-	door = mem_alloc(sizeof(int) * i);
+	*door = mem_alloc(sizeof(t_door) * i);
 	*count = i;
 	tmp = map;
 	i = 0;
+	k = -1;
 	while (tmp)
 	{
 		j = -1;
@@ -212,12 +214,12 @@ void	get_doors(t_list *map, t_door *door, int *count)
 		{
 			if (((char *)tmp->content)[j] == 'D')
 			{
-				door[i].x = j;
-				door[i].y = i;
-				door[i].is_open = false;
-				i++;
+				(*door)[++k].x = j;
+				(*door)[k].y = i;
+				(*door)[k].is_open = false;
 			}
 		}
+		i++;
 		tmp = tmp->next;
 	}
 }

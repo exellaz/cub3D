@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 12:20:49 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/06 14:28:32 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture);
 t_list	*get_rgb(t_list *raw, int (*rgb)[3]);
 void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
-void	get_doors(t_list *map, t_door *door, int *count);
+void	get_doors(t_list *map, t_door **door, int *count);
 void	load_textures(t_texture *texture, void *mlx);
 
 void	validate_map(t_map *map);
