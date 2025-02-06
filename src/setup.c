@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 11:07:22 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:05:39 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,31 @@
 
 char	**hardcode_map(void);
 
-static void	init_textures(t_vars *vars)
+static void	init_textures(t_vars *vars, t_map *map)
 {
 	int	x;
 	int	y;
 	int	xycolor;
 	(void)xycolor;
 
-	vars->texture = malloc(sizeof(int *) * 2);
-	vars->texture[0] = malloc(TEX_HEIGHT * TEX_WIDTH * sizeof(int));
-	vars->texture[1] = malloc(TEX_HEIGHT * TEX_WIDTH * sizeof(int));
-	// vars->texture[2] = malloc(TEX_HEIGHT * TEX_WIDTH * sizeof(int));
-	x = 0;
-	while (x < TEX_WIDTH)
+	x = -1;
+	(void)map;
+	vars->texture = malloc(sizeof(int *) * 4);
+	while (++x < 4)
+		vars->texture[x] = malloc(sizeof(int) * TEX_HEIGHT * TEX_WIDTH);
+	y = 0;
+	while (y < TEX_HEIGHT)
 	{
-		y = 0;
-		while (y < TEX_HEIGHT)
+		x = 0;
+		while (x < TEX_WIDTH)
 		{
-			xycolor = y * 128 / TEX_HEIGHT + x * 128 / TEX_WIDTH;
-			// vars->texture[0][TEX_WIDTH * y + x] = xycolor + 256
-			// 	* xycolor + 65536 * xycolor;
-			vars->texture[0][TEX_WIDTH * y + x] = 0xFFFFFF;
-			vars->texture[1][TEX_WIDTH * y + x] = 0xFF0000;
-			y++;
+			vars->texture[0][y * TEX_WIDTH + x] = map->texture[0].img->addr[y * TEX_WIDTH + x];
+			vars->texture[1][y * TEX_WIDTH + x] = map->texture[1].img->addr[y * TEX_WIDTH + x];
+			vars->texture[2][y * TEX_WIDTH + x] = map->texture[2].img->addr[y * TEX_WIDTH + x];
+			vars->texture[3][y * TEX_WIDTH + x] = map->texture[3].img->addr[y * TEX_WIDTH + x];
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
 
@@ -98,7 +98,7 @@ static void	setup_mlx(t_vars *vars)
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	vars->img.img = mlx_new_image(vars->mlx, WIN_WIDTH, WIN_HEIGHT);
-	vars->img.addr = mlx_get_data_addr(vars->img.img, \
+	vars->img.addr = (int *)mlx_get_data_addr(vars->img.img, \
 		&vars->img.bits_per_pixel, &vars->img.line_length, &vars->img.endian);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	mlx_hook(vars->win, DESTROY_NOTIFY, NOT_EVENT_MASK, quit, vars);
@@ -124,10 +124,10 @@ void	init_doors(char **map, t_vars *vars)
 
 void	init_vars(t_vars *vars, int fd)
 {
-	vars->map_data = parse_map(fd, vars->mlx);
 	setup_mlx(vars);
+	vars->map_data = parse_map(fd, vars->mlx);
 	init_fps(vars);
-	init_textures(vars);
+	init_textures(vars, vars->map_data);
 	init_player(vars, vars->map_data);
 	vars->map = lst_to_arr(vars->map_data->map);
 	vars->tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);

@@ -51,10 +51,10 @@ void put_pixel(int x, int y, int color, t_img *img)
 	if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
 		return;
 
-	int index = y * img->line_length + x * img->bits_per_pixel / 8;
-	img->addr[index] = color & 0xFF;
-	img->addr[index + 1] = (color >> 8) & 0xFF;
-	img->addr[index + 2] = (color >> 16) & 0xFF;
+	int index = (y * img->line_length / 4) + x;
+	img->addr[index] = color;
+	img->addr[index + 1] = (color >> 8);
+	img->addr[index + 2] = (color >> 16);
 }
 
 void	draw_square(int x, int y, int size, int color, t_img *img)

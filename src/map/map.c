@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/05 21:46:05 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:00:56 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_map	*parse_map(int file,  void *mlx)
 	get_map(remain, &map->map, &map->width, &map->height);
 	get_spawn(map->map, map->spawn);
 	// get_doors(map->map, map->door);
-	// validate_map(map);
-	// load_textures(map->texture, mlx);
+	validate_map(map);
+	load_textures(map->texture, mlx);
 	close(file);
 	return (map);
 }
@@ -187,6 +187,8 @@ void	get_spawn(t_list *map, int *spawn)
 		}
 		map = map->next;
 	}
+	if (!ft_strchr("NSEW", spawn[2]))
+		error_exit("Invalid spawn point");
 }
 
 // TODO: get_doors
@@ -232,7 +234,7 @@ void	load_textures(t_texture *texture, void *mlx)
 				&texture[i].width, &texture[i].height);
 		if (!texture[i].img->img)
 			error_exit("Invalid texture");
-		texture[i].img->addr = mlx_get_data_addr(texture[i].img->img,
+		texture[i].img->addr = (int *)mlx_get_data_addr(texture[i].img->img,
 				&texture[i].img->bits_per_pixel, &texture[i].img->line_length,
 				&texture[i].img->endian);
 	}

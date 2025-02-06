@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/05 16:59:10 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:15:38 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int apply_opacity(int color, float opacity);
 
 static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 {
-	int				texNum = mlx->map[ray->map_y][ray->map_x] - 49;
+	int				texNum = mlx->map[ray->map_y][ray->map_x];
 	int				**texture = mlx->texture;
 	float			wallX;
 	int				texX;
@@ -133,7 +133,6 @@ static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 	int				texY;
 	unsigned int	color;
 
-	// printf("texNum: %d\n", texNum);
 	if (ray->wall_side == 0)
 		wallX = player->pos_y + ray->perp_wall_dist * ray->dir_y;
 	else
@@ -147,6 +146,20 @@ static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 	if (ray->wall_side == 1 && ray->dir_y < 0)
 		texX = TEX_WIDTH - texX - 1;
 
+	if (ray->wall_side == 1)
+	{
+		if (ray->dir_y < 0)
+			texNum = 0;
+		else
+			texNum = 1;
+	}
+	else
+	{
+		if (ray->dir_x < 0)
+			texNum = 2;
+		else
+			texNum = 3;
+	}
 	step = 1.0 * TEX_HEIGHT / ray->line_height;
 	texPos = (ray->draw_start - WIN_HEIGHT / 2 + ray->line_height / 2) * step;
 
@@ -154,10 +167,7 @@ static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 	{
 		texY = (int)texPos & (TEX_HEIGHT - 1);
 		texPos += step;
-		// printf("%c\n", mlx->map[ray->map_y][ray->map_x]);
-		// printf("%d\n", texNum);
 		color = texture[texNum][TEX_HEIGHT * texY + texX];
-		// color = 0xFFFFFF;
 
 		if (ray->wall_side == 1)
 			color = (color >> 1) & 8355711;
@@ -165,7 +175,20 @@ static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 		// float	opacity;
 
 		// distance = sqrt(pow(ray->map_x - player->pos_x, 2) + pow(ray->map_y - player->pos_y, 2));
-		// opacity = fmax(0.0, 1.0 - (distance / VISIBLE_RANGE));
+		// opacity = fmax(0.0, 1.0 - (distance / (VISIBLE_RANGE * 2)));
+
+		// float rel_y = (y - ray->draw_start) / (float)ray->line_height; // 0 (top) to 1 (bottom)
+		// float center_dist = fabs(rel_y - 0.5) * 2.0; // 0 at center, 1 at edges
+
+		// // Compute radial-based opacity (Gaussian-like falloff)
+		// float base_opacity = fmax(0.0, 1.0 - (ray->perp_wall_dist / (VISIBLE_RANGE * 2)));
+		// float radial_factor = 1.0 - 0.1 * (center_dist * center_dist); // Softer falloff, but still highlights the center
+		// float opacity = base_opacity * radial_factor;
+
+		// float brightness_factor = (ray->dir_x * player->dir_x + ray->dir_y * player->dir_y);
+		// brightness_factor = fmax(0.2, brightness_factor); // Avoid complete darkness
+		// opacity *= brightness_factor;
+
 		// color = apply_opacity(color, opacity);
 		put_pixel(x, y, color, &mlx->img);
 	}
