@@ -6,6 +6,7 @@
 #include "graphics.h"
 #include "events.h"
 #include "enum.h"
+#include "utils.h"
 #include "map.h"
 #include "cub3D.h"
 
@@ -23,9 +24,7 @@ int	main(int ac, char **av)
 	fd = validate_arg(ac, av[1]);
 	mlx = mlx_init();
 	map = parse_map(fd, mlx);
-	printf("door count: %d\n", map->door_count);
-	for (int i = 0; i < map->door_count; i++)
-		printf("door: x: %d, y: %d\n", map->door[i].x, map->door[i].y);
+	printf("door texure path: %s\n", map->texture[4].path);
 	return (0);
 }
 

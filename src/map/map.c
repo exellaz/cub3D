@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 14:35:20 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:11:14 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_map	*parse_map(int file,  void *mlx)
 	get_doors(map->map, &map->door, &map->door_count);
 	validate_map(map);
 	load_textures(map->texture, mlx);
-	close(file);
 	return (map);
 }
 
@@ -52,15 +51,26 @@ t_list	*load_file(int file)
 	}
 	if (!map)
 		error_exit("Empty file");
+	close(file);
 	return (map);
 }
 
 t_list	*get_texture_path(t_list *raw, t_texture *texture)
 {
 	char	**split;
+	t_list	*tmp;
 	int		i;
 
-	count_cfg(raw, 4, "Texture count is not 4");
+	raw = skip_empty_lines(raw);
+	i = 0;
+	tmp = raw;
+	while (!is_whitespace(((char *)tmp->content)[0]))
+	{
+		i += 1;
+		tmp = tmp->next;
+	}
+	if (i < 4 || i > 5)
+		error_exit("Texture count is not 4 or 5");
 	i = -1;
 	while (++i < 4)
 	{
@@ -73,6 +83,8 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture)
 			texture[2].path = split[1];
 		else if (ft_strcmp(split[0], "EA") == 0)
 			texture[3].path = split[1];
+		else if (ft_strcmp(split[0], "DO") == 0)
+			texture[4].path = split[1];
 		else
 			error_exit("Invalid texture identifier");
 		raw = raw->next;

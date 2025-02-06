@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 14:28:32 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/06 14:56:59 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_door
 typedef struct s_map
 {
 	t_list		*map;
-	t_texture	texture[4];
+	t_texture	texture[5];
 	int			fc_rgb[2][3];
 	int			spawn[3];
 	t_door		*door;
