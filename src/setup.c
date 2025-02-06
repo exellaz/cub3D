@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/05 21:49:36 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:07:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,7 @@ static void	init_player(t_vars *vars, t_map *map_data)
 	player = ft_calloc(1, sizeof(t_player));
 	player->pos_x = map_data->spawn[1];
 	player->pos_y = map_data->spawn[0];
-	printf("player->pos_x: %f\n", player->pos_x);
-	printf("player->pos_y: %f\n", player->pos_y);
-	// player->dir_x = 1;
-	// player->dir_y = 0;
-	// player->plane_x = 0;
-	// player->plane_y = 0.66;
 	init_player_dir(player, map_data->spawn[2]);
-	printf("%c\n", map_data->spawn[2]);
 	vars->player = player;
 }
 
@@ -131,18 +124,12 @@ void	init_doors(char **map, t_vars *vars)
 
 void	init_vars(t_vars *vars, int fd)
 {
-	t_map	*map_data;
-
-	map_data = parse_map(fd, vars->mlx);
+	vars->map_data = parse_map(fd, vars->mlx);
 	setup_mlx(vars);
 	init_fps(vars);
 	init_textures(vars);
-	init_player(vars, map_data);
-	// vars->map = hardcode_map();
-	vars->map = lst_to_arr(map_data->map);
-	vars->map_data = map_data;
-	vars->map_width = map_data->width;
-	vars->map_height = map_data->height;
-	vars->tile_size = MINIMAP_SIZE / 9;
+	init_player(vars, vars->map_data);
+	vars->map = lst_to_arr(vars->map_data->map);
+	vars->tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);
 	// init_doors(vars->map, vars);
 }

@@ -11,7 +11,7 @@
 
 void	raycast(t_vars *mlx);
 void	draw_line(t_point start, t_point end, int color, t_img *img);
-int		draw_loop(t_vars *mlx);
+int		draw_loop(t_vars *vars);
 
 
 int	main(int ac, char **av)
@@ -147,21 +147,21 @@ void	draw_map(t_vars *mlx)
 	}
 }
 
-int	draw_loop(t_vars *mlx)
+int	draw_loop(t_vars *vars)
 {
 	t_player	*player;
 
-	player = mlx->player;
-	frame_counter(mlx->fps);
-	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
-	handle_player_controls(mlx->map, player, mlx->fps, mlx->doors);
-	raycast(mlx);
-	// if (mlx->doors[0].is_open == true)
-	// 	mlx->map[mlx->doors[0].y][mlx->doors[0].x] = '0';
-	// else if (mlx->doors[0].is_open == false)
-	// 	mlx->map[mlx->doors[0].y][mlx->doors[0].x] = '2';
-	if (mlx->minimap_toggle == true)
-		render_minimap(player, mlx);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
+	player = vars->player;
+	frame_counter(vars->fps);
+	ft_bzero(vars->img.addr, WIN_WIDTH * WIN_HEIGHT * (vars->img.bits_per_pixel / 8));
+	handle_player_controls(vars->map, player, vars->fps, vars->doors);
+	raycast(vars);
+	// if (vars->doors[0].is_open == true)
+	// 	vars->map[vars->doors[0].y][vars->doors[0].x] = '0';
+	// else if (vars->doors[0].is_open == false)
+	// 	vars->map[vars->doors[0].y][vars->doors[0].x] = '2';
+	if (vars->minimap_toggle == true)
+		render_minimap(player, vars, vars->map_data);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	return (0);
 }

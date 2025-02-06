@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/02 15:45:02 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:13:46 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	draw_player(t_player *player, int map_x, int map_y, t_vars *vars);
 static int	get_tile_color(t_player *player, int x, int y, char **map);
 int	apply_opacity(int color, float opacity);
 
-void	render_minimap(t_player *player, t_vars *vars)
+void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 {
 	int	map_x;
 	int	map_y;
@@ -25,13 +25,13 @@ void	render_minimap(t_player *player, t_vars *vars)
 	map_x = floor(player->pos_x) - VISIBLE_RANGE;
 	if (map_x < 0)
 		map_x = 0;
-	else if (map_x + 2 * VISIBLE_RANGE + 1 > vars->map_width)
-		map_x = vars->map_width - (2 * VISIBLE_RANGE + 1);
+	else if (map_x + 2 * VISIBLE_RANGE + 1 > map_data->width)
+		map_x = map_data->width - (2 * VISIBLE_RANGE + 1);
 	map_y = floor(player->pos_y) - VISIBLE_RANGE;
 	if (map_y < 0)
 		map_y = 0;
-	else if (map_y + 2 * VISIBLE_RANGE + 1 > vars->map_height)
-		map_y = vars->map_height - (2 * VISIBLE_RANGE + 1);
+	else if (map_y + 2 * VISIBLE_RANGE + 1 > map_data->height)
+		map_y = map_data->height - (2 * VISIBLE_RANGE + 1);
 	draw_border(0, 0, MINIMAP_SIZE, MINIMAP_OFFSET, 0x808080, &vars->img);
 	draw_minimap(player, map_x, map_y, vars);
 	draw_player(player, map_x, map_y, vars);
@@ -84,6 +84,8 @@ int	get_tile_color(t_player *player, int x, int y, char **map)
 
 	distance = sqrt(pow(x - player->pos_x, 2) + pow(y - player->pos_y, 2));
 	opacity = fmax(0.0, 1.0 - (distance / VISIBLE_RANGE));
+	printf("y: %d\n", y);
+	printf("x: %d\n", x);
 	if (map[y][x] == '1')
 		color = 0x0000FF;
 	else
