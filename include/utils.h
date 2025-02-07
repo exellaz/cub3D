@@ -14,6 +14,7 @@
 # define UTILS_H
 
 typedef struct s_list	t_list;
+typedef struct s_img	t_img;
 
 char	**lst_to_arr(t_list *lst);
 t_list	*skip_empty_lines(t_list *raw);
@@ -21,5 +22,6 @@ bool	is_whitespace(char c);
 bool	is_num(char *str);
 void	print_arr(char **arr);
 int		count_arr(char **arr);
+void	free_img(t_img *img, void *mlx);
 
 #endif
