@@ -81,6 +81,7 @@ void	valid_walls(t_list *map, int height)
 	char	**map_arr;
 	int		i;
 	int		j;
+	(void)height;
 
 	map_arr = lst_to_arr(map);
 	i = -1;
@@ -88,25 +89,25 @@ void	valid_walls(t_list *map, int height)
 	{
 		j = -1;
 		while (map_arr[i][++j] && is_whitespace(map_arr[i][j]))
-		;
+			;
 		if (map_arr[i][j] != '1')
-		error_exit("Invalid wall 1");
+			error_exit("Invalid wall");
 		while (map_arr[i][j] && !is_whitespace(map_arr[i][j]))
-		j++;
+			j++;
 		if (map_arr[i][j - 1] != '1')
-		error_exit("Invalid wall 2");
+			error_exit("Invalid wall");
 	}
 	i = -1;
 	while (map_arr[0][++i])
 	{
 		j = -1;
-		while (++j < height && is_whitespace(map_arr[j][i]))
+		while (map_arr[++j] && is_whitespace(map_arr[j][i]))
 			;
-		if (map_arr[--j][i] != '1')
-			error_exit("Invalid wall 3");
-		while (++j < height && !is_whitespace(map_arr[j][i]))
-			;
+		if (map_arr[j][i] != '1')
+			error_exit("Invalid wall");
+		while (map_arr[j] && !is_whitespace(map_arr[j][i]))
+			j++;
 		if (map_arr[j - 1][i] != '1')
-			error_exit("Invalid wall 4");
+			error_exit("Invalid wall");
 	}
 }
