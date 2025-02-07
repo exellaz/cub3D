@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 14:54:45 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:15:19 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@
 #include "cub3D.h"
 #include "utils.h"
 
+void	init_fps(t_vars *vars);
+
 static void	init_textures(t_vars *vars, t_map *map)
 {
 	int	x;
 	int	y;
+	int	tex_index;
 
 	(void)map;
 	x = -1;
@@ -32,29 +35,19 @@ static void	init_textures(t_vars *vars, t_map *map)
 		x = 0;
 		while (x < TEX_WIDTH)
 		{
-			// vars->texture[0][y * TEX_WIDTH + x] = map->texture[0].img->addr[y * TEX_WIDTH + x];
-			// vars->texture[1][y * TEX_WIDTH + x] = map->texture[1].img->addr[y * TEX_WIDTH + x];
-			// vars->texture[2][y * TEX_WIDTH + x] = map->texture[2].img->addr[y * TEX_WIDTH + x];
-			// vars->texture[3][y * TEX_WIDTH + x] = map->texture[3].img->addr[y * TEX_WIDTH + x];
-			vars->texture[0][y * TEX_WIDTH + x] = 0xFFFFFF;
-			vars->texture[1][y * TEX_WIDTH + x] = 0xFFFFFF;
-			vars->texture[2][y * TEX_WIDTH + x] = 0xFFFFFF;
-			vars->texture[3][y * TEX_WIDTH + x] = 0xFFFFFF;
+			tex_index = y * TEX_WIDTH + x;
+			// vars->texture[0][tex_index] = map->texture[0].img->addr[tex_index];
+			// vars->texture[1][tex_index] = map->texture[1].img->addr[tex_index];
+			// vars->texture[2][tex_index] = map->texture[2].img->addr[tex_index];
+			// vars->texture[3][tex_index] = map->texture[3].img->addr[tex_index];
+			vars->texture[0][tex_index] = 0xFFFFFF;
+			vars->texture[1][tex_index] = 0xFFFFFF;
+			vars->texture[2][tex_index] = 0xFFFFFF;
+			vars->texture[3][tex_index] = 0xFFFFFF;
 			x++;
 		}
 		y++;
 	}
-}
-
-static void	init_fps(t_vars *vars)
-{
-	t_fps	*fps;
-
-	fps = ft_calloc(1, sizeof(t_fps));
-	fps->frame_count = 0;
-	fps->fps = 0.0;
-	fps->start_time = clock();
-	vars->fps = fps;
 }
 
 static void	init_player_dir(t_player *player, char dir)
