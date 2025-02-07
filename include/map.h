@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 11:15:28 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:30:06 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 # include "defines.h"
 
+# define VALID_IDEN " 01NSEWD"
+
 typedef struct s_list	t_list;
 typedef struct s_img	t_img;
+typedef struct s_door	t_door;
 
 typedef struct s_texture
 {
@@ -33,22 +36,25 @@ typedef struct s_texture
 typedef struct s_map
 {
 	t_list		*map;
-	t_texture	texture[4];
+	t_texture	texture[5];
 	int			fc_rgb[2][3];
 	int			spawn[3];
-	int			*door[2];
+	t_door		*door;
+	int			texture_count;
+	int			door_count;
 	int			width;
 	int			height;
 }	t_map;
 
 t_map	*parse_map(int file, void *mlx);
 t_list	*load_file(int file);
-t_list	*get_texture_path(t_list *raw, t_texture *texture);
+t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count);
 t_list	*get_rgb(t_list *raw, int (*rgb)[3]);
 void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
-void	get_doors(t_list *map, int (*door)[2]);
-void	load_textures(t_texture *texture, void *mlx);
+void	get_doors(t_list *map, t_door **door, int *count);
+void	load_textures(t_texture *texture, void *mlx, int count);
+void	free_texture(t_texture *texture, void *mlx, int count);
 
 void	validate_map(t_map *map);
 void	valid_texture_path(t_texture *texture);

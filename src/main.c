@@ -5,6 +5,7 @@
 
 #include "graphics.h"
 #include "events.h"
+#include "utils.h"
 #include "map.h"
 #include "cub3D.h"
 
@@ -20,7 +21,6 @@ int	main(int ac, char **av)
 
 	fd = validate_arg(ac, av[1]);
 	init_vars(&vars, fd);
-	// print_map(map->map);
 	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
 	mlx_loop(vars.mlx);
 	return (0);

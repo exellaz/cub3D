@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 19:15:19 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:29:29 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@ static void	init_textures(t_vars *vars, t_map *map)
 	int	tex_index;
 
 	(void)map;
-	x = -1;
-	vars->texture = malloc(sizeof(int *) * 4);
+	vars->texture = mem_alloc(sizeof(int *) * 4);
 	while (++x < 4)
-		vars->texture[x] = malloc(sizeof(int) * TEX_HEIGHT * TEX_WIDTH);
+		vars->texture[x] = mem_alloc(sizeof(int) * TEX_HEIGHT * TEX_WIDTH);
 	y = 0;
 	while (y < TEX_HEIGHT)
 	{

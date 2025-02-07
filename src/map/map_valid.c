@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_valid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 18:15:46 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/06 12:21:09 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,17 @@ void	valid_texture_path(t_texture *texture)
 
 void	valid_iden(t_list *map)
 {
-	char	*iden;
 	char	*line;
 	int		spawn;
 	t_list	*tmp;
 
-	iden = " 01NSEW";
 	tmp = map;
 	while (tmp)
 	{
 		line = (char *)tmp->content;
 		while (*line)
 		{
-			if (!ft_strchr(iden, *line))
+			if (!ft_strchr(VALID_IDEN, *line))
 				error_exit("Invalid identifier");
 			line++;
 		}
@@ -67,6 +65,15 @@ void	valid_iden(t_list *map)
 	}
 	spawn = 0;
 	tmp = map;
+	while (tmp)
+	{
+		if (ft_strchr(tmp->content, 'N') || ft_strchr(tmp->content, 'S')
+			|| ft_strchr(tmp->content, 'E') || ft_strchr(tmp->content, 'W'))
+			spawn++;
+		tmp = tmp->next;
+	}
+	if (spawn != 1)
+		error_exit("Invalid spawn point");
 }
 
 void	valid_walls(t_list *map)

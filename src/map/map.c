@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 19:00:56 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:11:14 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,15 @@ t_map	*parse_map(int file,  void *mlx)
 	t_list	*raw;
 	t_list	*remain;
 
-	(void)mlx;
 	map = mem_alloc(sizeof(t_map));
 	raw = load_file(file);
-	remain = get_texture_path(raw, map->texture);
+	remain = get_texture_path(raw, map->texture, &map->texture_count);
 	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map, &map->width, &map->height);
 	get_spawn(map->map, map->spawn);
-	// get_doors(map->map, map->door);
+	get_doors(map->map, &map->door, &map->door_count);
 	validate_map(map);
-	load_textures(map->texture, mlx);
-	close(file);
+	load_textures(map->texture, mlx, map->texture_count);
 	return (map);
 }
 
@@ -53,36 +51,8 @@ t_list	*load_file(int file)
 	}
 	if (!map)
 		error_exit("Empty file");
+	close(file);
 	return (map);
-}
-
-t_list	*get_texture_path(t_list *raw, t_texture *texture)
-{
-	char	**split;
-	int		i;
-
-	count_cfg(raw, 4, "Texture count is not 4");
-	i = -1;
-	while (++i < 4)
-	{
-		split = split_cfg(raw->content);
-		if (ft_strcmp(split[0], "NO") == 0)
-			texture[0].path = split[1];
-		else if (ft_strcmp(split[0], "SO") == 0)
-			texture[1].path = split[1];
-		else if (ft_strcmp(split[0], "WE") == 0)
-			texture[2].path = split[1];
-		else if (ft_strcmp(split[0], "EA") == 0)
-			texture[3].path = split[1];
-		else
-			error_exit("Invalid texture identifier");
-		raw = raw->next;
-	}
-	i = -1;
-	while (++i < 4)
-		if (!texture[i].path)
-			error_exit("Missing texture path");
-	return (raw->next);
 }
 
 t_list	*get_rgb(t_list *raw, int (*rgb)[3])
@@ -181,7 +151,6 @@ void	get_spawn(t_list *map, int *spawn)
 				spawn[0] = i;
 				spawn[1] = j;
 				spawn[2] = line[j];
-				line[j] = '0';
 				return ;
 			}
 		}
@@ -191,51 +160,39 @@ void	get_spawn(t_list *map, int *spawn)
 		error_exit("Invalid spawn point");
 }
 
-// TODO: get_doors
-// void	get_doors(t_list *map, int (*door)[2])
-// {
-// 	(void)map;
-// 	(void)door;
-// 	t_list	*tmp;
-// 	int		i;
-
-// 	tmp = map;
-// 	i = 0;
-// 	while (tmp)
-// 	{
-// 		if (ft_strchr(tmp->content, 'D'))
-// 			i++;
-// 		tmp = tmp->next;
-// 	}
-// 	door = mem_alloc(sizeof(int) * i);
-// 	tmp = map;
-// 	i = 0;
-// 	while (tmp)
-// 	{
-// 		if (ft_strchr(tmp->content, 'D'))
-// 		{
-// 			door[i][0] = tmp->content;
-// 			door[i][1] = ft_strchr(tmp->content, 'D');
-// 			i++;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
-
-void	load_textures(t_texture *texture, void *mlx)
+void	get_doors(t_list *map, t_door **door, int *count)
 {
-	int	i;
+	t_list	*tmp;
+	int		i;
+	int		j;
+	int		k;
 
-	i = -1;
-	while (++i < 4)
+	tmp = map;
+	i = 0;
+	while (tmp)
 	{
-		texture[i].img = mem_alloc(sizeof(t_img));
-		texture[i].img->img = mlx_xpm_file_to_image(mlx, texture[i].path,
-				&texture[i].width, &texture[i].height);
-		if (!texture[i].img->img)
-			error_exit("Invalid texture");
-		texture[i].img->addr = (int *)mlx_get_data_addr(texture[i].img->img,
-				&texture[i].img->bits_per_pixel, &texture[i].img->line_length,
-				&texture[i].img->endian);
+		if (ft_strchr(tmp->content, 'D'))
+			i++;
+		tmp = tmp->next;
+	}
+	*door = mem_alloc(sizeof(t_door) * i);
+	*count = i;
+	tmp = map;
+	i = 0;
+	k = -1;
+	while (tmp)
+	{
+		j = -1;
+		while (((char *)tmp->content)[++j])
+		{
+			if (((char *)tmp->content)[j] == 'D')
+			{
+				(*door)[++k].x = j;
+				(*door)[k].y = i;
+				(*door)[k].is_open = false;
+			}
+		}
+		i++;
+		tmp = tmp->next;
 	}
 }

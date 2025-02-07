@@ -22,6 +22,10 @@ int	quit(int keycode, t_vars *m)
 {
 	(void)keycode;
 	mlx_destroy_window(m->mlx, m->win);
+	mlx_destroy_image(m->mlx, m->img.img);
+	free_texture(m->map_data->texture, m->mlx, m->map_data->texture_count);
+	mem_clean();
+	free(m->mlx);
 	exit(0);
 	return (0);
 }

@@ -32,6 +32,7 @@ typedef struct s_mem
 t_mem	*mem_init(void);
 void	*mem_alloc(size_t size);
 void	mem_free(void *ptr);
+void	mem_free_arr(void *ptr);
 void	mem_clean(void);
 void	mem_debug(void);
 
