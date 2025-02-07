@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:00:47 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 17:22:58 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 21:09:49 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@
 unsigned int	apply_opacity(unsigned int color, float opacity);
 void			put_pixel(int x, int y, int color, t_img *img);
 void			draw_textured_column(int x, t_ray *ray, t_tex_data *tex_data, t_vars *vars);
-void			get_textures(int x, t_ray *ray, t_player *player, t_vars *vars);
+void			get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx);
 
 #endif

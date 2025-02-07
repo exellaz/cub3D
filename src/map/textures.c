@@ -52,6 +52,9 @@ void	load_textures(t_texture *texture, void *mlx, int count)
 	int	i;
 
 	i = -1;
+	// printf("Count: %d\n", count);
+	// for (int x = 0; x < 5; x++)
+	// 	printf("%s\n", texture[x].path);
 	while (++i < count)
 	{
 		texture[i].img = mem_alloc(sizeof(t_img));

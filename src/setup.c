@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 19:32:28 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 21:22:19 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void	init_textures(t_vars *vars, t_map *map)
 	int	tex_index;
 
 	(void)map;
-	vars->texture = mem_alloc(sizeof(int *) * 4);
+	vars->texture = mem_alloc(sizeof(int *) * 5);
 	x = -1;
-	while (++x < 4)
+	while (++x < 5)
 		vars->texture[x] = mem_alloc(sizeof(int) * TEX_HEIGHT * TEX_WIDTH);
 	y = 0;
 	while (y < TEX_HEIGHT)
@@ -36,14 +36,16 @@ static void	init_textures(t_vars *vars, t_map *map)
 		while (x < TEX_WIDTH)
 		{
 			tex_index = y * TEX_WIDTH + x;
-			// vars->texture[0][tex_index] = map->texture[0].img->addr[tex_index];
-			// vars->texture[1][tex_index] = map->texture[1].img->addr[tex_index];
-			// vars->texture[2][tex_index] = map->texture[2].img->addr[tex_index];
-			// vars->texture[3][tex_index] = map->texture[3].img->addr[tex_index];
-			vars->texture[0][tex_index] = 0xFFFFFF;
-			vars->texture[1][tex_index] = 0xFFFFFF;
-			vars->texture[2][tex_index] = 0xFFFFFF;
-			vars->texture[3][tex_index] = 0xFFFFFF;
+			vars->texture[0][tex_index] = map->texture[0].img->addr[tex_index];
+			vars->texture[1][tex_index] = map->texture[1].img->addr[tex_index];
+			vars->texture[2][tex_index] = map->texture[2].img->addr[tex_index];
+			vars->texture[3][tex_index] = map->texture[3].img->addr[tex_index];
+			vars->texture[4][tex_index] = map->texture[4].img->addr[tex_index];
+			// vars->texture[0][tex_index] = 0xFFFFFF;
+			// vars->texture[1][tex_index] = 0xFFFFFF;
+			// vars->texture[2][tex_index] = 0xFFFFFF;
+			// vars->texture[3][tex_index] = 0xFFFFFF;
+			// vars->texture[4][tex_index] = 0xFF0000;
 			x++;
 		}
 		y++;
