@@ -6,28 +6,23 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 19:05:39 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:54:45 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics.h"
 #include "events.h"
-#include "enum.h"
 #include "map.h"
 #include "cub3D.h"
 #include "utils.h"
-
-char	**hardcode_map(void);
 
 static void	init_textures(t_vars *vars, t_map *map)
 {
 	int	x;
 	int	y;
-	int	xycolor;
-	(void)xycolor;
 
-	x = -1;
 	(void)map;
+	x = -1;
 	vars->texture = malloc(sizeof(int *) * 4);
 	while (++x < 4)
 		vars->texture[x] = malloc(sizeof(int) * TEX_HEIGHT * TEX_WIDTH);
@@ -37,10 +32,14 @@ static void	init_textures(t_vars *vars, t_map *map)
 		x = 0;
 		while (x < TEX_WIDTH)
 		{
-			vars->texture[0][y * TEX_WIDTH + x] = map->texture[0].img->addr[y * TEX_WIDTH + x];
-			vars->texture[1][y * TEX_WIDTH + x] = map->texture[1].img->addr[y * TEX_WIDTH + x];
-			vars->texture[2][y * TEX_WIDTH + x] = map->texture[2].img->addr[y * TEX_WIDTH + x];
-			vars->texture[3][y * TEX_WIDTH + x] = map->texture[3].img->addr[y * TEX_WIDTH + x];
+			// vars->texture[0][y * TEX_WIDTH + x] = map->texture[0].img->addr[y * TEX_WIDTH + x];
+			// vars->texture[1][y * TEX_WIDTH + x] = map->texture[1].img->addr[y * TEX_WIDTH + x];
+			// vars->texture[2][y * TEX_WIDTH + x] = map->texture[2].img->addr[y * TEX_WIDTH + x];
+			// vars->texture[3][y * TEX_WIDTH + x] = map->texture[3].img->addr[y * TEX_WIDTH + x];
+			vars->texture[0][y * TEX_WIDTH + x] = 0xFFFFFF;
+			vars->texture[1][y * TEX_WIDTH + x] = 0xFFFFFF;
+			vars->texture[2][y * TEX_WIDTH + x] = 0xFFFFFF;
+			vars->texture[3][y * TEX_WIDTH + x] = 0xFFFFFF;
 			x++;
 		}
 		y++;

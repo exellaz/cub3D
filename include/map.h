@@ -6,12 +6,14 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 18:15:37 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:15:28 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_H
 # define MAP_H
+
+# include "defines.h"
 
 typedef struct s_list	t_list;
 typedef struct s_img	t_img;

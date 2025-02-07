@@ -6,22 +6,18 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:49 by we                #+#    #+#             */
-/*   Updated: 2025/02/05 21:57:44 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:07:09 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# ifndef DEBUG
-#  define DEBUG 0
-# endif
-
 # include <math.h>
-
 # include <mlx.h>
 # include <Libft.h>
 
+# include "defines.h"
 # include "graphics.h"
 # include "map.h"
 

@@ -6,17 +6,17 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/06 15:53:11 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:29:05 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3D.h>
 
-static void	draw_minimap(t_player *player, int map_x, int map_y, int range, t_vars *vars);
-static void	draw_player(t_player *player, int map_x, int map_y, t_vars *vars);
-static int	get_tile_color(t_player *player, int x, int y, char **map);
-static int	get_size_and_range(t_vars *vars, t_map *map_data);
-int	apply_opacity(int color, float opacity);
+static void		draw_minimap(t_player *player, int map_x, int map_y, int range, t_vars *vars);
+static void		draw_player(t_player *player, int map_x, int map_y, t_vars *vars);
+static int		get_tile_color(t_player *player, int x, int y, char **map);
+static int		get_size_and_range(t_vars *vars, t_map *map_data);
+unsigned int	apply_opacity(unsigned int color, float opacity);
 
 void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 {
@@ -94,7 +94,7 @@ int	get_tile_color(t_player *player, int x, int y, char **map)
 	return (apply_opacity(color, opacity));
 }
 
-int	apply_opacity(int color, float opacity)
+unsigned int	apply_opacity(unsigned int color, float opacity)
 {
 	int	r;
 	int	g;
