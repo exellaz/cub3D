@@ -47,12 +47,12 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count)
 	return (raw->next);
 }
 
-void	load_textures(t_texture *texture, void *mlx)
+void	load_textures(t_texture *texture, void *mlx, int count)
 {
 	int	i;
 
 	i = -1;
-	while (++i < 4)
+	while (++i < count)
 	{
 		texture[i].img = mem_alloc(sizeof(t_img));
 		texture[i].img->img = mlx_xpm_file_to_image(mlx, texture[i].path,

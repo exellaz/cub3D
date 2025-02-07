@@ -51,7 +51,7 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3]);
 void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
 void	get_doors(t_list *map, t_door **door, int *count);
-void	load_textures(t_texture *texture, void *mlx);
+void	load_textures(t_texture *texture, void *mlx, int count);
 void	free_texture(t_texture *texture, void *mlx, int count);
 
 void	validate_map(t_map *map);

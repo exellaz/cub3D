@@ -28,9 +28,9 @@ static void	init_textures(t_vars *vars, t_map *map)
 
 	x = -1;
 	(void)map;
-	vars->texture = malloc(sizeof(int *) * 4);
+	vars->texture = mem_alloc(sizeof(int *) * 4);
 	while (++x < 4)
-		vars->texture[x] = malloc(sizeof(int) * TEX_HEIGHT * TEX_WIDTH);
+		vars->texture[x] = mem_alloc(sizeof(int) * TEX_HEIGHT * TEX_WIDTH);
 	y = 0;
 	while (y < TEX_HEIGHT)
 	{
