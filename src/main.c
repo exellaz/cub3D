@@ -27,6 +27,7 @@ int	main(int ac, char **av)
 	printf("door texure path: %s\n", map->texture[4].path);
 	for (int i = 0; i < map->door_count; i++)
 		printf("door %d: x: %d, y: %d, is_open: %d\n", i, map->door[i].x, map->door[i].y, map->door[i].is_open);
+	// free textures
 	mem_clean();
 	return (0);
 }
