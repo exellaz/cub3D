@@ -30,7 +30,6 @@ t_map	*parse_map(int file,  void *mlx)
 	remain = get_texture_path(raw, map->texture, &map->texture_count);
 	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map, &map->width, &map->height);
-	print_map(map->map);
 	get_spawn(map->map, map->spawn);
 	get_doors(map->map, &map->door, &map->door_count);
 	validate_map(map);

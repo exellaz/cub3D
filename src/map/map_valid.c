@@ -67,7 +67,6 @@ void	valid_iden(t_list *map)
 	tmp = map;
 	while (tmp)
 	{
-		// DEBUG("content: %s\n", (char *)tmp->content);
 		if (ft_strchr(tmp->content, 'N') || ft_strchr(tmp->content, 'S')
 			|| ft_strchr(tmp->content, 'E') || ft_strchr(tmp->content, 'W'))
 			spawn++;
