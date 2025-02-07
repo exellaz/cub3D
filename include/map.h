@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 14:56:59 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/07 19:30:06 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_H
 # define MAP_H
+
+# include "defines.h"
 
 # define VALID_IDEN " 01NSEWD"
 

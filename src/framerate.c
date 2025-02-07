@@ -6,11 +6,22 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:33:35 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/01 14:16:58 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:15:24 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	init_fps(t_vars *vars)
+{
+	t_fps	*fps;
+
+	fps = ft_calloc(1, sizeof(t_fps));
+	fps->frame_count = 0;
+	fps->fps = 0.0;
+	fps->start_time = clock();
+	vars->fps = fps;
+}
 
 int	frame_counter(t_fps *fps)
 {
