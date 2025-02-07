@@ -57,7 +57,7 @@ void	free_texture(t_texture *texture, void *mlx, int count);
 void	validate_map(t_map *map);
 void	valid_texture_path(t_texture *texture);
 void	valid_iden(t_list *map);
-void	valid_walls(t_list *map);
+void	valid_walls(t_list *map, int height);
 
 void	count_cfg(t_list *raw, int count, char *msg);
 char	**split_cfg(char *line);

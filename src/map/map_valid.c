@@ -23,7 +23,7 @@ void	validate_map(t_map *map)
 {
 	valid_texture_path(map->texture);
 	valid_iden(map->map);
-	valid_walls(map->map);
+	valid_walls(map->map, map->height);
 }
 
 void	valid_texture_path(t_texture *texture)
@@ -76,7 +76,7 @@ void	valid_iden(t_list *map)
 		error_exit("Invalid spawn point");
 }
 
-void	valid_walls(t_list *map)
+void	valid_walls(t_list *map, int height)
 {
 	char	**map_arr;
 	int		i;
@@ -88,25 +88,25 @@ void	valid_walls(t_list *map)
 	{
 		j = -1;
 		while (map_arr[i][++j] && is_whitespace(map_arr[i][j]))
-			;
+		;
 		if (map_arr[i][j] != '1')
-			error_exit("Invalid wall");
+		error_exit("Invalid wall 1");
 		while (map_arr[i][j] && !is_whitespace(map_arr[i][j]))
-			j++;
+		j++;
 		if (map_arr[i][j - 1] != '1')
-			error_exit("Invalid wall");
+		error_exit("Invalid wall 2");
 	}
 	i = -1;
 	while (map_arr[0][++i])
 	{
 		j = -1;
-		while (map_arr[++j] && is_whitespace(map_arr[j][i]))
+		while (++j < height && is_whitespace(map_arr[j][i]))
 			;
-		if (map_arr[j][i] != '1')
-			error_exit("Invalid wall");
-		while (map_arr[j] && !is_whitespace(map_arr[j][i]))
-			j++;
+		if (map_arr[--j][i] != '1')
+			error_exit("Invalid wall 3");
+		while (++j < height && !is_whitespace(map_arr[j][i]))
+			;
 		if (map_arr[j - 1][i] != '1')
-			error_exit("Invalid wall");
+			error_exit("Invalid wall 4");
 	}
 }

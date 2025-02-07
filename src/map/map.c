@@ -110,19 +110,18 @@ void	get_map(t_list *raw, t_list **map, int *width, int *height)
 		tmp = tmp->next;
 	}
 	*width = max;
-	i = -1;
 	*height = 0;
 	tmp = *map;
 	while (tmp)
 	{
-		if (ft_strlen(tmp->content) < (size_t)max)
+		if (ft_strlen(tmp->content) <= (size_t)max)
 		{
 			line = mem_alloc(max + 1);
 			ft_strlcpy(line, (char *)tmp->content, max + 1);
+			line[max] = '\0';
 			i = ft_strlen(line);
 			while (i < max)
-				line[i++] = ' ';
-			line[max] = '\0';
+			line[i++] = ' ';
 			tmp->content = line;
 		}
 		*height += 1;
