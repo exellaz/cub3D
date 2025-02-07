@@ -17,6 +17,7 @@
 
 typedef struct s_list	t_list;
 typedef struct s_img	t_img;
+typedef struct s_door	t_door;
 
 typedef struct s_texture
 {
@@ -25,13 +26,6 @@ typedef struct s_texture
 	int		width;
 	int		height;
 }	t_texture;
-
-typedef struct s_door
-{
-	int		x;
-	int		y;
-	bool	is_open;
-}	t_door;
 
 // `texture` is stored in N, S, E, W, D order
 // `floor` and `ceiling` are stored in R, G, B order

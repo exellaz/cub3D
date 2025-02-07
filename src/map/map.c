@@ -24,11 +24,13 @@ t_map	*parse_map(int file,  void *mlx)
 	t_list	*raw;
 	t_list	*remain;
 
+	(void)mlx;
 	map = mem_alloc(sizeof(t_map));
 	raw = load_file(file);
 	remain = get_texture_path(raw, map->texture, &map->texture_count);
 	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map, &map->width, &map->height);
+	print_map(map->map);
 	get_spawn(map->map, map->spawn);
 	get_doors(map->map, &map->door, &map->door_count);
 	validate_map(map);
@@ -156,6 +158,8 @@ void	get_spawn(t_list *map, int *spawn)
 		}
 		map = map->next;
 	}
+	if (!ft_strchr("NSEW", spawn[2]))
+		error_exit("Invalid spawn point");
 }
 
 void	get_doors(t_list *map, t_door **door, int *count)

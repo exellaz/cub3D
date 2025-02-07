@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/01/24 15:56:30 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:15:38 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	find_step_and_dist(t_ray *ray, t_player *player)
 	}
 }
 
-static void	do_dda(t_ray *ray, char **map)
+static void	do_dda(t_ray *ray, t_map *map_data, char **map)
 {
 	int	hit;
 
@@ -100,7 +100,7 @@ static void	do_dda(t_ray *ray, char **map)
 			ray->map_y += ray->step_y;
 			ray->wall_side = 1;
 		}
-		if (ray->map_x > 13 || ray->map_y > 10 || ray->map_x < 0 || ray->map_y < 0 || map[ray->map_y][ray->map_x] == '1')
+		if (ray->map_x > map_data->width || ray->map_y > map_data->width || ray->map_x < 0 || ray->map_y < 0 || map[ray->map_y][ray->map_x] != '0')
 			hit = 1;
 	}
 }
@@ -124,7 +124,7 @@ int apply_opacity(int color, float opacity);
 
 static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 {
-	int				texNum = mlx->map[ray->map_y][ray->map_x] - 49;
+	int				texNum = mlx->map[ray->map_y][ray->map_x];
 	int				**texture = mlx->texture;
 	float			wallX;
 	int				texX;
@@ -146,6 +146,20 @@ static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 	if (ray->wall_side == 1 && ray->dir_y < 0)
 		texX = TEX_WIDTH - texX - 1;
 
+	if (ray->wall_side == 1)
+	{
+		if (ray->dir_y < 0)
+			texNum = 0;
+		else
+			texNum = 1;
+	}
+	else
+	{
+		if (ray->dir_x < 0)
+			texNum = 2;
+		else
+			texNum = 3;
+	}
 	step = 1.0 * TEX_HEIGHT / ray->line_height;
 	texPos = (ray->draw_start - WIN_HEIGHT / 2 + ray->line_height / 2) * step;
 
@@ -157,6 +171,25 @@ static void		get_textures(int x, t_ray *ray, t_player *player, t_vars *mlx)
 
 		if (ray->wall_side == 1)
 			color = (color >> 1) & 8355711;
+		// float	distance;
+		// float	opacity;
+
+		// distance = sqrt(pow(ray->map_x - player->pos_x, 2) + pow(ray->map_y - player->pos_y, 2));
+		// opacity = fmax(0.0, 1.0 - (distance / (VISIBLE_RANGE * 2)));
+
+		// float rel_y = (y - ray->draw_start) / (float)ray->line_height; // 0 (top) to 1 (bottom)
+		// float center_dist = fabs(rel_y - 0.5) * 2.0; // 0 at center, 1 at edges
+
+		// // Compute radial-based opacity (Gaussian-like falloff)
+		// float base_opacity = fmax(0.0, 1.0 - (ray->perp_wall_dist / (VISIBLE_RANGE * 2)));
+		// float radial_factor = 1.0 - 0.1 * (center_dist * center_dist); // Softer falloff, but still highlights the center
+		// float opacity = base_opacity * radial_factor;
+
+		// float brightness_factor = (ray->dir_x * player->dir_x + ray->dir_y * player->dir_y);
+		// brightness_factor = fmax(0.2, brightness_factor); // Avoid complete darkness
+		// opacity *= brightness_factor;
+
+		// color = apply_opacity(color, opacity);
 		put_pixel(x, y, color, &mlx->img);
 	}
 }
@@ -174,7 +207,7 @@ void	raycast(t_vars *mlx)
 	{
 		init_ray(x, player, ray);
 		find_step_and_dist(ray, player);
-		do_dda(ray, mlx->map);
+		do_dda(ray, mlx->map_data, mlx->map);
 		render_walls(ray);
 		get_textures(x, ray, player, mlx);
 		x++;

@@ -59,7 +59,7 @@ void	load_textures(t_texture *texture, void *mlx)
 				&texture[i].width, &texture[i].height);
 		if (!texture[i].img->img)
 			error_exit("Invalid texture");
-		texture[i].img->addr = mlx_get_data_addr(texture[i].img->img,
+		texture[i].img->addr = (int *)mlx_get_data_addr(texture[i].img->img,
 				&texture[i].img->bits_per_pixel, &texture[i].img->line_length,
 				&texture[i].img->endian);
 	}
