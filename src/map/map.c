@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 16:17:51 by we               ###   ########.fr       */
+/*   Updated: 2025/02/06 19:00:56 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ t_map	*parse_map(int file,  void *mlx)
 	t_list	*raw;
 	t_list	*remain;
 
+	(void)mlx;
 	map = mem_alloc(sizeof(t_map));
 	raw = load_file(file);
 	remain = get_texture_path(raw, map->texture);
 	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map, &map->width, &map->height);
 	get_spawn(map->map, map->spawn);
-	get_doors(map->map, map->door);
+	// get_doors(map->map, map->door);
 	validate_map(map);
 	load_textures(map->texture, mlx);
 	close(file);
@@ -180,43 +181,46 @@ void	get_spawn(t_list *map, int *spawn)
 				spawn[0] = i;
 				spawn[1] = j;
 				spawn[2] = line[j];
+				line[j] = '0';
 				return ;
 			}
 		}
 		map = map->next;
 	}
+	if (!ft_strchr("NSEW", spawn[2]))
+		error_exit("Invalid spawn point");
 }
 
 // TODO: get_doors
-void	get_doors(t_list *map, int (*door)[2])
-{
-	(void)map;
-	(void)door;
-	t_list	*tmp;
-	int		i;
+// void	get_doors(t_list *map, int (*door)[2])
+// {
+// 	(void)map;
+// 	(void)door;
+// 	t_list	*tmp;
+// 	int		i;
 
-	tmp = map;
-	i = 0;
-	while (tmp)
-	{
-		if (ft_strchr(tmp->content, 'D'))
-			i++;
-		tmp = tmp->next;
-	}
-	door = mem_alloc(sizeof(int) * i);
-	tmp = map;
-	i = 0;
-	while (tmp)
-	{
-		if (ft_strchr(tmp->content, 'D'))
-		{
-			door[i][0] = tmp->content;
-			door[i][1] = ft_strchr(tmp->content, 'D');
-			i++;
-		}
-		tmp = tmp->next;
-	}
-}
+// 	tmp = map;
+// 	i = 0;
+// 	while (tmp)
+// 	{
+// 		if (ft_strchr(tmp->content, 'D'))
+// 			i++;
+// 		tmp = tmp->next;
+// 	}
+// 	door = mem_alloc(sizeof(int) * i);
+// 	tmp = map;
+// 	i = 0;
+// 	while (tmp)
+// 	{
+// 		if (ft_strchr(tmp->content, 'D'))
+// 		{
+// 			door[i][0] = tmp->content;
+// 			door[i][1] = ft_strchr(tmp->content, 'D');
+// 			i++;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// }
 
 void	load_textures(t_texture *texture, void *mlx)
 {
@@ -230,7 +234,7 @@ void	load_textures(t_texture *texture, void *mlx)
 				&texture[i].width, &texture[i].height);
 		if (!texture[i].img->img)
 			error_exit("Invalid texture");
-		texture[i].img->addr = mlx_get_data_addr(texture[i].img->img,
+		texture[i].img->addr = (int *)mlx_get_data_addr(texture[i].img->img,
 				&texture[i].img->bits_per_pixel, &texture[i].img->line_length,
 				&texture[i].img->endian);
 	}

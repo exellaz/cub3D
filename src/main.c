@@ -11,19 +11,19 @@
 
 void	raycast(t_vars *mlx);
 void	draw_line(t_point start, t_point end, int color, t_img *img);
-int		draw_loop(t_vars *mlx);
+int		draw_loop(t_vars *vars);
 
 
 int	main(int ac, char **av)
 {
-	void	*mlx;
-	t_map	*map;
+	t_vars	vars;
 	int		fd;
 
 	fd = validate_arg(ac, av[1]);
-	mlx = mlx_init();
-	map = parse_map(fd, mlx);
-	print_map(map->map);
+	init_vars(&vars, fd);
+	// print_map(map->map);
+	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
+	mlx_loop(vars.mlx);
 	return (0);
 }
 
@@ -32,16 +32,16 @@ char	**hardcode_map(void)
 	char **map;
 
 	map = malloc(sizeof(char *) * 11);
-	map[0] = "11111111111111";
-	map[1] = "10001000000001";
-	map[2] = "10001000000001";
-	map[3] = "10001000011111";
-	map[4] = "10000100000001";
-	map[5] = "10000100000001";
-	map[6] = "10000000010001";
-	map[7] = "10000000010001";
-	map[8] = "10000000010001";
-	map[9] = "11111111111111";
+	map[0] = ft_strdup("11111111111111");
+	map[1] = ft_strdup("10001000000001");
+	map[2] = ft_strdup("10002000000001");
+	map[3] = ft_strdup("10001000011111");
+	map[4] = ft_strdup("10000100000001");
+	map[5] = ft_strdup("10000100000001");
+	map[6] = ft_strdup("10000000010001");
+	map[7] = ft_strdup("10000000010001");
+	map[8] = ft_strdup("10000000010001");
+	map[9] = ft_strdup("11111111111111");
 	map[10] = NULL;
 	return (map);
 }
@@ -51,10 +51,10 @@ void put_pixel(int x, int y, int color, t_img *img)
 	if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
 		return;
 
-	int index = y * img->line_length + x * img->bits_per_pixel / 8;
-	img->addr[index] = color & 0xFF;
-	img->addr[index + 1] = (color >> 8) & 0xFF;
-	img->addr[index + 2] = (color >> 16) & 0xFF;
+	int index = (y * img->line_length / 4) + x;
+	img->addr[index] = color;
+	img->addr[index + 1] = (color >> 8);
+	img->addr[index + 2] = (color >> 16);
 }
 
 void	draw_square(int x, int y, int size, int color, t_img *img)
@@ -147,17 +147,21 @@ void	draw_map(t_vars *mlx)
 	}
 }
 
-int	draw_loop(t_vars *mlx)
+int	draw_loop(t_vars *vars)
 {
 	t_player	*player;
 
-	player = mlx->player;
-	frame_counter(mlx->fps);
-	ft_bzero(mlx->img.addr, WIN_WIDTH * WIN_HEIGHT * (mlx->img.bits_per_pixel / 8));
-	handle_player_controls(mlx->map, player, mlx->fps);
-	raycast(mlx);
-	if (mlx->minimap_toggle == true)
-		render_minimap(player, mlx);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
+	player = vars->player;
+	frame_counter(vars->fps);
+	ft_bzero(vars->img.addr, WIN_WIDTH * WIN_HEIGHT * (vars->img.bits_per_pixel / 8));
+	handle_player_controls(vars->map, player, vars->fps, vars->doors);
+	raycast(vars);
+	// if (vars->doors[0].is_open == true)
+	// 	vars->map[vars->doors[0].y][vars->doors[0].x] = '0';
+	// else if (vars->doors[0].is_open == false)
+	// 	vars->map[vars->doors[0].y][vars->doors[0].x] = '2';
+	if (vars->minimap_toggle == true)
+		render_minimap(player, vars, vars->map_data);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	return (0);
 }

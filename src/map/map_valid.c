@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_valid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 14:10:15 by we               ###   ########.fr       */
+/*   Updated: 2025/02/06 18:15:46 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,6 @@ void	valid_iden(t_list *map)
 	}
 	spawn = 0;
 	tmp = map;
-	while (tmp)
-	{
-		if (ft_strchr(tmp->content, 'N') || ft_strchr(tmp->content, 'S')
-			|| ft_strchr(tmp->content, 'E') || ft_strchr(tmp->content, 'W'))
-			spawn++;
-		tmp = tmp->next;
-	}
-	if (spawn != 1)
-		error_exit("Invalid spawn point");
 }
 
 void	valid_walls(t_list *map)
