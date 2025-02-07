@@ -79,9 +79,9 @@ void	valid_iden(t_list *map)
 void	valid_walls(t_list *map, int height)
 {
 	char	**map_arr;
+	int		empty;
 	int		i;
 	int		j;
-	(void)height;
 
 	map_arr = lst_to_arr(map);
 	i = -1;
@@ -100,11 +100,14 @@ void	valid_walls(t_list *map, int height)
 	i = -1;
 	while (map_arr[0][++i])
 	{
-		j = -1;
-		while (map_arr[++j] && is_whitespace(map_arr[j][i]))
-			;
-		if (map_arr[j][i] != '1')
-			error_exit("Invalid wall");
+		empty = 0;
+		j = 0;
+		while (j < height && is_whitespace(map_arr[j++][i]))
+			++empty;
+		if (empty == height)
+			continue;
+		if (map_arr[j - 1][i] != '1')
+			error_exit("Invalid wall !");
 		while (map_arr[j] && !is_whitespace(map_arr[j][i]))
 			j++;
 		if (map_arr[j - 1][i] != '1')
