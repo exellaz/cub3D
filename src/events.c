@@ -6,12 +6,12 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 11:21:44 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:31:58 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-
+#include "cub3D.h"
 #include <mlx.h>
 
 #include "events.h"
