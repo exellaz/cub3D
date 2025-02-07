@@ -26,7 +26,7 @@ t_map	*parse_map(int file,  void *mlx)
 
 	map = mem_alloc(sizeof(t_map));
 	raw = load_file(file);
-	remain = get_texture_path(raw, map->texture);
+	remain = get_texture_path(raw, map->texture, &map->texture_count);
 	remain = get_rgb(remain, map->fc_rgb);
 	get_map(remain, &map->map, &map->width, &map->height);
 	get_spawn(map->map, map->spawn);
@@ -194,4 +194,3 @@ void	get_doors(t_list *map, t_door **door, int *count)
 		tmp = tmp->next;
 	}
 }
-

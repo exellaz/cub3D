@@ -44,6 +44,7 @@ typedef struct s_map
 	int			fc_rgb[2][3];
 	int			spawn[3];
 	t_door		*door;
+	int			texture_count;
 	int			door_count;
 	int			width;
 	int			height;
@@ -51,12 +52,13 @@ typedef struct s_map
 
 t_map	*parse_map(int file, void *mlx);
 t_list	*load_file(int file);
-t_list	*get_texture_path(t_list *raw, t_texture *texture);
+t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count);
 t_list	*get_rgb(t_list *raw, int (*rgb)[3]);
 void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
 void	get_doors(t_list *map, t_door **door, int *count);
 void	load_textures(t_texture *texture, void *mlx);
+void	free_texture(t_texture *texture, void *mlx, int count);
 
 void	validate_map(t_map *map);
 void	valid_texture_path(t_texture *texture);

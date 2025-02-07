@@ -24,12 +24,9 @@ int	main(int ac, char **av)
 	fd = validate_arg(ac, av[1]);
 	mlx = mlx_init();
 	map = parse_map(fd, mlx);
-	printf("door texure path: %s\n", map->texture[4].path);
-	for (int i = 0; i < map->door_count; i++)
-	{
-		printf("door %d: x: %d, y: %d, is_open: %d\n", i, map->door[i].x, map->door[i].y, map->door[i].is_open);
-		free_img(map->texture[i].img, mlx);
-	}
+	printf("texture count: %d\n", map->texture_count);
+	free_texture(map->texture, mlx, 4);
+	free(mlx);
 	mem_clean();
 	return (0);
 }
