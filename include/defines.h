@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 09:42:39 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 21:21:46 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/09 14:28:36 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ typedef struct s_vars
 	int			prev_mouse_x;
 	int			prev_mouse_y;
 	bool		minimap_toggle;
-	t_door		*doors;
 	t_map		*map_data;
 }				t_vars;
 

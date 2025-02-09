@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/07 20:47:25 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/09 13:52:44 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,22 @@ static void		find_step_and_dist(t_ray *ray, t_player *player);
 static void		do_dda(t_ray *ray, t_map *map_data, char **map);
 static void		render_walls(t_ray *ray);
 
-void	raycast(t_vars *mlx)
+void	raycast(t_vars *vars)
 {
 	t_player	*player;
 	t_ray		*ray;
 	int			x;
 
-	player = mlx->player;
+	player = vars->player;
 	ray = &player->ray;
 	x = 0;
 	while (x < WIN_WIDTH)
 	{
 		init_ray(x, player, ray);
 		find_step_and_dist(ray, player);
-		do_dda(ray, mlx->map_data, mlx->map);
+		do_dda(ray, vars->map_data, vars->map_data->map);
 		render_walls(ray);
-		get_textures(x, ray, player, mlx);
+		get_textures(x, ray, player, vars);
 		x++;
 	}
 }

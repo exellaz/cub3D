@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/09 13:12:12 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/09 14:09:26 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	draw_minimap(t_player *player, int map_x, int map_y, int range, t_vars *var
 		{
 			screen_x = (x - map_x) * vars->tile_size + MINIMAP_OFFSET;
 			screen_y = (y - map_y) * vars->tile_size + MINIMAP_OFFSET;
-			color = get_tile_color(player, x, y, vars->map);
+			color = get_tile_color(player, x, y, vars->map_data->map);
 			draw_tile(screen_x, screen_y, vars->tile_size, color, &vars->img);
 			x++;
 		}

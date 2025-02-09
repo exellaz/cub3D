@@ -6,19 +6,19 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:31:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/09 13:10:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/09 13:51:24 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 void	rotate_player(float angle, t_player *player);
-void	move_player(float move_x, float move_y, char **map, t_player *player, t_map *map_data);
+void	move_player(float move_x, float move_y, t_player *player, t_map *map_data);
 void	get_moves(float *move_x, float *move_y, t_player *player, t_fps *fps);
-bool	is_passable(int x, int y, char **map, t_map *map_data);
+bool	is_passable(int x, int y, t_map *map_data);
 void	handle_interact(t_player *player, t_map *map_data);
 
-void	handle_player_controls(char **map, t_player *player, t_fps *fps, t_map *map_data)
+void	handle_player_controls(t_player *player, t_fps *fps, t_map *map_data)
 {
 	float	move_x;
 	float	move_y;
@@ -32,7 +32,7 @@ void	handle_player_controls(char **map, t_player *player, t_fps *fps, t_map *map
 	if (player->interact == true)
 		handle_interact(player, map_data);
 	get_moves(&move_x, &move_y, player, fps);
-	move_player(move_x, move_y, map, player, map_data);
+	move_player(move_x, move_y, player, map_data);
 	if (player->pan_left == true)
 		rotate_player(-rot_speed, player);
 	if (player->pan_right == true)
@@ -105,7 +105,7 @@ void	get_moves(float *move_x, float *move_y, t_player *player, t_fps *fps)
 	}
 }
 
-void	move_player(float move_x, float move_y, char **map, t_player *player, t_map *map_data)
+void	move_player(float move_x, float move_y, t_player *player, t_map *map_data)
 {
 	float	new_x;
 	float	new_y;
@@ -114,19 +114,21 @@ void	move_player(float move_x, float move_y, char **map, t_player *player, t_map
 	new_x = player->pos_x + move_x;
 	new_y = player->pos_y + move_y;
 	doors = map_data->doors;
-	if (is_passable(new_x, player->pos_y, map, map_data) == true)
+	if (is_passable(new_x, player->pos_y, map_data) == true)
 		player->pos_x += move_x;
-	if (is_passable(player->pos_x, new_y, map, map_data) == true)
+	if (is_passable(player->pos_x, new_y, map_data) == true)
 		player->pos_y += move_y;
 }
 
-bool	is_passable(int x, int y, char **map, t_map *map_data)
+bool	is_passable(int x, int y, t_map *map_data)
 {
 	int		i;
+	char	**map;
 	t_door	*doors;
 
 	i = 0;
 	doors = map_data->doors;
+	map = map_data->map;
 	if (map[y][x] != '0')
 		return (false);
 	while (i < map_data->door_count)

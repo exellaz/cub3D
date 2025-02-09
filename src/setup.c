@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/09 13:12:49 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/09 13:47:39 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,6 @@ static void	setup_mlx(t_vars *vars)
 	mlx_hook(vars->win, MOTION_NOTIFY, POINTER_MOTION_MASK, mouse_hook, vars);
 }
 
-void	init_doors(char **map, t_vars *vars)
-{
-	t_door	*doors;
-
-	(void)map;
-	doors = malloc(sizeof(t_door) * 4);
-	doors[0].x = 4;
-	doors[0].y = 2;
-	doors[0].is_open = false;
-	doors[1].x = -1;
-	doors[1].y = -1;
-	doors[0].is_open = false;
-	vars->doors = doors;
-}
-
 void	init_vars(t_vars *vars, int fd)
 {
 	setup_mlx(vars);
@@ -124,7 +109,5 @@ void	init_vars(t_vars *vars, int fd)
 	init_fps(vars);
 	init_textures(vars, vars->map_data);
 	init_player(vars, vars->map_data);
-	vars->map = lst_to_arr(vars->map_data->map_list);
 	vars->tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);
-	// init_doors(vars->map, vars);
 }

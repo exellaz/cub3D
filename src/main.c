@@ -9,7 +9,7 @@
 #include "map.h"
 #include "cub3D.h"
 
-void	raycast(t_vars *mlx);
+void	raycast(t_vars *vars);
 void	draw_line(t_point start, t_point end, int color, t_img *img);
 int		draw_loop(t_vars *vars);
 
@@ -33,7 +33,7 @@ int	draw_loop(t_vars *vars)
 	player = vars->player;
 	frame_counter(vars->fps);
 	// ft_bzero(vars->img.addr, WIN_WIDTH * WIN_HEIGHT * (vars->img.bits_per_pixel / 8));
-	handle_player_controls(vars->map, player, vars->fps, vars->map_data);
+	handle_player_controls(player, vars->fps, vars->map_data);
 	for (int y = 0; y < WIN_HEIGHT; y++)
 		for (int x = 0; x < WIN_WIDTH; x++)
 			put_pixel(x, y, 0x000000, &vars->img);
