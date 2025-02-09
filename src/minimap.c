@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/07 15:29:05 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/09 13:12:12 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	get_tile_color(t_player *player, int x, int y, char **map)
 
 	distance = sqrt(pow(x - player->pos_x, 2) + pow(y - player->pos_y, 2));
 	opacity = fmax(0.0, 1.0 - (distance / VISIBLE_RANGE));
-	if (map[y][x] == '1')
+	if (map[y][x] == '1' || map[y][x] == 'D')
 		color = 0x0000FF;
 	else
 		color = 0xFFFFFF;

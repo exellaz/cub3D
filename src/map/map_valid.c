@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_valid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 12:21:09 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/09 13:10:47 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 void	validate_map(t_map *map)
 {
 	valid_texture_path(map->texture);
-	valid_iden(map->map);
-	valid_walls(map->map);
+	valid_iden(map->map_list);
+	valid_walls(map->map_list);
 }
 
 void	valid_texture_path(t_texture *texture)

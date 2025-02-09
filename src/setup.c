@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 21:22:19 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/09 13:12:49 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ static void	setup_mlx(t_vars *vars)
 	vars->img.img = mlx_new_image(vars->mlx, WIN_WIDTH, WIN_HEIGHT);
 	vars->img.addr = (int *)mlx_get_data_addr(vars->img.img, \
 		&vars->img.bits_per_pixel, &vars->img.line_length, &vars->img.endian);
+	mlx_mouse_hide(vars->mlx, vars->win);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	mlx_hook(vars->win, DESTROY_NOTIFY, NOT_EVENT_MASK, quit, vars);
 	mlx_hook(vars->win, KEY_PRESS, KEY_PRESS_MASK, key_press_hook, vars);
@@ -123,7 +124,7 @@ void	init_vars(t_vars *vars, int fd)
 	init_fps(vars);
 	init_textures(vars, vars->map_data);
 	init_player(vars, vars->map_data);
-	vars->map = lst_to_arr(vars->map_data->map);
+	vars->map = lst_to_arr(vars->map_data->map_list);
 	vars->tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);
 	// init_doors(vars->map, vars);
 }

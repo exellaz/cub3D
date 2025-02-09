@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 15:11:14 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/09 13:10:34 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,23 @@
 #include "graphics.h"
 #include "map.h"
 
-t_map	*parse_map(int file,  void *mlx)
+t_map	*parse_map(int file, void *mlx)
 {
-	t_map	*map;
+	t_map	*map_data;
 	t_list	*raw;
 	t_list	*remain;
 
-	map = mem_alloc(sizeof(t_map));
+	map_data = mem_alloc(sizeof(t_map));
 	raw = load_file(file);
-	remain = get_texture_path(raw, map->texture, &map->texture_count);
-	remain = get_rgb(remain, map->fc_rgb);
-	get_map(remain, &map->map, &map->width, &map->height);
-	get_spawn(map->map, map->spawn);
-	get_doors(map->map, &map->door, &map->door_count);
-	validate_map(map);
-	load_textures(map->texture, mlx, map->texture_count);
-	return (map);
+	remain = get_texture_path(raw, map_data->texture, &map_data->texture_count);
+	remain = get_rgb(remain, map_data->fc_rgb);
+	get_map(remain, &map_data->map_list, &map_data->width, &map_data->height);
+	validate_map(map_data);
+	get_spawn(map_data->map_list, map_data->spawn);
+	get_doors(map_data->map_list, &map_data->doors, &map_data->door_count);
+	load_textures(map_data->texture, mlx, map_data->texture_count);
+	map_data->map = lst_to_arr(map_data->map_list);
+	return (map_data);
 }
 
 // takes a file descriptor as argument and returns a 2D array of strings
@@ -151,6 +152,7 @@ void	get_spawn(t_list *map, int *spawn)
 				spawn[0] = i;
 				spawn[1] = j;
 				spawn[2] = line[j];
+				line[j] = '0';
 				return ;
 			}
 		}

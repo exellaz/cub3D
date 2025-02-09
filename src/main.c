@@ -33,7 +33,7 @@ int	draw_loop(t_vars *vars)
 	player = vars->player;
 	frame_counter(vars->fps);
 	// ft_bzero(vars->img.addr, WIN_WIDTH * WIN_HEIGHT * (vars->img.bits_per_pixel / 8));
-	handle_player_controls(vars->map, player, vars->fps, vars->doors);
+	handle_player_controls(vars->map, player, vars->fps, vars->map_data);
 	for (int y = 0; y < WIN_HEIGHT; y++)
 		for (int x = 0; x < WIN_WIDTH; x++)
 			put_pixel(x, y, 0x000000, &vars->img);
@@ -44,10 +44,6 @@ int	draw_loop(t_vars *vars)
 	// 	for (int x = 0; x < WIN_WIDTH; x++)
 	// 		put_pixel(x, y, 0x808080, &vars->img);
 	raycast(vars);
-	// if (vars->doors[0].is_open == true)
-	// 	vars->map[vars->doors[0].y][vars->doors[0].x] = '0';
-	// else if (vars->doors[0].is_open == false)
-	// 	vars->map[vars->doors[0].y][vars->doors[0].x] = '2';
 	if (vars->minimap_toggle == true)
 		render_minimap(player, vars, vars->map_data);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
