@@ -19,6 +19,25 @@
 #include "error.h"
 #include "map.h"
 
+// takes a file descriptor as argument and returns a 2D array of strings
+t_list	*load_file(int file)
+{
+	t_list	*map;
+	char	*line;
+
+	map = NULL;
+	line = get_next_line(file);
+	while (line)
+	{
+		ft_lstadd_back(&map, ft_lstnew(line));
+		line = get_next_line(file);
+	}
+	if (!map)
+		error_exit("Empty file");
+	close(file);
+	return (map);
+}
+
 void	count_cfg(t_list *raw, int count, char *msg)
 {
 	t_list	*tmp;

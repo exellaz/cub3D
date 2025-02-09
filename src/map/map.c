@@ -36,25 +36,6 @@ t_map	*parse_map(int file,  void *mlx)
 	return (map);
 }
 
-// takes a file descriptor as argument and returns a 2D array of strings
-t_list	*load_file(int file)
-{
-	t_list	*map;
-	char	*line;
-
-	map = NULL;
-	line = get_next_line(file);
-	while (line)
-	{
-		ft_lstadd_back(&map, ft_lstnew(line));
-		line = get_next_line(file);
-	}
-	if (!map)
-		error_exit("Empty file");
-	close(file);
-	return (map);
-}
-
 t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 {
 	char	**split;
