@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/12 16:01:18 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/12 22:13:01 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ void	draw_floor_and_ceiling(t_vars *vars, t_player *player)
 		x = 0;
 		while (x < WIN_WIDTH)
 		{
-			int tex_x = (int)(floor_x * TEX_WIDTH) % TEX_WIDTH;
-			int tex_y = (int)(floor_y * TEX_HEIGHT) % TEX_HEIGHT;
-
 			unsigned int color = 0x696969;
 
 			float opacity = fmax(0.0, 1.0 - (row_dist / (VISIBLE_RANGE * 2)));
@@ -63,6 +60,53 @@ void	draw_floor_and_ceiling(t_vars *vars, t_player *player)
 	}
 }
 
+void	floor_casting(t_vars *vars)
+{
+	t_player	*player = vars->player;
+
+	float	ray_dir_x0 = player->dir_x - player->plane_x;
+	float	ray_dir_y0 = player->dir_y - player->plane_y;
+	float	ray_dir_x1 = player->dir_x + player->plane_x;
+	float	ray_dir_y1 = player->dir_y + player->plane_y;
+
+	float	pos_z = 0.5 * WIN_HEIGHT;
+
+	for (int y = 0; y < WIN_HEIGHT; y++)
+	{
+		int	p = y - WIN_HEIGHT / 2;
+		float	row_distance = pos_z / p;
+		float	floor_step_x = row_distance * (ray_dir_x1 - ray_dir_x0) / WIN_WIDTH;
+		float	floor_step_y = row_distance * (ray_dir_y1 - ray_dir_y0) / WIN_WIDTH;
+
+		float	floor_x = player->pos_x + row_distance * ray_dir_x0;
+		float	floor_y = player->pos_y + row_distance * ray_dir_y0;
+		float	opacity = fmax(0.0, 1.0 - (row_distance / (VISIBLE_RANGE * 2)));
+		for (int x = 0; x < WIN_WIDTH; x++)
+		{
+			int	cell_x = (int)floor_x;
+			int	cell_y = (int)floor_y;
+
+			int	tx = (int)(TEX_WIDTH * (floor_x - cell_x)) & (TEX_WIDTH - 1);
+			int	ty = (int)(TEX_HEIGHT * (floor_y - cell_y)) & (TEX_HEIGHT - 1);
+
+			floor_x += floor_step_x;
+			floor_y += floor_step_y;
+
+			int	floor_texture = 4;
+			int	ceiling_texture = 5;
+			uint32_t	color;
+
+
+			color = vars->texture[floor_texture][TEX_WIDTH * ty + tx];
+			color = apply_opacity(color, opacity);
+			put_pixel(x, y, color, &vars->img);
+			color = vars->texture[ceiling_texture][TEX_WIDTH * ty + tx];
+			color = apply_opacity(color, opacity);
+			put_pixel(x, WIN_HEIGHT - y - 1, color, &vars->img);
+		}
+	}
+}
+
 void	raycast(t_vars *vars)
 {
 	t_player	*player;
@@ -72,7 +116,8 @@ void	raycast(t_vars *vars)
 	player = vars->player;
 	ray = &player->ray;
 	x = 0;
-	draw_floor_and_ceiling(vars, player);
+	floor_casting(vars);
+	// draw_floor_and_ceiling(vars, player);
 	while (x < WIN_WIDTH)
 	{
 		init_ray(x, player, ray);

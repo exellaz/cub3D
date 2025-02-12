@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:07:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/12 16:01:23 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/12 21:21:06 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ void	draw_textured_column(int x, t_ray *ray, \
 
 	tex_data->base_opacity = fmax(0.0, 1.0 \
 			- (ray->perp_wall_dist / (VISIBLE_RANGE * 2)));
+	// tex_data->base_opacity = 1;
 	y = ray->draw_start;
 	while (y < ray->draw_end)
 	{
 		tex_data->tex_y = (int)tex_data->tex_pos & (TEX_HEIGHT - 1);
 		tex_data->tex_pos += tex_data->step;
 		color = get_tex_color(y, tex_data, vars, ray);
+		color = apply_opacity(color, 1);
 		put_pixel(x, y, color, &vars->img);
 		y++;
 	}

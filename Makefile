@@ -1,6 +1,6 @@
 # Compiler & Flags
 CC = clang
-CFLAGS = -g -O3
+CFLAGS = -Wall -Werror -Wextra -O3 #-fsanitize=address -g3
 INC = -Iinclude -I$(MLX_DIR) -I$(LIBFT_DIR)
 LIB = -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lft -lm -lX11 -lXext
 

@@ -17,11 +17,12 @@ int		draw_loop(t_vars *vars);
 int	main(int ac, char **av)
 {
 	t_vars	vars;
+	// t_vars	*vars = malloc(sizeof(t_vars));
 	int		fd;
 
 	fd = validate_arg(ac, av[1]);
 	init_vars(&vars, fd);
-	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
+	mlx_loop_hook(vars.mlx, draw_loop, &vars);
 	mlx_loop(vars.mlx);
 	return (0);
 }
@@ -29,20 +30,15 @@ int	main(int ac, char **av)
 int	draw_loop(t_vars *vars)
 {
 	t_player	*player;
+	int			*addr;
 
 	player = vars->player;
+	addr = vars->img.addr;
 	frame_counter(vars->fps);
-	// ft_bzero(vars->img.addr, WIN_WIDTH * WIN_HEIGHT * (vars->img.bits_per_pixel / 8));
 	handle_player_controls(player, vars->fps, vars->map_data);
 	for (int y = 0; y < WIN_HEIGHT; y++)
 		for (int x = 0; x < WIN_WIDTH; x++)
 			put_pixel(x, y, 0x000000, &vars->img);
-	// for (int y = 0; y < WIN_HEIGHT / 2; y++)
-	// 	for (int x = 0; x < WIN_WIDTH; x++)
-	// 		put_pixel(x, y, 0x808080, &vars->img);
-	// for (int y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++)
-	// 	for (int x = 0; x < WIN_WIDTH; x++)
-	// 		put_pixel(x, y, 0x808080, &vars->img);
 	raycast(vars);
 	if (vars->minimap_toggle == true)
 		render_minimap(player, vars, vars->map_data);
@@ -55,8 +51,8 @@ void	put_pixel(int x, int y, int color, t_img *img)
 	int	index;
 
 	if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
-		return;
-	index = (y * (img->line_length / 4)) + x;
+		return ;
+	index = (y * img->line_length / 4) + x;
 	((int *)img->addr)[index] = color;
 }
 

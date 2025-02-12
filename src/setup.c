@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/12 15:39:26 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/12 22:07:18 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	init_textures(t_vars *vars, t_map *map)
 			while (++i < map->texture_count)
 			{
 				tex_i = y * TEX_WIDTH + x;
-				vars->texture[i][tex_i] = map->texture[i].img->addr[tex_i];
+				vars->texture[i][tex_i] = (int)(map->texture[i].img->addr[tex_i]);
 			}
 		}
 	}
@@ -98,6 +98,8 @@ static void	setup_mlx(t_vars *vars)
 
 void	init_vars(t_vars *vars, int fd)
 {
+	// ft_bzero(vars, sizeof(vars));
+	vars->minimap_toggle = false;
 	setup_mlx(vars);
 	vars->map_data = parse_map(fd, vars->mlx);
 	init_fps(vars);

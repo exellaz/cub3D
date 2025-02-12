@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/09 13:09:17 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:03:36 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_map
 {
 	t_list		*map_list;
 	char		**map;
-	t_texture	texture[5];
+	t_texture	texture[7];
 	int			fc_rgb[2][3];
 	int			spawn[3];
 	t_door		*doors;
