@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 09:42:39 by we                #+#    #+#             */
-/*   Updated: 2025/02/09 14:28:36 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:14:25 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # define BLUE 0x000000FF
 
 # define BLOCK_SIZE 32
-# define TEX_WIDTH 32
-# define TEX_HEIGHT 32
+# define TEX_WIDTH 64
+# define TEX_HEIGHT 64
 # define MINIMAP_SIZE 360
 # define MINIMAP_OFFSET 4
 # define VISIBLE_RANGE 4

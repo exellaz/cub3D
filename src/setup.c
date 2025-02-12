@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/09 13:47:39 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:39:26 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,27 @@ static void	init_textures(t_vars *vars, t_map *map)
 {
 	int	x;
 	int	y;
-	int	tex_index;
+	int	i;
+	int	tex_i;
 
 	(void)map;
-	vars->texture = mem_alloc(sizeof(int *) * 5);
+	vars->texture = mem_alloc(sizeof(int *) * map->texture_count);
 	x = -1;
-	while (++x < 5)
+	while (++x < map->texture_count)
 		vars->texture[x] = mem_alloc(sizeof(int) * TEX_HEIGHT * TEX_WIDTH);
-	y = 0;
-	while (y < TEX_HEIGHT)
+	y = -1;
+	while (++y < TEX_HEIGHT)
 	{
-		x = 0;
-		while (x < TEX_WIDTH)
+		x = -1;
+		while (++x < TEX_WIDTH)
 		{
-			tex_index = y * TEX_WIDTH + x;
-			vars->texture[0][tex_index] = map->texture[0].img->addr[tex_index];
-			vars->texture[1][tex_index] = map->texture[1].img->addr[tex_index];
-			vars->texture[2][tex_index] = map->texture[2].img->addr[tex_index];
-			vars->texture[3][tex_index] = map->texture[3].img->addr[tex_index];
-			vars->texture[4][tex_index] = map->texture[4].img->addr[tex_index];
-			// vars->texture[0][tex_index] = 0xFFFFFF;
-			// vars->texture[1][tex_index] = 0xFFFFFF;
-			// vars->texture[2][tex_index] = 0xFFFFFF;
-			// vars->texture[3][tex_index] = 0xFFFFFF;
-			// vars->texture[4][tex_index] = 0xFF0000;
-			x++;
+			i = -1;
+			while (++i < map->texture_count)
+			{
+				tex_i = y * TEX_WIDTH + x;
+				vars->texture[i][tex_i] = map->texture[i].img->addr[tex_i];
+			}
 		}
-		y++;
 	}
 }
 

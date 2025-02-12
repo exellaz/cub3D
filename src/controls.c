@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:31:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/09 13:51:24 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:21:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	handle_interact(t_player *player, t_map *map_data)
 		if ((int)(player->pos_x + (player->dir_x * interact_range)) == doors[i].x && \
 			(int)(player->pos_y + (player->dir_y * interact_range)) == doors[i].y)
 		{
-			doors[i].is_open = !doors[i].is_open;
+				doors[i].is_open = !doors[i].is_open;
 		}
 		i++;
 	}

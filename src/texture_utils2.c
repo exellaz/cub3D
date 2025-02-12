@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:07:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/07 21:06:59 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:01:23 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int	get_tex_color(int y, t_tex_data *tex_data, \
 	int				texture_index;
 	unsigned int	color;
 
-	// (void)ray;
 	relative_y = (y - ray->draw_start) / (float)ray->line_height;
 	center_dist = fabs(relative_y - 0.5) * 2.0;
 	radial_factor = 1.0 - 0.2 * (center_dist * center_dist);

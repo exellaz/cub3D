@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/09 13:52:44 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:01:18 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,50 @@ static void		find_step_and_dist(t_ray *ray, t_player *player);
 static void		do_dda(t_ray *ray, t_map *map_data, char **map);
 static void		render_walls(t_ray *ray);
 
+void	draw_floor_and_ceiling(t_vars *vars, t_player *player)
+{
+	int	y, x;
+	float	row_dist;
+	float	floor_x, floor_y;
+	float	ray_dir_x0, ray_dir_y0;
+	float	ray_dir_x1, ray_dir_y1;
+
+	ray_dir_x0 = player->dir_x + player->plane_x;
+	ray_dir_y0 = player->dir_y + player->plane_y;
+	ray_dir_x1 = player->dir_x + player->plane_x;
+	ray_dir_y1 = player->dir_y + player->plane_y;
+
+	y = WIN_HEIGHT / 2;
+	while (y < WIN_HEIGHT)
+	{
+		row_dist = (0.5 * WIN_HEIGHT) / (y - WIN_HEIGHT / 2);
+
+		floor_x = player->pos_x + row_dist * (ray_dir_x1 - ray_dir_x0);
+		floor_y = player->pos_y + row_dist * (ray_dir_y1 - ray_dir_y0);
+
+		x = 0;
+		while (x < WIN_WIDTH)
+		{
+			int tex_x = (int)(floor_x * TEX_WIDTH) % TEX_WIDTH;
+			int tex_y = (int)(floor_y * TEX_HEIGHT) % TEX_HEIGHT;
+
+			unsigned int color = 0x696969;
+
+			float opacity = fmax(0.0, 1.0 - (row_dist / (VISIBLE_RANGE * 2)));
+			color = apply_opacity(color, opacity);
+
+			put_pixel(x, y, color, &vars->img);
+
+			unsigned int ceiling_color = 0x384147;
+			ceiling_color = apply_opacity(ceiling_color, opacity);
+			put_pixel(x, WIN_HEIGHT - y, ceiling_color, &vars->img);
+
+			x++;
+		}
+		y++;
+	}
+}
+
 void	raycast(t_vars *vars)
 {
 	t_player	*player;
@@ -28,6 +72,7 @@ void	raycast(t_vars *vars)
 	player = vars->player;
 	ray = &player->ray;
 	x = 0;
+	draw_floor_and_ceiling(vars, player);
 	while (x < WIN_WIDTH)
 	{
 		init_ray(x, player, ray);
