@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:10:13 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/13 13:36:34 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:40:23 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count)
 		*count += 1;
 		tmp = tmp->next;
 	}
+	get_path(&raw, texture, *count);
 	if (*count < 4 || *count > 7)
 		error_exit("Invalid texture count");
 	return (raw->next);

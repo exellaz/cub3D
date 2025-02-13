@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spawn.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:58:42 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/13 11:59:44 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:41:42 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	get_spawn(t_list *map, int *spawn)
 				spawn[0] = i;
 				spawn[1] = j;
 				spawn[2] = line[j];
+				line[j] = '0';
 				return ;
 			}
 		}

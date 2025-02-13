@@ -30,10 +30,8 @@ int	main(int ac, char **av)
 int	draw_loop(t_vars *vars)
 {
 	t_player	*player;
-	int			*addr;
 
 	player = vars->player;
-	addr = vars->img.addr;
 	frame_counter(vars->fps);
 	handle_player_controls(player, vars->fps, vars->map_data);
 	for (int y = 0; y < WIN_HEIGHT; y++)

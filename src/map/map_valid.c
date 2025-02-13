@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 13:34:48 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:41:25 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	valid_spawn(t_list *map)
 			spawn++;
 		tmp = tmp->next;
 	}
-	if (spawn != 1)
+	if (spawn > 0)
 		error_exit("Invalid spawn point");
 }
 
