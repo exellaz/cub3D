@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 11:30:57 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:34:23 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ typedef struct s_texture
 // `door` is stored in x, y order
 typedef struct s_map
 {
-	t_list		*map;
-	t_texture	texture[5];
+	t_list		*map_list;
+	char		**map;
+	t_texture	texture[7];
 	int			fc_rgb[2][3];
 	int			spawn[3];
-	t_door		*door;
+	t_door		*doors;
 	int			texture_count;
 	int			door_count;
 	int			width;

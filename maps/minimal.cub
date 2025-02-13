@@ -1,7 +1,9 @@
-NO ./assets/green-brick-wall.xpm
-SO ./assets/green-brick-wall.xpm
-WE ./assets/green-brick-wall.xpm
-EA ./assets/green-brick-wall.xpm
+NO ./assets/str_stonebrk1.xpm
+SO ./assets/str_stonebrk1.xpm
+WE ./assets/str_stonebrk1.xpm
+EA ./assets/str_stonebrk1.xpm
+FL ./assets/str_stoneflr4.xpm
+CL ./assets/str_stonegen1.xpm
 
 F 220,100,0
 C 225,30,0

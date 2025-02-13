@@ -6,47 +6,75 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:31:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/05 16:34:03 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:49:27 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 void	rotate_player(float angle, t_player *player);
-void	move_player(float move_x, float move_y, char **map, t_player *player, t_door *doors);
+void	move_player(float move_x, float move_y, t_player *player, t_map *map_data);
 void	get_moves(float *move_x, float *move_y, t_player *player, t_fps *fps);
-bool	is_passable(int x, int y, char **map, t_door *doors);
-void	handle_interact(t_player *player, t_door *doors);
+bool	is_passable(int x, int y, t_map *map_data);
+void	handle_interact(t_player *player, t_map *map_data);
 
-void	handle_player_controls(char **map, t_player *player, t_fps *fps, t_door *doors)
+void	handle_player_controls(t_player *player, t_fps *fps, t_map *map_data)
 {
 	float	move_x;
 	float	move_y;
 	float	rot_speed;
+	t_door	*doors;
 
 	move_x = 0.0;
 	move_y = 0.0;
 	rot_speed = fps->frame_time * 2.5;
+	doors = map_data->doors;
 	if (player->interact == true)
-		handle_interact(player, doors);
+		handle_interact(player, map_data);
 	get_moves(&move_x, &move_y, player, fps);
-	move_player(move_x, move_y, map, player, doors);
+	move_player(move_x, move_y, player, map_data);
 	if (player->pan_left == true)
 		rotate_player(-rot_speed, player);
 	if (player->pan_right == true)
 		rotate_player(rot_speed, player);
 }
 
-void	handle_interact(t_player *player, t_door *doors)
+void	update_door_status(t_map *map_data)
 {
-	int	interact_range;
+	int		i;
+	t_door	*doors;
+
+	i = 0;
+	doors = map_data->doors;
+	while (i < map_data->door_count)
+	{
+		if (doors[i].is_open == true)
+			map_data->map[doors[i].y][doors[i].x] = '0';
+		else if (doors[i].is_open == false)
+			map_data->map[doors[i].y][doors[i].x] = 'D';
+		i++;
+	}
+}
+
+void	handle_interact(t_player *player, t_map *map_data)
+{
+	int		interact_range;
+	int		i;
+	t_door	*doors;
 
 	interact_range = 1.0;
-	if ((int)(player->pos_x + (player->dir_x * interact_range)) == doors[0].x && \
-			(int)(player->pos_y + (player->dir_y * interact_range)) == doors[0].y)
+	i = 0;
+	doors = map_data->doors;
+	while (i < map_data->door_count)
 	{
-		doors[0].is_open = !doors[0].is_open;
+		if ((int)(player->pos_x + (player->dir_x * interact_range)) == doors[i].x && \
+			(int)(player->pos_y + (player->dir_y * interact_range)) == doors[i].y)
+		{
+				doors[i].is_open = !doors[i].is_open;
+		}
+		i++;
 	}
+	update_door_status(map_data);
 	player->interact = false;
 }
 
@@ -77,27 +105,38 @@ void	get_moves(float *move_x, float *move_y, t_player *player, t_fps *fps)
 	}
 }
 
-void	move_player(float move_x, float move_y, char **map, t_player *player, t_door *doors)
+void	move_player(float move_x, float move_y, t_player *player, t_map *map_data)
 {
 	float	new_x;
 	float	new_y;
+	t_door	*doors;
 
 	new_x = player->pos_x + move_x;
 	new_y = player->pos_y + move_y;
-	(void)doors;
-	if (is_passable(new_x, player->pos_y, map, doors) == true)
+	doors = map_data->doors;
+	if (is_passable(new_x, player->pos_y, map_data) == true)
 		player->pos_x += move_x;
-	if (is_passable(player->pos_x, new_y, map, doors) == true)
+	if (is_passable(player->pos_x, new_y, map_data) == true)
 		player->pos_y += move_y;
 }
 
-bool	is_passable(int x, int y, char **map, t_door *doors)
+bool	is_passable(int x, int y, t_map *map_data)
 {
-	(void)doors;
-	if (map[y][x] != '0' && map[y][x] != '2')
+	int		i;
+	char	**map;
+	t_door	*doors;
+
+	i = 0;
+	doors = map_data->doors;
+	map = map_data->map;
+	if (map[y][x] != '0')
 		return (false);
-	// if (doors[0].x == x && doors[0].y == y && doors[0].is_open == false)
-	// 	return (false);
+	while (i < map_data->door_count)
+	{
+		if (doors[i].x == x && doors[i].y == y && doors[i].is_open == false)
+			return (false);
+		i++;
+	}
 	return (true);
 }
 

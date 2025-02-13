@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:10:13 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/13 11:01:45 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:40:23 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count)
 		tmp = tmp->next;
 	}
 	get_path(&raw, texture, *count);
-	if (*count < 4 || *count > 5)
-		error_exit("Texture count is not 4 or 5");
+	if (*count < 4 || *count > 7)
+		error_exit("Invalid texture count");
 	return (raw->next);
 }
 
@@ -55,8 +55,12 @@ static void	get_path(t_list **raw, t_texture *texture, int count)
 			texture[2].path = split[1];
 		else if (ft_strcmp(split[0], "EA") == 0)
 			texture[3].path = split[1];
-		else if (ft_strcmp(split[0], "DO") == 0)
+		else if (ft_strcmp(split[0], "FL") == 0)
 			texture[4].path = split[1];
+		else if (ft_strcmp(split[0], "CL") == 0)
+			texture[5].path = split[1];
+		else if (ft_strcmp(split[0], "DO") == 0)
+			texture[count - 1].path = split[1];
 		else
 			error_exit("Invalid texture identifier");
 		*raw = (*raw)->next;
@@ -72,8 +76,11 @@ void	load_textures(t_texture *texture, void *mlx, int count)
 	int	i;
 
 	i = -1;
+	// printf("Count: %d\n", count);
+	// for (int x = 0; x < 5; x++)
 	while (++i < count)
 	{
+		printf("%s\n", texture[i].path);
 		texture[i].img = mem_alloc(sizeof(t_img));
 		texture[i].img->img = mlx_xpm_file_to_image(mlx, texture[i].path,
 				&texture[i].width, &texture[i].height);

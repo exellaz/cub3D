@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 19:32:28 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:52:19 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,27 @@ static void	init_textures(t_vars *vars, t_map *map)
 {
 	int	x;
 	int	y;
-	int	tex_index;
+	int	i;
+	int	tex_i;
 
 	(void)map;
-	vars->texture = mem_alloc(sizeof(int *) * 4);
+	vars->texture = mem_alloc(sizeof(int *) * map->texture_count);
 	x = -1;
-	while (++x < 4)
+	while (++x < map->texture_count)
 		vars->texture[x] = mem_alloc(sizeof(int) * TEX_HEIGHT * TEX_WIDTH);
-	y = 0;
-	while (y < TEX_HEIGHT)
+	y = -1;
+	while (++y < TEX_HEIGHT)
 	{
-		x = 0;
-		while (x < TEX_WIDTH)
+		x = -1;
+		while (++x < TEX_WIDTH)
 		{
-			tex_index = y * TEX_WIDTH + x;
-			// vars->texture[0][tex_index] = map->texture[0].img->addr[tex_index];
-			// vars->texture[1][tex_index] = map->texture[1].img->addr[tex_index];
-			// vars->texture[2][tex_index] = map->texture[2].img->addr[tex_index];
-			// vars->texture[3][tex_index] = map->texture[3].img->addr[tex_index];
-			vars->texture[0][tex_index] = 0xFFFFFF;
-			vars->texture[1][tex_index] = 0xFFFFFF;
-			vars->texture[2][tex_index] = 0xFFFFFF;
-			vars->texture[3][tex_index] = 0xFFFFFF;
-			x++;
+			i = -1;
+			while (++i < map->texture_count)
+			{
+				tex_i = y * TEX_WIDTH + x;
+				vars->texture[i][tex_i] = (int)(map->texture[i].img->addr[tex_i]);
+			}
 		}
-		y++;
 	}
 }
 
@@ -92,6 +88,7 @@ static void	setup_mlx(t_vars *vars)
 	vars->img.img = mlx_new_image(vars->mlx, WIN_WIDTH, WIN_HEIGHT);
 	vars->img.addr = (int *)mlx_get_data_addr(vars->img.img, \
 		&vars->img.bits_per_pixel, &vars->img.line_length, &vars->img.endian);
+	mlx_mouse_hide(vars->mlx, vars->win);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	mlx_hook(vars->win, DESTROY_NOTIFY, NOT_EVENT_MASK, quit, vars);
 	mlx_hook(vars->win, KEY_PRESS, KEY_PRESS_MASK, key_press_hook, vars);
@@ -99,29 +96,14 @@ static void	setup_mlx(t_vars *vars)
 	mlx_hook(vars->win, MOTION_NOTIFY, POINTER_MOTION_MASK, mouse_hook, vars);
 }
 
-void	init_doors(char **map, t_vars *vars)
-{
-	t_door	*doors;
-
-	(void)map;
-	doors = malloc(sizeof(t_door) * 4);
-	doors[0].x = 4;
-	doors[0].y = 2;
-	doors[0].is_open = false;
-	doors[1].x = -1;
-	doors[1].y = -1;
-	doors[0].is_open = false;
-	vars->doors = doors;
-}
-
 void	init_vars(t_vars *vars, int fd)
 {
+	// ft_bzero(vars, sizeof(vars));
+	vars->minimap_toggle = false;
 	setup_mlx(vars);
 	vars->map_data = parse_map(fd, vars->mlx);
 	init_fps(vars);
 	init_textures(vars, vars->map_data);
 	init_player(vars, vars->map_data);
-	vars->map = lst_to_arr(vars->map_data->map);
 	vars->tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);
-	// init_doors(vars->map, vars);
 }

@@ -9,7 +9,7 @@
 #include "map.h"
 #include "cub3D.h"
 
-void	raycast(t_vars *mlx);
+void	raycast(t_vars *vars);
 void	draw_line(t_point start, t_point end, int color, t_img *img);
 int		draw_loop(t_vars *vars);
 
@@ -17,11 +17,12 @@ int		draw_loop(t_vars *vars);
 int	main(int ac, char **av)
 {
 	t_vars	vars;
+	// t_vars	*vars = malloc(sizeof(t_vars));
 	int		fd;
 
 	fd = validate_arg(ac, av[1]);
 	init_vars(&vars, fd);
-	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
+	mlx_loop_hook(vars.mlx, draw_loop, &vars);
 	mlx_loop(vars.mlx);
 	return (0);
 }
@@ -32,22 +33,11 @@ int	draw_loop(t_vars *vars)
 
 	player = vars->player;
 	frame_counter(vars->fps);
-	// ft_bzero(vars->img.addr, WIN_WIDTH * WIN_HEIGHT * (vars->img.bits_per_pixel / 8));
-	handle_player_controls(vars->map, player, vars->fps, vars->doors);
+	handle_player_controls(player, vars->fps, vars->map_data);
 	for (int y = 0; y < WIN_HEIGHT; y++)
 		for (int x = 0; x < WIN_WIDTH; x++)
 			put_pixel(x, y, 0x000000, &vars->img);
-	// for (int y = 0; y < WIN_HEIGHT / 2; y++)
-	// 	for (int x = 0; x < WIN_WIDTH; x++)
-	// 		put_pixel(x, y, 0x808080, &vars->img);
-	// for (int y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++)
-	// 	for (int x = 0; x < WIN_WIDTH; x++)
-	// 		put_pixel(x, y, 0x808080, &vars->img);
 	raycast(vars);
-	// if (vars->doors[0].is_open == true)
-	// 	vars->map[vars->doors[0].y][vars->doors[0].x] = '0';
-	// else if (vars->doors[0].is_open == false)
-	// 	vars->map[vars->doors[0].y][vars->doors[0].x] = '2';
 	if (vars->minimap_toggle == true)
 		render_minimap(player, vars, vars->map_data);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
@@ -59,8 +49,8 @@ void	put_pixel(int x, int y, int color, t_img *img)
 	int	index;
 
 	if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
-		return;
-	index = (y * (img->line_length / 4)) + x;
+		return ;
+	index = (y * img->line_length / 4) + x;
 	((int *)img->addr)[index] = color;
 }
 
