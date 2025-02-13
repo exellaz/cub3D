@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils-1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 15:59:45 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 16:15:58 by we               ###   ########.fr       */
+/*   Updated: 2025/02/13 10:56:58 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,25 @@
 #include "utils.h"
 #include "error.h"
 #include "map.h"
+
+// takes a file descriptor as argument and returns a 2D array of strings
+t_list	*load_file(int file)
+{
+	t_list	*map;
+	char	*line;
+
+	map = NULL;
+	line = get_next_line(file);
+	while (line)
+	{
+		ft_lstadd_back(&map, ft_lstnew(line));
+		line = get_next_line(file);
+	}
+	if (!map)
+		error_exit("Empty file");
+	close(file);
+	return (map);
+}
 
 void	count_cfg(t_list *raw, int count, char *msg)
 {
@@ -45,6 +64,5 @@ char	**split_cfg(char *line)
 	split = ft_split(tmp[0], ' ');
 	if (!split)
 		error_exit(strerror(errno));
-	mem_free_arr(tmp);
 	return (split);
 }
