@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 13:51:34 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:54:54 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	valid_spawn(t_list *map)
 			if (ft_strchr(SPAWN_IDEN, ((char *)tmp->content)[i]))
 			{
 				spawn_count += 1;
-				((char *)tmp->content)[i] = '0';	
+				((char *)tmp->content)[i] = '0';
 			}
 		}
 		tmp = tmp->next;
