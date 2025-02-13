@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 11:59:19 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 12:16:20 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "utils.h"
 #include "graphics.h"
 #include "map.h"
+
+static int	get_map_width(t_list *map);
 
 t_map	*parse_map(int file, void *mlx)
 {
@@ -42,12 +44,36 @@ void	get_map(t_list *raw, t_list **map, int *width, int *height)
 {
 	t_list	*tmp;
 	char	*line;
-	int		max;
 	int		i;
 
 	*map = skip_empty_lines(raw);
-	max = 0;
+	*width = get_map_width(*map);
+	*height = 0;
 	tmp = *map;
+	while (tmp)
+	{
+		if (ft_strlen(tmp->content) <= (size_t) * width)
+		{
+			line = mem_alloc(*width + 1);
+			ft_strlcpy(line, (char *)tmp->content, *width + 1);
+			line[*width] = '\0';
+			i = ft_strlen(line);
+			while (i < *width)
+				line[i++] = ' ';
+			tmp->content = line;
+		}
+		*height += 1;
+		tmp = tmp->next;
+	}
+}
+
+static int	get_map_width(t_list *map)
+{
+	t_list	*tmp;
+	int		max;
+
+	max = 0;
+	tmp = map;
 	while (tmp)
 	{
 		((char *)tmp->content)[ft_strlen(tmp->content) - 1] = '\0';
@@ -55,22 +81,5 @@ void	get_map(t_list *raw, t_list **map, int *width, int *height)
 			max = ft_strlen(tmp->content);
 		tmp = tmp->next;
 	}
-	*width = max;
-	*height = 0;
-	tmp = *map;
-	while (tmp)
-	{
-		if (ft_strlen(tmp->content) <= (size_t)max)
-		{
-			line = mem_alloc(max + 1);
-			ft_strlcpy(line, (char *)tmp->content, max + 1);
-			line[max] = '\0';
-			i = ft_strlen(line);
-			while (i < max)
-				line[i++] = ' ';
-			tmp->content = line;
-		}
-		*height += 1;
-		tmp = tmp->next;
-	}
+	return (max);
 }
