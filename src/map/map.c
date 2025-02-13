@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 14:28:43 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 15:23:34 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_map	*parse_map(int file, void *mlx)
 	valid_iden(map_data->map_list);
 	valid_walls(map_data->map_list, map_data->height);
 	load_textures(map_data->texture, mlx, map_data->texture_count);
-	map_data->map =	lst_to_arr(map_data->map_list);
+	map_data->map = lst_to_arr(map_data->map_list);
 	return (map_data);
 }
 
