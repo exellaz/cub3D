@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:53:00 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/13 11:57:25 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 17:22:44 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	get_doors(t_list *map, t_door **door, int *count)
 				(*door)[++k].x = j;
 				(*door)[k].y = i;
 				(*door)[k].is_open = false;
+				(*door)[k].progress = 0;
 			}
 		}
 		i++;

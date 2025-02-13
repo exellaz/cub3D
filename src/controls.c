@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:31:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/13 13:49:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:30:17 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	handle_interact(t_player *player, t_map *map_data)
 		}
 		i++;
 	}
-	update_door_status(map_data);
+	// update_door_status(map_data);
 	player->interact = false;
 }
 

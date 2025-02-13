@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/13 13:32:09 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:31:17 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include "graphics.h"
 
 unsigned int	apply_opacity(unsigned int color, float opacity);
-static void		init_ray(int x, t_player *player, t_ray *ray);
-static void		find_step_and_dist(t_ray *ray, t_player *player);
-static void		do_dda(t_ray *ray, t_map *map_data, char **map);
-static void		render_walls(t_ray *ray);
+void		init_ray(int x, t_player *player, t_ray *ray);
+void		find_step_and_dist(t_ray *ray, t_player *player);
+void		do_dda(t_ray *ray, t_map *map_data, char **map);
+void		render_walls(t_ray *ray);
 
 void	floor_casting(t_vars *vars)
 {
@@ -39,7 +39,7 @@ void	floor_casting(t_vars *vars)
 
 		float	floor_x = player->pos_x + row_distance * ray_dir_x0;
 		float	floor_y = player->pos_y + row_distance * ray_dir_y0;
-		float	opacity = fmax(0.0, 1.0 - (row_distance / (VISIBLE_RANGE * 2)));
+		float	opacity = fmax(0.0, 1.0 - (row_distance / (VISIBLE_RANGE)));
 		for (int x = 0; x < WIN_WIDTH; x++)
 		{
 			int	cell_x = (int)floor_x;
@@ -59,7 +59,8 @@ void	floor_casting(t_vars *vars)
 				color = 0x696969;
 			else
 				color = vars->texture[floor_texture][TEX_WIDTH * ty + tx];
-			// color = (color >> 1) & 8355711; // make a bit darker
+			// color = (color >> 1) & 8355711; // make a bit darker			// color = (color >> 1) & 8355711; // make a bit darker
+
 			color = apply_opacity(color, opacity);
 			put_pixel(x, y, color, &vars->img);
 			if (vars->map_data->texture_count < 6)
@@ -73,28 +74,56 @@ void	floor_casting(t_vars *vars)
 	}
 }
 
+void update_doors(t_map *map_data)
+{
+    for (int i = 0; i < map_data->door_count; i++)
+    {
+        t_door *door = &map_data->doors[i];
+        if (door->is_open && door->progress < 1.0)
+        {
+            door->progress += 0.05;
+            if (door->progress > 1.0)
+                door->progress = 1.0;
+        }
+        else if (!door->is_open && door->progress > 0.0)
+        {
+            door->progress -= 0.05;
+            if (door->progress < 0.0)
+                door->progress = 0.0;
+        }
+    }
+}
+
+void	door_raycast(t_vars *vars);
+void	add_door_offset(t_ray *ray);
+
 void	raycast(t_vars *vars)
 {
 	t_player	*player;
-	t_ray		*ray;
+	t_ray		ray;
 	int			x;
 
 	player = vars->player;
-	ray = &player->ray;
+	ray.door = 0;
 	x = 0;
+	update_doors(vars->map_data);
 	floor_casting(vars);
 	while (x < WIN_WIDTH)
 	{
-		init_ray(x, player, ray);
-		find_step_and_dist(ray, player);
-		do_dda(ray, vars->map_data, vars->map_data->map);
-		render_walls(ray);
-		get_textures(x, ray, player, vars);
+		init_ray(x, player, &ray);
+		find_step_and_dist(&ray, player);
+		do_dda(&ray, vars->map_data, vars->map_data->map);
+		// if (ray.door)
+		// 	add_door_offset(&ray);
+		render_walls(&ray);
+		get_textures(x, &ray, player, vars);
 		x++;
 	}
+	// if (ray.door)
+	// 	door_raycast(vars);
 }
 
-static void	init_ray(int x, t_player *player, t_ray *ray)
+void	init_ray(int x, t_player *player, t_ray *ray)
 {
 	ray->camera_x = 2 * x / (float)WIN_WIDTH - 1;
 	ray->dir_x = player->dir_x + player->plane_x * ray->camera_x;
@@ -111,7 +140,7 @@ static void	init_ray(int x, t_player *player, t_ray *ray)
 		ray->delta_dist_y = fabs(1 / ray->dir_y);
 }
 
-static void	find_step_and_dist(t_ray *ray, t_player *player)
+void	find_step_and_dist(t_ray *ray, t_player *player)
 {
 	if (ray->dir_x < 0)
 	{
@@ -137,7 +166,27 @@ static void	find_step_and_dist(t_ray *ray, t_player *player)
 	}
 }
 
-static void	do_dda(t_ray *ray, t_map *map_data, char **map)
+t_door	*find_door(t_map *map_data, int x, int y)
+{
+	int		i;
+	t_door	*doors;
+	t_door	*door;
+
+	i = 0;
+	doors = map_data->doors;
+	while (i < map_data->door_count)
+	{
+		if (doors[i].x == x && doors[i].y == y)
+		{
+			door = &doors[i];
+			return (door);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+void	do_dda(t_ray *ray, t_map *map_data, char **map)
 {
 	int	hit;
 
@@ -160,10 +209,18 @@ static void	do_dda(t_ray *ray, t_map *map_data, char **map)
 			ray->map_x < 0 || ray->map_y < 0 || \
 			map[ray->map_y][ray->map_x] != '0')
 			hit = 1;
+		if (map[ray->map_y][ray->map_x] == 'D')
+		{
+			ray->door = find_door(map_data, ray->map_x, ray->map_y);
+			// if (ray->door->is_open == false)
+			// 	hit = 1;
+		}
+		else
+			ray->door = 0;
 	}
 }
 
-static void	render_walls(t_ray *ray)
+void	render_walls(t_ray *ray)
 {
 	if (ray->wall_side == 0)
 		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
@@ -176,5 +233,19 @@ static void	render_walls(t_ray *ray)
 	ray->draw_end = ray->line_height / 2 + WIN_HEIGHT / 2;
 	if (ray->draw_end >= WIN_HEIGHT)
 		ray->draw_end = WIN_HEIGHT - 1;
+
+	if (ray->door)
+    {
+        // Offset the door vertically based on animation progress
+        int offset = (int)(ray->line_height * ray->door->progress);
+        // ray->draw_start -= offset;
+        ray->draw_end -= offset;
+
+        // Ensure the door doesn't go out of bounds
+        if (ray->draw_start < 0)
+            ray->draw_start = 0;
+        if (ray->draw_end < 0)
+            ray->draw_end = 0;
+    }
 }
 
