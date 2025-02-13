@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 11:06:42 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 11:30:57 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "defines.h"
 
 # define VALID_IDEN " 01NSEWD"
+# define SPAWN_IDEN "NSEW"
 
 typedef struct s_list	t_list;
 typedef struct s_img	t_img;
