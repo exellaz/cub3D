@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 11:36:19 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 11:57:08 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,41 +102,4 @@ void	get_spawn(t_list *map, int *spawn)
 	}
 	if (!ft_strchr(SPAWN_IDEN, spawn[2]))
 		error_exit("Invalid spawn point");
-}
-
-void	get_doors(t_list *map, t_door **door, int *count)
-{
-	t_list	*tmp;
-	int		i;
-	int		j;
-	int		k;
-
-	tmp = map;
-	i = 0;
-	while (tmp)
-	{
-		if (ft_strchr(tmp->content, 'D'))
-			i++;
-		tmp = tmp->next;
-	}
-	*door = mem_alloc(sizeof(t_door) * i);
-	*count = i;
-	tmp = map;
-	i = 0;
-	k = -1;
-	while (tmp)
-	{
-		j = -1;
-		while (((char *)tmp->content)[++j])
-		{
-			if (((char *)tmp->content)[j] == 'D')
-			{
-				(*door)[++k].x = j;
-				(*door)[k].y = i;
-				(*door)[k].is_open = false;
-			}
-		}
-		i++;
-		tmp = tmp->next;
-	}
 }
