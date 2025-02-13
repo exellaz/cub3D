@@ -1,6 +1,6 @@
 # Compiler & Flags
 CC = clang
-CFLAGS = -Wall -Werror -Wextra -O3 #-fsanitize=address -g3
+CFLAGS = -Wall -Werror -Wextra -O3
 INC = -Iinclude -I$(MLX_DIR) -I$(LIBFT_DIR)
 LIB = -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lft -lm -lX11 -lXext
 
@@ -45,7 +45,7 @@ valgrind : $(BIN)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(BIN)
 
 fsan:
-	$(CC) $(CFLAGS) -fsanitize=address $(INC) $(OBJ) $(LIB) -o $(BIN)
+	$(CC) $(CFLAGS) -fsanitize=address -g3 $(INC) $(OBJ) $(LIB) -o $(BIN)
 
 debug: CFLAGS := -D DEBUG=1
 debug: $(BIN)

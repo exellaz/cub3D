@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:32:29 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/12 22:06:40 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:41:35 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	get_textures(int x, t_ray *ray, t_player *player, t_vars *vars)
 	tex_data.tex_x = get_tex_x(tex_data.wall_x, ray);
 	tex_data.tex_num = get_tex_num(ray);
 	if (vars->map_data->map[ray->map_y][ray->map_x] == 'D')
-		tex_data.tex_num = 4;
+		tex_data.tex_num = vars->map_data->texture_count - 1;
 	get_tex_step_and_pos(ray, &tex_data);
 	draw_textured_column(x, ray, &tex_data, vars);
 }

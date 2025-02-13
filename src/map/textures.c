@@ -39,7 +39,7 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count)
 		else if (ft_strcmp(split[0], "CL") == 0)
 			texture[5].path = split[1];
 		else if (ft_strcmp(split[0], "DO") == 0)
-			texture[4].path = split[1];
+			texture[*count - 1].path = split[1];
 		else
 			error_exit("Invalid texture identifier");
 		raw = raw->next;
