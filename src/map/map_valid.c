@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 11:28:20 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:51:34 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,26 @@ void	valid_iden(t_list *map)
 
 static void	valid_spawn(t_list *map)
 {
-	int		spawn;
+	int		spawn_count;
 	t_list	*tmp;
+	int		i;
 
-	spawn = 0;
+	spawn_count = 0;
 	tmp = map;
 	while (tmp)
 	{
-		if (ft_strchr(tmp->content, 'N') || ft_strchr(tmp->content, 'S')
-			|| ft_strchr(tmp->content, 'E') || ft_strchr(tmp->content, 'W'))
-			spawn++;
+		i = -1;
+		while (((char *)tmp->content)[++i])
+		{
+			if (ft_strchr(SPAWN_IDEN, ((char *)tmp->content)[i]))
+			{
+				spawn_count += 1;
+				((char *)tmp->content)[i] = '0';	
+			}
+		}
 		tmp = tmp->next;
 	}
-	if (spawn != 1)
+	if (spawn_count != 1)
 		error_exit("Invalid spawn point");
 }
 
