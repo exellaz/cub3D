@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   textures.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/13 10:10:13 by tjun-yu           #+#    #+#             */
+/*   Updated: 2025/02/13 11:01:45 by tjun-yu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <Libft.h>
 #include <mlx.h>
 
@@ -6,11 +18,11 @@
 #include "graphics.h"
 #include "map.h"
 
+static void	get_path(t_list **raw, t_texture *texture, int count);
+
 t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count)
 {
-	char	**split;
 	t_list	*tmp;
-	int		i;
 
 	raw = skip_empty_lines(raw);
 	*count = 0;
@@ -20,12 +32,21 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count)
 		*count += 1;
 		tmp = tmp->next;
 	}
+	get_path(&raw, texture, *count);
 	if (*count < 4 || *count > 5)
 		error_exit("Texture count is not 4 or 5");
+	return (raw->next);
+}
+
+static void	get_path(t_list **raw, t_texture *texture, int count)
+{
+	char	**split;
+	int		i;
+
 	i = -1;
-	while (++i < *count)
+	while (++i < count)
 	{
-		split = split_cfg(raw->content);
+		split = split_cfg((*raw)->content);
 		if (ft_strcmp(split[0], "NO") == 0)
 			texture[0].path = split[1];
 		else if (ft_strcmp(split[0], "SO") == 0)
@@ -38,13 +59,12 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count)
 			texture[4].path = split[1];
 		else
 			error_exit("Invalid texture identifier");
-		raw = raw->next;
+		*raw = (*raw)->next;
 	}
 	i = -1;
-	while (++i < *count)
+	while (++i < count)
 		if (!texture[i].path)
 			error_exit("Missing texture path");
-	return (raw->next);
 }
 
 void	load_textures(t_texture *texture, void *mlx, int count)
