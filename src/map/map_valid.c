@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/06 12:21:09 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 11:28:20 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,8 @@
 #include "utils.h"
 #include "map.h"
 
-void	validate_map(t_map *map)
-{
-	valid_texture_path(map->texture);
-	valid_iden(map->map);
-	valid_walls(map->map, map->height);
-}
+static void	valid_spawn(t_list *map);
+static void	check_y_walls(char **map_arr, int height);
 
 void	valid_texture_path(t_texture *texture)
 {
@@ -48,7 +44,6 @@ void	valid_texture_path(t_texture *texture)
 void	valid_iden(t_list *map)
 {
 	char	*line;
-	int		spawn;
 	t_list	*tmp;
 
 	tmp = map;
@@ -63,6 +58,14 @@ void	valid_iden(t_list *map)
 		}
 		tmp = tmp->next;
 	}
+	valid_spawn(map);
+}
+
+static void	valid_spawn(t_list *map)
+{
+	int		spawn;
+	t_list	*tmp;
+
 	spawn = 0;
 	tmp = map;
 	while (tmp)
@@ -79,7 +82,6 @@ void	valid_iden(t_list *map)
 void	valid_walls(t_list *map, int height)
 {
 	char	**map_arr;
-	int		empty;
 	int		i;
 	int		j;
 
@@ -97,6 +99,15 @@ void	valid_walls(t_list *map, int height)
 		if (map_arr[i][j - 1] != '1')
 			error_exit("Invalid wall");
 	}
+	check_y_walls(map_arr, height);
+}
+
+static void	check_y_walls(char **map_arr, int height)
+{
+	int	empty;
+	int	i;
+	int	j;
+
 	i = -1;
 	while (map_arr[0][++i])
 	{
@@ -105,7 +116,7 @@ void	valid_walls(t_list *map, int height)
 		while (j < height && is_whitespace(map_arr[j++][i]))
 			++empty;
 		if (empty == height)
-			continue;
+			continue ;
 		if (map_arr[j - 1][i] != '1')
 			error_exit("Invalid wall !");
 		while (map_arr[j] && !is_whitespace(map_arr[j][i]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 19:30:06 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:06:42 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	get_doors(t_list *map, t_door **door, int *count);
 void	load_textures(t_texture *texture, void *mlx, int count);
 void	free_texture(t_texture *texture, void *mlx, int count);
 
-void	validate_map(t_map *map);
 void	valid_texture_path(t_texture *texture);
 void	valid_iden(t_list *map);
 void	valid_walls(t_list *map, int height);
