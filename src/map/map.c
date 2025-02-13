@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 11:57:08 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/13 11:59:19 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,33 +73,4 @@ void	get_map(t_list *raw, t_list **map, int *width, int *height)
 		*height += 1;
 		tmp = tmp->next;
 	}
-}
-
-void	get_spawn(t_list *map, int *spawn)
-{
-	char	*line;
-	int		i;
-	int		j;
-
-	map = skip_empty_lines(map);
-	i = -1;
-	while (map)
-	{
-		i += 1;
-		line = map->content;
-		j = -1;
-		while (line[++j])
-		{
-			if (ft_strchr(SPAWN_IDEN, line[j]))
-			{
-				spawn[0] = i;
-				spawn[1] = j;
-				spawn[2] = line[j];
-				return ;
-			}
-		}
-		map = map->next;
-	}
-	if (!ft_strchr(SPAWN_IDEN, spawn[2]))
-		error_exit("Invalid spawn point");
 }
