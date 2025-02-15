@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:10:13 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/13 15:05:04 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/15 15:31:59 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@
 #include "graphics.h"
 #include "map.h"
 
-void	load_textures(t_texture *texture, void *mlx, int count)
+void	load_textures(t_texture *texture, void *mlx)
 {
 	int	i;
 
 	i = -1;
-	while (++i < count)
+	while (++i < 7)
 	{
+		if (!texture[i].path)
+			continue ;
 		texture[i].img = mem_alloc(sizeof(t_img));
 		texture[i].img->img = mlx_xpm_file_to_image(mlx, texture[i].path,
 				&texture[i].width, &texture[i].height);
@@ -36,13 +38,15 @@ void	load_textures(t_texture *texture, void *mlx, int count)
 	}
 }
 
-void	free_texture(t_texture *texture, void *mlx, int count)
+void	free_texture(t_texture *texture, void *mlx)
 {
 	int	i;
 
 	i = -1;
-	while (++i < count)
+	while (++i < 7)
 	{
+		if (!texture[i].path)
+			continue ;
 		mlx_destroy_image(mlx, texture[i].img->img);
 		mem_free(texture[i].img);
 	}

@@ -6,7 +6,7 @@
 /*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/15 11:11:52 by bazzite          ###   ########.fr       */
+/*   Updated: 2025/02/15 15:31:04 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_map	*parse_map(int file, void *mlx)
 	valid_texture_path(map_data->texture);
 	valid_iden(map_data->map_list);
 	valid_walls(map_data->map_list, map_data->height);
-	load_textures(map_data->texture, mlx, map_data->texture_count);
+	load_textures(map_data->texture, mlx);
 	map_data->map = lst_to_arr(map_data->map_list);
 	return (map_data);
 }

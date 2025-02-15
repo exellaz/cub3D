@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 15:19:04 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/15 15:32:07 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3]);
 void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
 void	get_doors(t_list *map, t_door **door, int *count);
-void	load_textures(t_texture *texture, void *mlx, int count);
-void	free_texture(t_texture *texture, void *mlx, int count);
+void	load_textures(t_texture *texture, void *mlx);
+void	free_texture(t_texture *texture, void *mlx);
 
 void	valid_texture_path(t_texture *texture);
 void	valid_iden(t_list *map);
