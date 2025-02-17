@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/15 15:31:04 by bazzite          ###   ########.fr       */
+/*   Updated: 2025/02/17 09:40:04 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_map	*parse_map(int file, void *mlx)
 	map_data->map = lst_to_arr(map_data->map_list);
 	return (map_data);
 }
+
 static void	init_map(t_map *map_data)
 {
 	map_data->map_list = NULL;
