@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/13 18:31:17 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/17 22:04:18 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	raycast(t_vars *vars)
 		x++;
 	}
 	// if (ray.door)
-	// 	door_raycast(vars);
+	// door_raycast(vars);
 }
 
 void	init_ray(int x, t_player *player, t_ray *ray)
@@ -191,6 +191,7 @@ void	do_dda(t_ray *ray, t_map *map_data, char **map)
 	int	hit;
 
 	hit = 0;
+	ray->door = NULL;
 	while (hit == 0)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
@@ -205,18 +206,20 @@ void	do_dda(t_ray *ray, t_map *map_data, char **map)
 			ray->map_y += ray->step_y;
 			ray->wall_side = 1;
 		}
-		if (ray->map_x > map_data->width || ray->map_y > map_data->width || \
-			ray->map_x < 0 || ray->map_y < 0 || \
-			map[ray->map_y][ray->map_x] != '0')
-			hit = 1;
 		if (map[ray->map_y][ray->map_x] == 'D')
 		{
 			ray->door = find_door(map_data, ray->map_x, ray->map_y);
-			// if (ray->door->is_open == false)
-			// 	hit = 1;
 		}
 		else
+		{
 			ray->door = 0;
+			// hit = 0;
+			// continue ;
+		}
+		if ((ray->map_x > map_data->width || ray->map_y > map_data->height || \
+			ray->map_x < 0 || ray->map_y < 0 || \
+			map[ray->map_y][ray->map_x] != '0'))
+			hit = 1;
 	}
 }
 
@@ -248,4 +251,3 @@ void	render_walls(t_ray *ray)
             ray->draw_end = 0;
     }
 }
-

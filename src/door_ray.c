@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:51:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/13 21:52:05 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:45:05 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	door_raycast(t_vars *vars)
 		init_ray(x, player, &ray);
 		find_step_and_dist(&ray, player);
 		do_dda(&ray, vars->map_data, vars->map_data->map);
-		add_door_offset(&ray);
+		// add_door_offset(&ray);
 		render_walls(&ray);
 		get_textures(x, &ray, player, vars);
 		x++;

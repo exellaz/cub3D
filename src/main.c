@@ -17,7 +17,6 @@ int		draw_loop(t_vars *vars);
 int	main(int ac, char **av)
 {
 	t_vars	vars;
-	// t_vars	*vars = malloc(sizeof(t_vars));
 	int		fd;
 
 	fd = validate_arg(ac, av[1]);
