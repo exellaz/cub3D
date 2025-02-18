@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:32:29 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/17 16:36:15 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:16:48 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,6 @@ void	get_textures(int x, t_ray *ray, t_player *player, t_vars *vars)
 {
 	t_tex_data	tex_data;
 
-	//  if (ray->door)
-    // {
-    //     // Render the door
-    //     int door_color = 0x00FF00; // Green color for the door
-    //     for (int y = ray->draw_start; y < ray->draw_end; y++)
-    //     {
-    //         put_pixel(x, y, door_color, &vars->img);
-    //     }
-
-    //     // If the door is not fully open, render what's behind it
-    //     if (ray->door->progress < 1.0)
-    //     {
-    //         // Calculate the distance to the wall behind the door
-    //         float behind_dist = ray->perp_wall_dist / (1.0 - ray->door->progress);
-
-    //         // Calculate the height of the wall behind the door
-    //         int behind_line_height = (int)(WIN_HEIGHT / behind_dist);
-    //         int behind_draw_start = -(behind_line_height) / 2 + WIN_HEIGHT / 2;
-    //         if (behind_draw_start < 0)
-    //             behind_draw_start = 0;
-    //         int behind_draw_end = behind_line_height / 2 + WIN_HEIGHT / 2;
-    //         if (behind_draw_end >= WIN_HEIGHT)
-    //             behind_draw_end = WIN_HEIGHT - 1;
-
-    //         // Render the wall behind the door
-    //         for (int y = behind_draw_start; y < behind_draw_end; y++)
-    //         {
-    //             int color = 0x808080; // Gray color for the wall
-    //             put_pixel(x, y, color, &vars->img);
-    //         }
-    //     }
-    // }
 	tex_data.wall_x = get_wall_x(ray, player);
 	tex_data.tex_x = get_tex_x(tex_data.wall_x, ray);
 	tex_data.tex_num = get_tex_num(ray);

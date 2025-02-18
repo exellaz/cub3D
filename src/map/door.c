@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:53:00 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/13 17:22:44 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:21:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,24 @@ void	get_doors(t_list *map, t_door **door, int *count)
 static int	count_doors(t_list *map)
 {
 	t_list	*tmp;
+	char	*str;
 	int		i;
+	int		j;
 
 	tmp = map;
 	i = 0;
 	while (tmp)
 	{
-		if (ft_strchr(tmp->content, 'D'))
-			i++;
+		// if (ft_strchr(tmp->content, 'D'))
+		// 	i++;
+		j = 0;
+		str = tmp->content;
+		while (str[j])
+		{
+			if (str[j] == 'D')
+				i++;
+			j++;
+		}
 		tmp = tmp->next;
 	}
 	return (i);
