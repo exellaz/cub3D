@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 13:52:19 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/15 15:33:27 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void	init_textures(t_vars *vars, t_map *map)
 	int	x;
 	int	y;
 	int	i;
+	int j;
 	int	tex_i;
 
-	(void)map;
 	vars->texture = mem_alloc(sizeof(int *) * map->texture_count);
 	x = -1;
 	while (++x < map->texture_count)
@@ -36,11 +36,14 @@ static void	init_textures(t_vars *vars, t_map *map)
 		x = -1;
 		while (++x < TEX_WIDTH)
 		{
+			j = -1;
 			i = -1;
-			while (++i < map->texture_count)
+			while (++i < 7)
 			{
+				if (!map->texture[i].path)
+					continue ;
 				tex_i = y * TEX_WIDTH + x;
-				vars->texture[i][tex_i] = (int)(map->texture[i].img->addr[tex_i]);
+				vars->texture[++j][tex_i] = (int)(map->texture[i].img->addr[tex_i]);
 			}
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/02/07 19:31:58 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/15 15:32:30 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	quit(int keycode, t_vars *m)
 	(void)keycode;
 	mlx_destroy_window(m->mlx, m->win);
 	mlx_destroy_image(m->mlx, m->img.img);
-	free_texture(m->map_data->texture, m->mlx, m->map_data->texture_count);
+	free_texture(m->map_data->texture, m->mlx);
 	mem_clean();
 	free(m->mlx);
 	exit(0);
