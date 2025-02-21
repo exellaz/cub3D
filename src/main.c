@@ -13,7 +13,6 @@ void	raycast(t_vars *vars);
 void	draw_line(t_point start, t_point end, int color, t_img *img);
 int		draw_loop(t_vars *vars);
 
-
 int	main(int ac, char **av)
 {
 	t_vars	vars;
