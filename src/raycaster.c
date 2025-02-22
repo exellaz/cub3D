@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/21 13:58:12 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/22 14:44:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,12 @@ void	raycast(t_vars *vars)
 	x = 0;
 	update_doors(vars->map_data);
 	floor_casting(vars);
+	// for (int y = 0; y < WIN_HEIGHT / 2; y++)
+	// 	for (int x = 0; x < WIN_WIDTH; x++)
+	// 	put_pixel(x, y, 0x696969, &vars->img);
+	// for (int y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++)
+	// 	for (int x = 0; x < WIN_WIDTH; x++)
+	// 	put_pixel(x, y, 0x696969, &vars->img);
 	while (x < WIN_WIDTH)
 	{
 		init_ray(x, player, &ray);
