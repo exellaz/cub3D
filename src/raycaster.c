@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/22 14:44:10 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:32:38 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	floor_casting(t_vars *vars)
 				color = 0x696969;
 			else
 				color = vars->texture[floor_texture][TEX_WIDTH * ty + tx];
-			// color = (color >> 1) & 8355711; // make a bit darker			// color = (color >> 1) & 8355711; // make a bit darker
 
 			color = apply_opacity(color, opacity);
 			put_pixel(x, y, color, &vars->img);
