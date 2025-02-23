@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 09:42:39 by we                #+#    #+#             */
-/*   Updated: 2025/02/22 18:06:15 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:37:45 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define VISIBLE_RANGE 4
 # define PI 3.14159
 # define MOUSE_SPEED 0.0005
+# define CURSOR_COLOR 0xFF000
 
 typedef struct s_list	t_list;
 typedef struct s_map	t_map;
