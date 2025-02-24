@@ -6,7 +6,7 @@
 /*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/17 09:40:04 by we               ###   ########.fr       */
+/*   Updated: 2025/02/24 16:05:17 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_map	*parse_map(int file, void *mlx)
 	get_doors(map_data->map_list, &map_data->doors, &map_data->door_count);
 	valid_texture_path(map_data->texture);
 	valid_iden(map_data->map_list);
-	valid_walls(map_data->map_list, map_data->height);
+	valid_walls(map_data->map_list, map_data->height, map_data->spawn);
 	load_textures(map_data->texture, mlx);
 	map_data->map = lst_to_arr(map_data->map_list);
 	return (map_data);

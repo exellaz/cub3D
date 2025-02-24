@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/15 15:32:07 by bazzite          ###   ########.fr       */
+/*   Updated: 2025/02/24 16:06:03 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	free_texture(t_texture *texture, void *mlx);
 
 void	valid_texture_path(t_texture *texture);
 void	valid_iden(t_list *map);
-void	valid_walls(t_list *map, int height);
+void	valid_walls(t_list *map, int height, int *spawn);
 
 void	count_cfg(t_list *raw, int count, char *msg);
 char	**split_cfg(char *line);

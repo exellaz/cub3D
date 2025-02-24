@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_valid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 13:54:54 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/24 16:17:53 by we               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 #include "map.h"
 
 static void	valid_spawn(t_list *map);
-static void	check_y_walls(char **map_arr, int height);
+// static void	check_y_walls(char **map_arr, int height);
+static void	flood_fill(int x, int y, char **map_arr, int height);
 
 void	valid_texture_path(t_texture *texture)
 {
@@ -86,49 +87,67 @@ static void	valid_spawn(t_list *map)
 		error_exit("Invalid spawn point");
 }
 
-void	valid_walls(t_list *map, int height)
+void	valid_walls(t_list *map, int height, int *spawn)
 {
 	char	**map_arr;
-	int		i;
-	int		j;
+	// int		i;
+	// int		j;
 
 	map_arr = lst_to_arr(map);
-	i = -1;
-	while (map_arr[++i])
-	{
-		j = -1;
-		while (map_arr[i][++j] && is_whitespace(map_arr[i][j]))
-			;
-		if (map_arr[i][j] != '1')
-			error_exit("Invalid wall");
-		while (map_arr[i][j] && !is_whitespace(map_arr[i][j]))
-			j++;
-		if (map_arr[i][j - 1] != '1')
-			error_exit("Invalid wall");
-	}
-	check_y_walls(map_arr, height);
+	flood_fill(spawn[0], spawn[1], map_arr, height);
+	// print_arr(map_arr);
+	// i = -1;
+	// while (map_arr[++i])
+	// {
+	// 	j = -1;
+	// 	while (map_arr[i][++j] && is_whitespace(map_arr[i][j]))
+	// 		;
+	// 	if (map_arr[i][j] != '1')
+	// 		error_exit("Invalid wall");
+	// 	while (map_arr[i][j] && !is_whitespace(map_arr[i][j]))
+	// 		j++;
+	// 	if (map_arr[i][j - 1] != '1')
+	// 		error_exit("Invalid wall");
+	// }
+	// check_y_walls(map_arr, height);
 }
 
-static void	check_y_walls(char **map_arr, int height)
-{
-	int	empty;
-	int	i;
-	int	j;
+// static void	check_y_walls(char **map_arr, int height)
+// {
+// 	int	empty;
+// 	int	i;
+// 	int	j;
 
-	i = -1;
-	while (map_arr[0][++i])
-	{
-		empty = 0;
-		j = 0;
-		while (j < height && is_whitespace(map_arr[j++][i]))
-			++empty;
-		if (empty == height)
-			continue ;
-		if (map_arr[j - 1][i] != '1')
-			error_exit("Invalid wall !");
-		while (map_arr[j] && !is_whitespace(map_arr[j][i]))
-			j++;
-		if (map_arr[j - 1][i] != '1')
-			error_exit("Invalid wall");
-	}
+// 	i = -1;
+// 	while (map_arr[0][++i])
+// 	{
+// 		empty = 0;
+// 		j = 0;
+// 		while (j < height && is_whitespace(map_arr[j++][i]))
+// 			++empty;
+// 		if (empty == height)
+// 			continue ;
+// 		if (map_arr[j - 1][i] != '1')
+// 			error_exit("Invalid wall !");
+// 		while (map_arr[j] && !is_whitespace(map_arr[j][i]))
+// 			j++;
+// 		if (map_arr[j - 1][i] != '1')
+// 			error_exit("Invalid wall");
+// 	}
+// }
+
+static void	flood_fill(int x, int y, char **map_arr, int height)
+{
+	if (x < 0 || x > (int)ft_strlen(map_arr[0]) || y < 0 || y >= height)
+		return ;
+	printf("map[%d][%d]: [%c]\n", x, y, map_arr[x][y]);
+	if (map_arr[x][y] == ' ')
+		error_exit("Invalid space");
+	if (map_arr[x][y] == '1' || map_arr[x][y] == 'x')
+		return ;
+	map_arr[x][y] = 'x';
+	flood_fill(x + 1, y, map_arr, height);
+	flood_fill(x - 1, y, map_arr, height);
+	flood_fill(x, y + 1, map_arr, height);
+	flood_fill(x, y - 1, map_arr, height);
 }
