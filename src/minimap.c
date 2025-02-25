@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/25 09:38:50 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:16:17 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		draw_minimap(t_point map, int range, t_vars *vars);
 static int		get_minimap_range(t_map *map_data);
 static int		get_pixel_color(t_point tile, t_fpoint pixel, \
 					char **map, t_vars *vars);
-unsigned int	apply_opacity(unsigned int color, float opacity);
+int	apply_opacity(int color, float opacity);
 
 void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 {
@@ -82,16 +82,19 @@ int	get_pixel_color(t_point tile, t_fpoint pixel, char **map, t_vars *vars)
 	if (map[tile.y][tile.x] == '1')
 		color = vars->texture[0][tex.y * TEX_WIDTH + tex.x];
 	else if (map[tile.y][tile.x] == 'D')
-		color = 0xFF00FF;
+		color = vars->texture[vars->map_data->texture_count - 1][tex.y * TEX_WIDTH + tex.x];
 	else
 	{
-		color = vars->texture[4][tex.y * TEX_WIDTH + tex.x];
+		if (vars->map_data->texture_count < 6)
+			color = vars->map_data->floor_color;
+		else
+			color = vars->texture[4][tex.y * TEX_WIDTH + tex.x];
 		color = (color >> 1) & 8355711;
 	}
 	return (apply_opacity(color, opacity));
 }
 
-unsigned int	apply_opacity(unsigned int color, float opacity)
+int	apply_opacity(int color, float opacity)
 {
 	int	r;
 	int	g;

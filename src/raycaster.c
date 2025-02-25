@@ -6,14 +6,14 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/25 07:21:08 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:12:11 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "graphics.h"
 
-unsigned int	apply_opacity(unsigned int color, float opacity);
+int	apply_opacity(int color, float opacity);
 void			init_ray(int x, t_player *player, t_ray *ray);
 void			find_step_and_dist(t_ray *ray, t_player *player);
 void			do_dda(t_ray *ray, t_map *map_data, char **map);
@@ -52,22 +52,19 @@ void	floor_casting(t_vars *vars)
 			floor_x += floor_step_x;
 			floor_y += floor_step_y;
 
-			int	floor_texture = 4;
-			int	ceiling_texture = 5;
-			uint32_t	color;
+			int	color;
 
 			if (vars->map_data->texture_count < 6)
-				color = 0x696969;
+				color = vars->map_data->floor_color;
 			else
-				color = vars->texture[floor_texture][TEX_WIDTH * ty + tx];
-
+				color = vars->texture[FLOOR][TEX_WIDTH * ty + tx];
 			color = apply_opacity(color, opacity);
 			put_pixel(x, y, color, &vars->img);
 			if (vars->map_data->texture_count < 6)
-				color = 0x555555;
+				color = vars->map_data->ceiling_color;
 			else
-				color = vars->texture[ceiling_texture][TEX_WIDTH * ty + tx];
-			color = (color >> 1) & 8355711; // make a bit darker
+				color = vars->texture[CEILING][TEX_WIDTH * ty + tx];
+			color = (color >> 1) & 8355711;
 			color = apply_opacity(color, opacity);
 			put_pixel(x, WIN_HEIGHT - y - 1, color, &vars->img);
 		}
@@ -108,12 +105,6 @@ void	raycast(t_vars *vars)
 	x = 0;
 	update_doors(vars->map_data);
 	floor_casting(vars);
-	// for (int y = 0; y < WIN_HEIGHT / 2; y++)
-	// 	for (int x = 0; x < WIN_WIDTH; x++)
-	// 	put_pixel(x, y, 0x696969, &vars->img);
-	// for (int y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++)
-	// 	for (int x = 0; x < WIN_WIDTH; x++)
-	// 	put_pixel(x, y, 0x696969, &vars->img);
 	while (x < WIN_WIDTH)
 	{
 		init_ray(x, player, &ray);

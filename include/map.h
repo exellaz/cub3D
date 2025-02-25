@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/15 15:32:07 by bazzite          ###   ########.fr       */
+/*   Updated: 2025/02/25 11:03:58 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_map
 	char		**map;
 	t_texture	texture[7];
 	int			fc_rgb[2][3];
+	int			floor_color;
+	int			ceiling_color;
 	int			spawn[3];
 	t_door		*doors;
 	int			texture_count;
@@ -51,7 +53,7 @@ typedef struct s_map
 t_map	*parse_map(int file, void *mlx);
 t_list	*load_file(int file);
 t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count);
-t_list	*get_rgb(t_list *raw, int (*rgb)[3]);
+t_list	*get_rgb(t_list *raw, int *floor_color, int *ceiling_color);
 void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
 void	get_doors(t_list *map, t_door **door, int *count);

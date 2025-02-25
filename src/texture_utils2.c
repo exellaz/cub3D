@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:07:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:10 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:09:36 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	draw_textured_column(int x, t_ray *ray, \
 
 	tex_data->base_opacity = fmax(0.0, 1.0 \
 			- (ray->perp_wall_dist / (VISIBLE_RANGE)));
-	// tex_data->base_opacity = 1;
 	y = ray->draw_start;
 	while (y < ray->draw_end)
 	{
@@ -40,11 +39,11 @@ void	draw_textured_column(int x, t_ray *ray, \
 static int	get_tex_color(int y, t_tex_data *tex_data, \
 				t_vars *vars, t_ray *ray)
 {
-	float			relative_y;
-	float			center_dist;
-	float			radial_factor;
-	int				texture_index;
-	unsigned int	color;
+	float	relative_y;
+	float	center_dist;
+	float	radial_factor;
+	int		texture_index;
+	int		color;
 
 	relative_y = (y - ray->draw_start) / (float)ray->line_height;
 	center_dist = fabs(relative_y - 0.5) * 2.0;
