@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 09:42:39 by we                #+#    #+#             */
-/*   Updated: 2025/02/23 18:37:45 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:05:27 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,16 @@ typedef struct s_vars
 	t_map		*map_data;
 }				t_vars;
 
-typedef struct s_point
+typedef struct s_fpoint
 {
 	float x;
 	float y;
+}				t_fpoint;
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
 }				t_point;
 
 enum e_keycode

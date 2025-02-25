@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/23 18:43:25 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/25 07:21:08 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	floor_casting(t_vars *vars)
 
 	float	pos_z = 0.5 * WIN_HEIGHT;
 
-	for (int y = 0; y < WIN_HEIGHT; y++)
+	for (int y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++)
 	{
 		int	p = y - WIN_HEIGHT / 2;
 		float	row_distance = pos_z / p;

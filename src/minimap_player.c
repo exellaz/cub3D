@@ -6,18 +6,18 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:57:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/23 18:34:32 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:07:01 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static float	sign(t_point a, t_point b, t_point p)
+static float	sign(t_fpoint a, t_fpoint b, t_fpoint p)
 {
 	return ((p.x - b.x) * (a.y - b.y) - (p.y - b.y) * (a.x - b.x));
 }
 
-static int	point_in_triangle(t_point point, t_point v0, t_point v1, t_point v2)
+static int	point_in_triangle(t_fpoint point, t_fpoint v0, t_fpoint v1, t_fpoint v2)
 {
 	float	d1;
 	float	d2;
@@ -28,16 +28,16 @@ static int	point_in_triangle(t_point point, t_point v0, t_point v1, t_point v2)
 	d1 = sign(v0, v1, point);
 	d2 = sign(v1, v2, point);
 	d3 = sign(v2, v0, point);
-	has_neg = d1 < 0 || d2 < 0 || d3 < 0;
-	has_pos = d1 > 0 || d2 > 0 || d3 > 0;
+	has_neg = (d1 < 0 || d2 < 0 || d3 < 0);
+	has_pos = (d1 > 0 || d2 > 0 || d3 > 0);
 	return (!(has_neg && has_pos));
 }
 
-void	draw_filled_triangle(t_point v0, t_point v1, t_point v2, t_img *img)
+void	draw_filled_triangle(t_fpoint v0, t_fpoint v1, t_fpoint v2, t_img *img)
 {
-	t_point	min;
-	t_point	max;
-	t_point	point;
+	t_fpoint	min;
+	t_fpoint	max;
+	t_fpoint	point;
 
 	min.x = fmin(fmin(v0.x, v1.x), v2.x);
 	max.x = fmax(fmax(v0.x, v1.x), v2.x);
@@ -59,11 +59,11 @@ void	draw_filled_triangle(t_point v0, t_point v1, t_point v2, t_img *img)
 
 void	draw_player(t_player *player, float map_x, float map_y, t_vars *vars)
 {
-	float	size;
-	float	angle;
-	float	player_x;
-	float	player_y;
-	t_point	points[3];
+	float		size;
+	float		angle;
+	float		player_x;
+	float		player_y;
+	t_fpoint	points[3];
 
 	size = vars->tile_size * 0.6;
 	angle = atan2(player->dir_y, player->dir_x);
