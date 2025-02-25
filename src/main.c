@@ -32,9 +32,9 @@ int	draw_loop(t_vars *vars)
 	player = vars->player;
 	frame_counter(vars->fps);
 	handle_player_controls(player, vars->fps, vars->map_data);
-	for (int y = 0; y < WIN_HEIGHT; y++)
-		for (int x = 0; x < WIN_WIDTH; x++)
-			put_pixel(x, y, 0x000000, &vars->img);
+	// for (int y = 0; y < WIN_HEIGHT; y++)
+	// 	for (int x = 0; x < WIN_WIDTH; x++)
+	// 		put_pixel(x, y, 0x000000, &vars->img);
 	raycast(vars);
 	if (vars->minimap_toggle == true)
 		render_minimap(player, vars, vars->map_data);

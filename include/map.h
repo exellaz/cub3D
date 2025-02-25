@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/25 11:03:58 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:28:46 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ typedef struct s_map
 {
 	t_list		*map_list;
 	char		**map;
-	t_texture	texture[7];
-	int			fc_rgb[2][3];
+	t_texture	texture_data[7];
 	int			floor_color;
 	int			ceiling_color;
 	int			spawn[3];
@@ -48,6 +47,8 @@ typedef struct s_map
 	int			door_count;
 	int			width;
 	int			height;
+	int			tile_size;
+	int			**texture;
 }	t_map;
 
 t_map	*parse_map(int file, void *mlx);

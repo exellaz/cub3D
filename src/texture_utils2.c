@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:07:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/25 11:09:36 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:40:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	get_tex_color(int y, t_tex_data *tex_data, \
 	center_dist = fabs(relative_y - 0.5) * 2.0;
 	radial_factor = 1.0 - 0.2 * (center_dist * center_dist);
 	texture_index = TEX_HEIGHT * tex_data->tex_y + tex_data->tex_x;
-	color = vars->texture[tex_data->tex_num][texture_index];
+	color = vars->map_data->texture[tex_data->tex_num][texture_index];
 	color = apply_opacity(color, tex_data->base_opacity * radial_factor);
 	return (color);
 }

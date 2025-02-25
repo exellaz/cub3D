@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/25 11:12:11 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:40:00 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void			door_casting(t_vars *vars, int x);
 void	floor_casting(t_vars *vars)
 {
 	t_player	*player = vars->player;
+	t_map		*map_data = vars->map_data;
 
 	float	ray_dir_x0 = player->dir_x - player->plane_x;
 	float	ray_dir_y0 = player->dir_y - player->plane_y;
@@ -54,16 +55,16 @@ void	floor_casting(t_vars *vars)
 
 			int	color;
 
-			if (vars->map_data->texture_count < 6)
-				color = vars->map_data->floor_color;
+			if (map_data->texture_count < 6)
+				color = map_data->floor_color;
 			else
-				color = vars->texture[FLOOR][TEX_WIDTH * ty + tx];
+				color = map_data->texture[FLOOR][TEX_WIDTH * ty + tx];
 			color = apply_opacity(color, opacity);
 			put_pixel(x, y, color, &vars->img);
-			if (vars->map_data->texture_count < 6)
-				color = vars->map_data->ceiling_color;
+			if (map_data->texture_count < 6)
+				color = map_data->ceiling_color;
 			else
-				color = vars->texture[CEILING][TEX_WIDTH * ty + tx];
+				color = map_data->texture[CEILING][TEX_WIDTH * ty + tx];
 			color = (color >> 1) & 8355711;
 			color = apply_opacity(color, opacity);
 			put_pixel(x, WIN_HEIGHT - y - 1, color, &vars->img);
