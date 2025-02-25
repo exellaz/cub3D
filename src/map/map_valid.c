@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_valid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/24 16:17:53 by we               ###   ########.fr       */
+/*   Updated: 2025/02/25 23:36:33 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	valid_walls(t_list *map, int height, int *spawn)
 	// int		j;
 
 	map_arr = lst_to_arr(map);
+	print_arr(map_arr);
 	flood_fill(spawn[0], spawn[1], map_arr, height);
 	// print_arr(map_arr);
 	// i = -1;
