@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:31:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/13 17:30:17 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:45:31 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ void	handle_player_controls(t_player *player, t_fps *fps, t_map *map_data)
 	float	move_x;
 	float	move_y;
 	float	rot_speed;
-	t_door	*doors;
 
 	move_x = 0.0;
 	move_y = 0.0;
 	rot_speed = fps->frame_time * 2.5;
-	doors = map_data->doors;
 	if (player->interact == true)
 		handle_interact(player, map_data);
 	get_moves(&move_x, &move_y, player, fps);
@@ -109,11 +107,9 @@ void	move_player(float move_x, float move_y, t_player *player, t_map *map_data)
 {
 	float	new_x;
 	float	new_y;
-	t_door	*doors;
 
 	new_x = player->pos_x + move_x;
 	new_y = player->pos_y + move_y;
-	doors = map_data->doors;
 	if (is_passable(new_x, player->pos_y, map_data) == true)
 		player->pos_x += move_x;
 	if (is_passable(player->pos_x, new_y, map_data) == true)

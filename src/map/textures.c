@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:10:13 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/13 13:40:23 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/15 15:31:59 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,69 +18,15 @@
 #include "graphics.h"
 #include "map.h"
 
-static void	get_path(t_list **raw, t_texture *texture, int count);
-
-t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count)
-{
-	t_list	*tmp;
-
-	raw = skip_empty_lines(raw);
-	*count = 0;
-	tmp = raw;
-	while (!is_whitespace(((char *)tmp->content)[0]))
-	{
-		*count += 1;
-		tmp = tmp->next;
-	}
-	get_path(&raw, texture, *count);
-	if (*count < 4 || *count > 7)
-		error_exit("Invalid texture count");
-	return (raw->next);
-}
-
-static void	get_path(t_list **raw, t_texture *texture, int count)
-{
-	char	**split;
-	int		i;
-
-	i = -1;
-	while (++i < count)
-	{
-		split = split_cfg((*raw)->content);
-		if (ft_strcmp(split[0], "NO") == 0)
-			texture[0].path = split[1];
-		else if (ft_strcmp(split[0], "SO") == 0)
-			texture[1].path = split[1];
-		else if (ft_strcmp(split[0], "WE") == 0)
-			texture[2].path = split[1];
-		else if (ft_strcmp(split[0], "EA") == 0)
-			texture[3].path = split[1];
-		else if (ft_strcmp(split[0], "FL") == 0)
-			texture[4].path = split[1];
-		else if (ft_strcmp(split[0], "CL") == 0)
-			texture[5].path = split[1];
-		else if (ft_strcmp(split[0], "DO") == 0)
-			texture[count - 1].path = split[1];
-		else
-			error_exit("Invalid texture identifier");
-		*raw = (*raw)->next;
-	}
-	i = -1;
-	while (++i < count)
-		if (!texture[i].path)
-			error_exit("Missing texture path");
-}
-
-void	load_textures(t_texture *texture, void *mlx, int count)
+void	load_textures(t_texture *texture, void *mlx)
 {
 	int	i;
 
 	i = -1;
-	// printf("Count: %d\n", count);
-	// for (int x = 0; x < 5; x++)
-	while (++i < count)
+	while (++i < 7)
 	{
-		printf("%s\n", texture[i].path);
+		if (!texture[i].path)
+			continue ;
 		texture[i].img = mem_alloc(sizeof(t_img));
 		texture[i].img->img = mlx_xpm_file_to_image(mlx, texture[i].path,
 				&texture[i].width, &texture[i].height);
@@ -92,13 +38,15 @@ void	load_textures(t_texture *texture, void *mlx, int count)
 	}
 }
 
-void	free_texture(t_texture *texture, void *mlx, int count)
+void	free_texture(t_texture *texture, void *mlx)
 {
 	int	i;
 
 	i = -1;
-	while (++i < count)
+	while (++i < 7)
 	{
+		if (!texture[i].path)
+			continue ;
 		mlx_destroy_image(mlx, texture[i].img->img);
 		mem_free(texture[i].img);
 	}
