@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/24 16:05:17 by we               ###   ########.fr       */
+/*   Updated: 2025/02/26 21:22:52 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include "graphics.h"
 #include "map.h"
 
-static void	init_map(t_map *map_data);
-static int	get_map_width(t_list *map);
+static t_map	*init_map(void);
+static int		get_map_width(t_list *map);
 
 t_map	*parse_map(int file, void *mlx)
 {
@@ -27,8 +27,7 @@ t_map	*parse_map(int file, void *mlx)
 	t_list	*raw;
 	t_list	*remain;
 
-	map_data = mem_alloc(sizeof(t_map));
-	init_map(map_data);
+	map_data = init_map();
 	raw = load_file(file);
 	remain = get_texture_path(raw, map_data->texture, &map_data->texture_count);
 	remain = get_rgb(remain, map_data->fc_rgb);
@@ -43,8 +42,11 @@ t_map	*parse_map(int file, void *mlx)
 	return (map_data);
 }
 
-static void	init_map(t_map *map_data)
+static t_map	*init_map(void)
 {
+	t_map	*map_data;
+
+	map_data = mem_alloc(sizeof(t_map));
 	map_data->map_list = NULL;
 	map_data->map = NULL;
 	map_data->doors = NULL;
@@ -52,6 +54,7 @@ static void	init_map(t_map *map_data)
 	map_data->door_count = 0;
 	map_data->width = 0;
 	map_data->height = 0;
+	return (map_data);
 }
 
 void	get_map(t_list *raw, t_list **map, int *width, int *height)

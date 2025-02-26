@@ -6,7 +6,7 @@
 /*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/02/26 01:03:26 by bazzite          ###   ########.fr       */
+/*   Updated: 2025/02/26 21:20:03 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,7 @@ void	valid_walls(t_list *map, int height, int *spawn)
 	char	**map_arr;
 
 	map_arr = lst_to_arr(map);
-	print_arr(map_arr);
 	flood_fill(spawn[0], spawn[1], map_arr, height);
-	printf("\n");
-	print_arr(map_arr);
 }
 
 static void	flood_fill(int y, int x, char **map_arr, int height)
@@ -103,7 +100,7 @@ static void	flood_fill(int y, int x, char **map_arr, int height)
 		return ;
 	if (map_arr[y][x] == ' ')
 		error_exit("Invalid space");
-	if (map_arr[y][x] == '1' || map_arr[y][x] == 'x')
+	if (map_arr[y][x] == '1' || map_arr[y][x] == 'D' || map_arr[y][x] == 'x')
 		return ;
 	map_arr[y][x] = 'x';
 	flood_fill(y + 1, x, map_arr, height);
