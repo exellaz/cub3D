@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/25 12:28:46 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/26 08:03:45 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_map
 	int			height;
 	int			tile_size;
 	int			**texture;
+	int			tex_width;
+	int			tex_height;
 }	t_map;
 
 t_map	*parse_map(int file, void *mlx);
@@ -62,6 +64,7 @@ void	load_textures(t_texture *texture, void *mlx);
 void	free_texture(t_texture *texture, void *mlx);
 
 void	valid_texture_path(t_texture *texture);
+void	valid_textures(t_texture *texture);
 void	valid_iden(t_list *map);
 void	valid_walls(t_list *map, int height);
 

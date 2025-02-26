@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/25 12:40:00 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/26 08:05:33 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	floor_casting(t_vars *vars)
 {
 	t_player	*player = vars->player;
 	t_map		*map_data = vars->map_data;
+	int			tex_width = map_data->tex_width;
+	int			tex_height = map_data->tex_height;
 
 	float	ray_dir_x0 = player->dir_x - player->plane_x;
 	float	ray_dir_y0 = player->dir_y - player->plane_y;
@@ -47,8 +49,8 @@ void	floor_casting(t_vars *vars)
 			int	cell_x = (int)floor_x;
 			int	cell_y = (int)floor_y;
 
-			int	tx = (int)(TEX_WIDTH * (floor_x - cell_x)) & (TEX_WIDTH - 1);
-			int	ty = (int)(TEX_HEIGHT * (floor_y - cell_y)) & (TEX_HEIGHT - 1);
+			int	tx = (int)(tex_width * (floor_x - cell_x)) & (tex_width - 1);
+			int	ty = (int)(tex_height * (floor_y - cell_y)) & (tex_height - 1);
 
 			floor_x += floor_step_x;
 			floor_y += floor_step_y;
@@ -58,13 +60,13 @@ void	floor_casting(t_vars *vars)
 			if (map_data->texture_count < 6)
 				color = map_data->floor_color;
 			else
-				color = map_data->texture[FLOOR][TEX_WIDTH * ty + tx];
+				color = map_data->texture[FLOOR][tex_width * ty + tx];
 			color = apply_opacity(color, opacity);
 			put_pixel(x, y, color, &vars->img);
 			if (map_data->texture_count < 6)
 				color = map_data->ceiling_color;
 			else
-				color = map_data->texture[CEILING][TEX_WIDTH * ty + tx];
+				color = map_data->texture[CEILING][tex_width * ty + tx];
 			color = (color >> 1) & 8355711;
 			color = apply_opacity(color, opacity);
 			put_pixel(x, WIN_HEIGHT - y - 1, color, &vars->img);

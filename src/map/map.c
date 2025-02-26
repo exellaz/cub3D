@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/25 12:37:22 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/26 08:03:29 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ t_map	*parse_map(int file, void *mlx)
 	valid_iden(map_data->map_list);
 	valid_walls(map_data->map_list, map_data->height);
 	load_textures(map_data->texture_data, mlx);
+	valid_textures(map_data->texture_data);
 	map_data->map = lst_to_arr(map_data->map_list);
+	map_data->tex_width = map_data->texture_data->width;
+	map_data->tex_height = map_data->texture_data->height;
 	return (map_data);
 }
 

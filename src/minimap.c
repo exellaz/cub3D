@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/25 15:45:54 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/26 08:14:44 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		draw_minimap(t_point map, int range, t_map *map_data, t_vars *vars)
 static int		get_minimap_range(t_map *map_data);
 static int		get_pixel_color(t_point tile, t_fpoint pixel, \
 					t_map *map_data, t_player *player);
-int	apply_opacity(int color, float opacity);
+int				apply_opacity(int color, float opacity);
 
 void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 {
@@ -79,18 +79,18 @@ int	get_pixel_color(t_point tile, t_fpoint pixel, t_map *map_data, t_player *pla
 	distance = sqrt(pow((pixel.x / tile_size) - player->pos_x, 2) \
 				+ pow((pixel.y / tile_size) - player->pos_y, 2));
 	opacity = fmax(0.0, 1.0 - (distance / VISIBLE_RANGE));
-	tex.x = ((int)pixel.x % tile_size * TEX_WIDTH) / tile_size;
-	tex.y = ((int)pixel.y % tile_size * TEX_HEIGHT) / tile_size;
+	tex.x = ((int)pixel.x % tile_size * map_data->tex_width) / tile_size;
+	tex.y = ((int)pixel.y % tile_size * map_data->tex_height) / tile_size;
 	if (map_data->map[tile.y][tile.x] == '1')
-		color = map_data->texture[0][tex.y * TEX_WIDTH + tex.x];
+		color = map_data->texture[0][tex.y * map_data->tex_width + tex.x];
 	else if (map_data->map[tile.y][tile.x] == 'D')
-		color = map_data->texture[map_data->texture_count - 1][tex.y * TEX_WIDTH + tex.x];
+		color = map_data->texture[map_data->texture_count - 1][tex.y * map_data->tex_width + tex.x];
 	else
 	{
 		if (map_data->texture_count < 6)
 			color = map_data->floor_color;
 		else
-			color = map_data->texture[4][tex.y * TEX_WIDTH + tex.x];
+			color = map_data->texture[4][tex.y * map_data->tex_width + tex.x];
 		color = (color >> 1) & 8355711;
 	}
 	return (apply_opacity(color, opacity));
