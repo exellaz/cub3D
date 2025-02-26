@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/26 17:56:58 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:25:00 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	draw_minimap(t_fpoint map, int range, t_map *map_data, t_vars *vars)
 		pixel.x = map.x * map_data->tile_size;
 		while (pixel.x < (map.x + range) * map_data->tile_size)
 		{
-			screen.x = (pixel.x - map.x * tile_size) + MINIMAP_OFFSET;
-			screen.y = (pixel.y - map.y * tile_size) + MINIMAP_OFFSET;
+			screen.x = (int)pixel.x - map.x * tile_size + MINIMAP_OFFSET;
+			screen.y = (int)pixel.y - map.y * tile_size + MINIMAP_OFFSET;
 			tile.x = pixel.x / tile_size;
 			tile.y = pixel.y / tile_size;
 			color = get_pixel_color(tile, pixel, map_data, vars->player);
@@ -79,8 +79,8 @@ int	get_pixel_color(t_point tile, t_fpoint pixel, t_map *map_data, t_player *pla
 	distance = sqrt(pow((pixel.x / tile_size) - player->pos_x, 2) \
 				+ pow((pixel.y / tile_size) - player->pos_y, 2));
 	opacity = fmax(0.0, 1.0 - (distance / VISIBLE_RANGE));
-	tex.x = ((int)pixel.x % tile_size * map_data->tex_width) / tile_size;
-	tex.y = ((int)pixel.y % tile_size * map_data->tex_height) / tile_size;
+	tex.x = ((int)pixel.x % tile_size) * map_data->tex_width / tile_size;
+	tex.y = ((int)pixel.y % tile_size) * map_data->tex_height / tile_size;
 	if (map_data->map[tile.y][tile.x] == '1')
 		color = map_data->texture[0][tex.y * map_data->tex_width + tex.x];
 	else if (map_data->map[tile.y][tile.x] == 'D')
