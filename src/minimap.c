@@ -6,13 +6,13 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/26 08:14:44 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:56:58 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3D.h>
 
-static void		draw_minimap(t_point map, int range, t_map *map_data, t_vars *vars);
+static void		draw_minimap(t_fpoint map, int range, t_map *map_data, t_vars *vars);
 static int		get_minimap_range(t_map *map_data);
 static int		get_pixel_color(t_point tile, t_fpoint pixel, \
 					t_map *map_data, t_player *player);
@@ -20,7 +20,7 @@ int				apply_opacity(int color, float opacity);
 
 void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 {
-	t_point	map;
+	t_fpoint	map;
 	int		range;
 
 	range = get_minimap_range(map_data);
@@ -40,7 +40,7 @@ void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 	draw_player(player, map.x, map.y, vars);
 }
 
-void	draw_minimap(t_point map, int range, t_map *map_data, t_vars *vars)
+void	draw_minimap(t_fpoint map, int range, t_map *map_data, t_vars *vars)
 {
 	t_point		screen;
 	t_fpoint	pixel;
