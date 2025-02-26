@@ -6,95 +6,97 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/09 14:09:26 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:25:00 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3D.h>
 
-static void		draw_minimap(t_player *player, int map_x, int map_y, int range, t_vars *vars);
-static void		draw_player(t_player *player, int map_x, int map_y, t_vars *vars);
-static int		get_tile_color(t_player *player, int x, int y, char **map);
-static int		get_size_and_range(t_vars *vars, t_map *map_data);
-unsigned int	apply_opacity(unsigned int color, float opacity);
+static void		draw_minimap(t_fpoint map, int range, t_map *map_data, t_vars *vars);
+static int		get_minimap_range(t_map *map_data);
+static int		get_pixel_color(t_point tile, t_fpoint pixel, \
+					t_map *map_data, t_player *player);
+int				apply_opacity(int color, float opacity);
 
 void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 {
-	int	map_x;
-	int	map_y;
-	int	range;
+	t_fpoint	map;
+	int		range;
 
-	range = get_size_and_range(vars, map_data);
-	map_x = ceil(player->pos_x) - VISIBLE_RANGE;
-	if (map_x < 0)
-		map_x = 0;
-	else if (map_x + range > map_data->width)
-		map_x = map_data->width - range;
-	map_y = ceil(player->pos_y) - VISIBLE_RANGE;
-	if (map_y < 0)
-		map_y = 0;
-	else if (map_y + range > map_data->height)
-		map_y = map_data->height - range;
+	range = get_minimap_range(map_data);
+	map_data->tile_size = MINIMAP_SIZE / range;
+	map.x = player->pos_x - (float)range / 2;
+	if (map.x < 0)
+		map.x = 0;
+	else if (map.x + range > map_data->width)
+		map.x = map_data->width - range;
+	map.y = player->pos_y - (float)range / 2;
+	if (map.y < 0)
+		map.y = 0;
+	else if (map.y + range > map_data->height)
+		map.y = map_data->height - range;
 	draw_border(0, 0, MINIMAP_SIZE, MINIMAP_OFFSET, 0x808080, &vars->img);
-	draw_minimap(player, map_x, map_y, range, vars);
-	draw_player(player, map_x, map_y, vars);
+	draw_minimap(map, range, map_data, vars);
+	draw_player(player, map.x, map.y, vars);
 }
 
-static void	draw_player(t_player *player, int map_x, int map_y, t_vars *vars)
+void	draw_minimap(t_fpoint map, int range, t_map *map_data, t_vars *vars)
 {
-	int	player_screen_x;
-	int	player_screen_y;
-	int	tile_size;
-	int	player_offset;
+	t_point		screen;
+	t_fpoint	pixel;
+	t_point		tile;
+	int			tile_size;
+	int			color;
 
-	tile_size = vars->tile_size;
-	player_screen_x = (player->pos_x - map_x) * tile_size;
-	player_screen_y = (player->pos_y - map_y) * tile_size;
-	player_offset = tile_size / 4 - MINIMAP_OFFSET;
-	draw_tile(player_screen_x - player_offset, player_screen_y - player_offset, \
-				tile_size / 2, 0xFF0000, &vars->img);
-}
-
-void	draw_minimap(t_player *player, int map_x, int map_y, int range, t_vars *vars)
-{
-	int	color;
-	int	screen_x;
-	int	screen_y;
-	int	x;
-	int	y;
-
-	y = map_y;
-	while (y < map_y + range)
+	tile_size = map_data->tile_size;
+	pixel.y = map.y * tile_size;
+	while (pixel.y < (map.y + range) * map_data->tile_size)
 	{
-		x = map_x;
-		while (x < map_x + range)
+		pixel.x = map.x * map_data->tile_size;
+		while (pixel.x < (map.x + range) * map_data->tile_size)
 		{
-			screen_x = (x - map_x) * vars->tile_size + MINIMAP_OFFSET;
-			screen_y = (y - map_y) * vars->tile_size + MINIMAP_OFFSET;
-			color = get_tile_color(player, x, y, vars->map_data->map);
-			draw_tile(screen_x, screen_y, vars->tile_size, color, &vars->img);
-			x++;
+			screen.x = (int)pixel.x - map.x * tile_size + MINIMAP_OFFSET;
+			screen.y = (int)pixel.y - map.y * tile_size + MINIMAP_OFFSET;
+			tile.x = pixel.x / tile_size;
+			tile.y = pixel.y / tile_size;
+			color = get_pixel_color(tile, pixel, map_data, vars->player);
+			put_pixel(screen.x, screen.y, color, &vars->img);
+			pixel.x++;
 		}
-		y++;
+		pixel.y++;
 	}
 }
 
-int	get_tile_color(t_player *player, int x, int y, char **map)
+int	get_pixel_color(t_point tile, t_fpoint pixel, t_map *map_data, t_player *player)
 {
 	float	distance;
 	float	opacity;
 	int		color;
+	int		tile_size;
+	t_point	tex;
 
-	distance = sqrt(pow(x - player->pos_x, 2) + pow(y - player->pos_y, 2));
+	tile_size = map_data->tile_size;
+	distance = sqrt(pow((pixel.x / tile_size) - player->pos_x, 2) \
+				+ pow((pixel.y / tile_size) - player->pos_y, 2));
 	opacity = fmax(0.0, 1.0 - (distance / VISIBLE_RANGE));
-	if (map[y][x] == '1' || map[y][x] == 'D')
-		color = 0x0000FF;
+	tex.x = ((int)pixel.x % tile_size) * map_data->tex_width / tile_size;
+	tex.y = ((int)pixel.y % tile_size) * map_data->tex_height / tile_size;
+	if (map_data->map[tile.y][tile.x] == '1')
+		color = map_data->texture[0][tex.y * map_data->tex_width + tex.x];
+	else if (map_data->map[tile.y][tile.x] == 'D')
+		color = map_data->texture[map_data->texture_count - 1][tex.y * map_data->tex_width + tex.x];
 	else
-		color = 0xFFFFFF;
+	{
+		if (map_data->texture_count < 6)
+			color = map_data->floor_color;
+		else
+			color = map_data->texture[4][tex.y * map_data->tex_width + tex.x];
+		color = (color >> 1) & 8355711;
+	}
 	return (apply_opacity(color, opacity));
 }
 
-unsigned int	apply_opacity(unsigned int color, float opacity)
+int	apply_opacity(int color, float opacity)
 {
 	int	r;
 	int	g;
@@ -106,7 +108,7 @@ unsigned int	apply_opacity(unsigned int color, float opacity)
 	return ((r << 16) | (g << 8) | b);
 }
 
-int	get_size_and_range(t_vars *vars, t_map *map_data)
+int	get_minimap_range(t_map *map_data)
 {
 	int	range_x;
 	int	range_y;
@@ -114,14 +116,8 @@ int	get_size_and_range(t_vars *vars, t_map *map_data)
 	range_x = 2 * VISIBLE_RANGE + 1;
 	range_y = 2 * VISIBLE_RANGE + 1;
 	if (map_data->width < range_x)
-	{
 		range_x = map_data->width;
-		vars->tile_size = MINIMAP_SIZE / map_data->height;
-	}
 	if (map_data->height < range_y)
-	{
 		range_y = map_data->height;
-		vars->tile_size = MINIMAP_SIZE / map_data->height;
-	}
 	return (fmin(range_x, range_y));
 }

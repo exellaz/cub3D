@@ -6,7 +6,7 @@
 /*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/26 21:22:52 by bazzite          ###   ########.fr       */
+/*   Updated: 2025/02/26 21:31:54 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,19 @@ t_map	*parse_map(int file, void *mlx)
 
 	map_data = init_map();
 	raw = load_file(file);
-	remain = get_texture_path(raw, map_data->texture, &map_data->texture_count);
-	remain = get_rgb(remain, map_data->fc_rgb);
+	remain = get_texture_path(raw, map_data->texture_data, &map_data->texture_count);
+	remain = get_rgb(remain, &map_data->floor_color, &map_data->ceiling_color);
 	get_map(remain, &map_data->map_list, &map_data->width, &map_data->height);
 	get_spawn(map_data->map_list, map_data->spawn);
 	get_doors(map_data->map_list, &map_data->doors, &map_data->door_count);
-	valid_texture_path(map_data->texture);
+	valid_texture_path(map_data->texture_data);
 	valid_iden(map_data->map_list);
 	valid_walls(map_data->map_list, map_data->height, map_data->spawn);
-	load_textures(map_data->texture, mlx);
+	load_textures(map_data->texture_data, mlx);
+	valid_textures(map_data->texture_data);
 	map_data->map = lst_to_arr(map_data->map_list);
+	map_data->tex_width = map_data->texture_data->width;
+	map_data->tex_height = map_data->texture_data->height;
 	return (map_data);
 }
 
