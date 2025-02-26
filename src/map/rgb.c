@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rgb.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:35:48 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/13 11:49:44 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/25 11:05:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@
 #include "map.h"
 
 static char	**valid_rgb(t_list *raw, int *fc);
+static int	rgb_to_int(int r, int g, int b);
 
-t_list	*get_rgb(t_list *raw, int (*rgb)[3])
+t_list	*get_rgb(t_list *raw, int *floor_color, int *ceiling_color)
 {
 	char	**split;
 	int		fc;
 	int		i;
 	int		j;
+	int		rgb[2][3];
 
 	count_cfg(raw, 2, "RGB count is not 2");
 	i = -1;
@@ -40,6 +42,8 @@ t_list	*get_rgb(t_list *raw, int (*rgb)[3])
 		}
 		raw = raw->next;
 	}
+	*floor_color = rgb_to_int(rgb[0][0], rgb[0][1], rgb[0][2]);
+	*ceiling_color = rgb_to_int(rgb[1][0], rgb[1][1], rgb[1][2]);
 	return (raw);
 }
 
@@ -60,4 +64,9 @@ static char	**valid_rgb(t_list *raw, int *fc)
 	if (count_arr(split) != 3)
 		error_exit("RGB value count is not 3");
 	return (split);
+}
+
+static int	rgb_to_int(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
 }

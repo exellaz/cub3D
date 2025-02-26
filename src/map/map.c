@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/17 09:40:04 by we               ###   ########.fr       */
+/*   Updated: 2025/02/26 08:03:29 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,19 @@ t_map	*parse_map(int file, void *mlx)
 	map_data = mem_alloc(sizeof(t_map));
 	init_map(map_data);
 	raw = load_file(file);
-	remain = get_texture_path(raw, map_data->texture, &map_data->texture_count);
-	remain = get_rgb(remain, map_data->fc_rgb);
+	remain = get_texture_path(raw, map_data->texture_data, &map_data->texture_count);
+	remain = get_rgb(remain, &map_data->floor_color, &map_data->ceiling_color);
 	get_map(remain, &map_data->map_list, &map_data->width, &map_data->height);
 	get_spawn(map_data->map_list, map_data->spawn);
 	get_doors(map_data->map_list, &map_data->doors, &map_data->door_count);
-	valid_texture_path(map_data->texture);
+	valid_texture_path(map_data->texture_data);
 	valid_iden(map_data->map_list);
 	valid_walls(map_data->map_list, map_data->height);
-	load_textures(map_data->texture, mlx);
+	load_textures(map_data->texture_data, mlx);
+	valid_textures(map_data->texture_data);
 	map_data->map = lst_to_arr(map_data->map_list);
+	map_data->tex_width = map_data->texture_data->width;
+	map_data->tex_height = map_data->texture_data->height;
 	return (map_data);
 }
 

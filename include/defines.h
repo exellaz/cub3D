@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 09:42:39 by we                #+#    #+#             */
-/*   Updated: 2025/02/13 13:16:30 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/26 07:57:32 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define VISIBLE_RANGE 4
 # define PI 3.14159
 # define MOUSE_SPEED 0.0005
+# define CURSOR_COLOR 0xFF000
 
 typedef struct s_list	t_list;
 typedef struct s_map	t_map;
@@ -59,6 +60,14 @@ typedef struct s_img
 	int		offset;
 }				t_img;
 
+typedef struct s_door
+{
+	int		x;
+	int		y;
+	bool	is_open;
+	float	progress;
+}				t_door;
+
 typedef struct s_ray
 {
 	float	camera_x;
@@ -77,6 +86,7 @@ typedef struct s_ray
 	int		draw_start;
 	int		draw_end;
 	int		line_height;
+	t_door	*door;
 }				t_ray;
 
 typedef struct s_player
@@ -107,13 +117,6 @@ typedef struct s_fps
 	clock_t	last_frame_time;
 }				t_fps;
 
-typedef struct s_door
-{
-	int		x;
-	int		y;
-	bool	is_open;
-}				t_door;
-
 typedef struct s_vars
 {
 	void		*mlx;
@@ -133,10 +136,16 @@ typedef struct s_vars
 	t_map		*map_data;
 }				t_vars;
 
-typedef struct s_point
+typedef struct s_fpoint
 {
 	float x;
 	float y;
+}				t_fpoint;
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
 }				t_point;
 
 enum e_keycode
@@ -173,6 +182,16 @@ enum e_mask
 	BUTTON_PRESS_MASK = 1L<<2,
 	BUTTON_RELEASE_MASK = 1L<<3,
 	POINTER_MOTION_MASK = 1L<<6,
+};
+
+enum	e_texture
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+	FLOOR,
+	CEILING,
 };
 
 #endif

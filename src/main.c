@@ -13,11 +13,9 @@ void	raycast(t_vars *vars);
 void	draw_line(t_point start, t_point end, int color, t_img *img);
 int		draw_loop(t_vars *vars);
 
-
 int	main(int ac, char **av)
 {
 	t_vars	vars;
-	// t_vars	*vars = malloc(sizeof(t_vars));
 	int		fd;
 
 	fd = validate_arg(ac, av[1]);
@@ -34,9 +32,9 @@ int	draw_loop(t_vars *vars)
 	player = vars->player;
 	frame_counter(vars->fps);
 	handle_player_controls(player, vars->fps, vars->map_data);
-	for (int y = 0; y < WIN_HEIGHT; y++)
-		for (int x = 0; x < WIN_WIDTH; x++)
-			put_pixel(x, y, 0x000000, &vars->img);
+	// for (int y = 0; y < WIN_HEIGHT; y++)
+	// 	for (int x = 0; x < WIN_WIDTH; x++)
+	// 		put_pixel(x, y, 0x000000, &vars->img);
 	raycast(vars);
 	if (vars->minimap_toggle == true)
 		render_minimap(player, vars, vars->map_data);

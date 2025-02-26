@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:10:13 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/15 15:31:59 by bazzite          ###   ########.fr       */
+/*   Updated: 2025/02/26 08:02:36 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,30 @@ void	free_texture(t_texture *texture, void *mlx)
 			continue ;
 		mlx_destroy_image(mlx, texture[i].img->img);
 		mem_free(texture[i].img);
+	}
+}
+
+void	valid_textures(t_texture *texture_data)
+{
+	int	i;
+	int	temp;
+
+	i = 0;
+	temp = texture_data[i].width;
+	while (++i < 7)
+	{
+		if (!texture_data[i].path)
+			continue ;
+		if (texture_data[i].width != temp)
+			error_exit("Texture widths not the same");
+	}
+	i = 0;
+	temp = texture_data[i].height;
+	while (++i < 7)
+	{
+		if (!texture_data[i].path)
+			continue ;
+		if (texture_data[i].height != temp)
+			error_exit("Texture heights not the same");
 	}
 }
