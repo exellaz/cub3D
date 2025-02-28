@@ -6,14 +6,14 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/26 08:05:33 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/28 20:54:43 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "graphics.h"
 
-int	apply_opacity(int color, float opacity);
+int				apply_opacity(int color, float opacity);
 void			init_ray(int x, t_player *player, t_ray *ray);
 void			find_step_and_dist(t_ray *ray, t_player *player);
 void			do_dda(t_ray *ray, t_map *map_data, char **map);
@@ -105,10 +105,10 @@ void	raycast(t_vars *vars)
 	int			x;
 
 	player = vars->player;
-	x = 0;
+	x = -1;
 	update_doors(vars->map_data);
 	floor_casting(vars);
-	while (x < WIN_WIDTH)
+	while (++x < WIN_WIDTH)
 	{
 		init_ray(x, player, &ray);
 		find_step_and_dist(&ray, player);
@@ -117,7 +117,6 @@ void	raycast(t_vars *vars)
 		get_textures(x, &ray, player, vars);
 		if (ray.door)
 			door_casting(vars, x);
-		x++;
 	}
 }
 
