@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/28 20:54:43 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:10:54 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	floor_casting(t_vars *vars)
 
 		float	floor_x = player->pos_x + row_distance * ray_dir_x0;
 		float	floor_y = player->pos_y + row_distance * ray_dir_y0;
-		float	opacity = fmax(0.0, 1.0 - (row_distance / (VISIBLE_RANGE)));
+		float	opacity = fmax(0.0, 1.0 - (row_distance / (VISIBLE_RANGE))) * vars->max_brightness;
 		for (int x = 0; x < WIN_WIDTH; x++)
 		{
 			int	cell_x = (int)floor_x;

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:31:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/25 09:45:31 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:09:24 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	get_moves(float *move_x, float *move_y, t_player *player, t_fps *fps);
 bool	is_passable(int x, int y, t_map *map_data);
 void	handle_interact(t_player *player, t_map *map_data);
 
-void	handle_player_controls(t_player *player, t_fps *fps, t_map *map_data)
+void	handle_player_controls(t_player *player, t_fps *fps, t_map *map_data, t_vars *vars)
 {
 	float	move_x;
 	float	move_y;
@@ -35,6 +35,10 @@ void	handle_player_controls(t_player *player, t_fps *fps, t_map *map_data)
 		rotate_player(-rot_speed, player);
 	if (player->pan_right == true)
 		rotate_player(rot_speed, player);
+	if (player->torch_toggle == true)
+		vars->max_brightness = 1.0f;
+	else if (player->torch_toggle == false)
+		vars->max_brightness = 0.4f;
 }
 
 void	update_door_status(t_map *map_data)

@@ -33,14 +33,15 @@ int	draw_loop(t_vars *vars)
 
 	player = vars->player;
 	frame_counter(vars->fps);
-	handle_player_controls(player, vars->fps, vars->map_data);
+	handle_player_controls(player, vars->fps, vars->map_data, vars);
 	for (int y = 0; y < WIN_HEIGHT; y++)
 		for (int x = 0; x < WIN_WIDTH; x++)
 			put_pixel(x, y, 0x000000, &vars->img);
 	raycast(vars);
 	if (vars->minimap_toggle == true)
 		render_minimap(player, vars, vars->map_data);
-	render_sprite(vars);
+	if (player->torch_toggle == true)
+		render_sprite(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	return (0);
 }

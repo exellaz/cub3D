@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 09:42:39 by we                #+#    #+#             */
-/*   Updated: 2025/02/28 20:22:09 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:03:16 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_player
 	bool	pan_right;
 	bool	interact;
 	bool	interact_held;
+	bool	torch_toggle;
 	t_ray	ray;
 }				t_player;
 
@@ -145,6 +146,7 @@ typedef struct s_vars
 	int			prev_mouse_x;
 	int			prev_mouse_y;
 	bool		minimap_toggle;
+	float		max_brightness;
 	t_map		*map_data;
 	t_sprite	*sprite;
 }				t_vars;

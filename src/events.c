@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/02/28 20:18:02 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:13:05 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ int	quit(int keycode, t_vars *m)
 	return (0);
 }
 
+void	handle_toggles(int keycode, t_player *player, t_vars *vars)
+{
+	if (keycode == XK_m && vars->minimap_toggle == false)
+		vars->minimap_toggle = true;
+	else if (keycode == XK_m)
+		vars->minimap_toggle = false;
+	if (keycode == XK_t && player->torch_toggle == false)
+		player->torch_toggle = true;
+	else if (keycode == XK_t)
+		player->torch_toggle = false;
+}
+
 int	key_press_hook(int keycode, t_vars *vars)
 {
 	t_player	*player;
@@ -37,10 +49,6 @@ int	key_press_hook(int keycode, t_vars *vars)
 	player = vars->player;
 	if (keycode == XK_Escape)
 		quit(keycode, vars);
-	if (keycode == XK_m && vars->minimap_toggle == false)
-		vars->minimap_toggle = true;
-	else if (keycode == XK_m)
-		vars->minimap_toggle = false;
 	if (keycode == XK_w)
 		player->move_forward = true;
 	if (keycode == XK_s)
@@ -55,6 +63,7 @@ int	key_press_hook(int keycode, t_vars *vars)
 		player->pan_right = true;
 	if (keycode == XK_e)
 		player->interact = true;
+	handle_toggles(keycode, player, vars);
 	return (0);
 }
 
