@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/26 08:14:19 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:53:05 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "utils.h"
 
 void	init_fps(t_vars *vars);
+void	init_torch_sprite(t_vars *vars);
 
 static void	init_textures(t_vars *vars, t_map *map, int tex_width, int tex_height)
 {
@@ -102,12 +103,13 @@ static void	setup_mlx(t_vars *vars)
 
 void	init_vars(t_vars *vars, int fd)
 {
-	// ft_bzero(vars, sizeof(vars));
+	ft_bzero(vars, sizeof(vars));
 	vars->minimap_toggle = false;
 	setup_mlx(vars);
 	vars->map_data = parse_map(fd, vars->mlx);
 	init_fps(vars);
 	init_textures(vars, vars->map_data, vars->map_data->tex_width, vars->map_data->tex_height);
+	init_torch_sprite(vars);
 	init_player(vars, vars->map_data);
 	vars->tile_size = MINIMAP_SIZE / (2 * VISIBLE_RANGE + 1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/26 21:30:34 by bazzite          ###   ########.fr       */
+/*   Updated: 2025/03/02 18:37:51 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ typedef struct s_list	t_list;
 typedef struct s_img	t_img;
 typedef struct s_door	t_door;
 
+// `texture` is stored in N, S, E, W, D order
+// `floor` and `ceiling` are stored in R, G, B order
+// `spawn` is stored in x, y, direction order
+// `door` is stored in x, y order
+
 typedef struct s_texture
 {
 	t_img	*img;
@@ -30,10 +35,15 @@ typedef struct s_texture
 	int		height;
 }	t_texture;
 
-// `texture` is stored in N, S, E, W, D order
-// `floor` and `ceiling` are stored in R, G, B order
-// `spawn` is stored in x, y, direction order
-// `door` is stored in x, y order
+typedef struct s_sprite
+{
+	t_texture	frame_data[7];
+	int			*frames[7];
+	int			current_frame;
+	float		frame_time;
+	float		last_update;
+}				t_sprite;
+
 typedef struct s_map
 {
 	t_list		*map_list;

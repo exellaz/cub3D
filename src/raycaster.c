@@ -6,14 +6,14 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/26 08:05:33 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:10:54 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "graphics.h"
 
-int	apply_opacity(int color, float opacity);
+int				apply_opacity(int color, float opacity);
 void			init_ray(int x, t_player *player, t_ray *ray);
 void			find_step_and_dist(t_ray *ray, t_player *player);
 void			do_dda(t_ray *ray, t_map *map_data, char **map);
@@ -43,7 +43,7 @@ void	floor_casting(t_vars *vars)
 
 		float	floor_x = player->pos_x + row_distance * ray_dir_x0;
 		float	floor_y = player->pos_y + row_distance * ray_dir_y0;
-		float	opacity = fmax(0.0, 1.0 - (row_distance / (VISIBLE_RANGE)));
+		float	opacity = fmax(0.0, 1.0 - (row_distance / (VISIBLE_RANGE))) * vars->max_brightness;
 		for (int x = 0; x < WIN_WIDTH; x++)
 		{
 			int	cell_x = (int)floor_x;
@@ -105,10 +105,10 @@ void	raycast(t_vars *vars)
 	int			x;
 
 	player = vars->player;
-	x = 0;
+	x = -1;
 	update_doors(vars->map_data);
 	floor_casting(vars);
-	while (x < WIN_WIDTH)
+	while (++x < WIN_WIDTH)
 	{
 		init_ray(x, player, &ray);
 		find_step_and_dist(&ray, player);
@@ -117,7 +117,6 @@ void	raycast(t_vars *vars)
 		get_textures(x, &ray, player, vars);
 		if (ray.door)
 			door_casting(vars, x);
-		x++;
 	}
 }
 

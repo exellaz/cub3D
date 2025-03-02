@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 09:42:39 by we                #+#    #+#             */
-/*   Updated: 2025/02/26 07:57:32 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:03:16 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,21 @@
 # define PI 3.14159
 # define MOUSE_SPEED 0.0005
 # define CURSOR_COLOR 0xFF000
+# define SPRITE_SCALE 16
 
-typedef struct s_list	t_list;
-typedef struct s_map	t_map;
+#define TORCH_X (WIN_WIDTH - 900)
+#define TORCH_Y (WIN_HEIGHT - 700)
+#define TORCH_1 "./assets/torch1.xpm"
+#define TORCH_2 "./assets/torch2.xpm"
+#define TORCH_3 "./assets/torch3.xpm"
+#define TORCH_4 "./assets/torch4.xpm"
+#define TORCH_5 "./assets/torch5.xpm"
+#define TORCH_6 "./assets/torch6.xpm"
+#define TORCH_7 "./assets/torch7.xpm"
+
+typedef struct s_list		t_list;
+typedef struct s_map		t_map;
+typedef struct s_sprite		t_sprite;
 
 typedef struct s_tex_data
 {
@@ -105,6 +117,7 @@ typedef struct s_player
 	bool	pan_right;
 	bool	interact;
 	bool	interact_held;
+	bool	torch_toggle;
 	t_ray	ray;
 }				t_player;
 
@@ -133,7 +146,9 @@ typedef struct s_vars
 	int			prev_mouse_x;
 	int			prev_mouse_y;
 	bool		minimap_toggle;
+	float		max_brightness;
 	t_map		*map_data;
+	t_sprite	*sprite;
 }				t_vars;
 
 typedef struct s_fpoint
