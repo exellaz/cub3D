@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/26 18:25:00 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:21:50 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		draw_minimap(t_fpoint map, int range, t_map *map_data, t_vars *vars
 static int		get_minimap_range(t_map *map_data);
 static int		get_pixel_color(t_point tile, t_fpoint pixel, \
 					t_map *map_data, t_player *player);
-int				apply_opacity(int color, float opacity);
+int				apply_opacity(int color, int opacity);
 
 void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 {
@@ -76,9 +76,9 @@ int	get_pixel_color(t_point tile, t_fpoint pixel, t_map *map_data, t_player *pla
 	t_point	tex;
 
 	tile_size = map_data->tile_size;
-	distance = sqrt(pow((pixel.x / tile_size) - player->pos_x, 2) \
-				+ pow((pixel.y / tile_size) - player->pos_y, 2));
-	opacity = fmax(0.0, 1.0 - (distance / VISIBLE_RANGE));
+	distance = sqrtf(powf((pixel.x / tile_size) - player->pos_x, 2) \
+				+ powf((pixel.y / tile_size) - player->pos_y, 2));
+	opacity = fmaxf(0.0f, 1.0f - (distance / VISIBLE_RANGE)) * 255;
 	tex.x = ((int)pixel.x % tile_size) * map_data->tex_width / tile_size;
 	tex.y = ((int)pixel.y % tile_size) * map_data->tex_height / tile_size;
 	if (map_data->map[tile.y][tile.x] == '1')
@@ -96,16 +96,19 @@ int	get_pixel_color(t_point tile, t_fpoint pixel, t_map *map_data, t_player *pla
 	return (apply_opacity(color, opacity));
 }
 
-int	apply_opacity(int color, float opacity)
+int apply_opacity(int color, int opacity_int)
 {
-	int	r;
-	int	g;
-	int	b;
+	int r;
+	int g;
+	int b;
 
-	r = ((color >> 16) & 0xFF) * opacity;
-	g = ((color >> 8) & 0xFF) * opacity;
-	b = (color & 0xFF) * opacity;
-	return ((r << 16) | (g << 8) | b);
+	r = (color >> 16) & 0xFF;
+	g = (color >> 8) & 0xFF;
+	b = color & 0xFF;
+	r = (r * opacity_int) >> 8;
+	g = (g * opacity_int) >> 8;
+	b = (b * opacity_int) >> 8;
+	return (r << 16) | (g << 8) | b;
 }
 
 int	get_minimap_range(t_map *map_data)

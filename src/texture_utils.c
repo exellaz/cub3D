@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:32:29 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/28 20:32:47 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:28:44 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static float	get_wall_x(t_ray *ray, t_player *player)
 		wall_x = player->pos_x + ray->perp_wall_dist * ray->dir_x;
 	else
 		wall_x = player->pos_y + ray->perp_wall_dist * ray->dir_y;
-	wall_x -= floor(wall_x);
+	wall_x -= floorf(wall_x);
 	return (wall_x);
 }
 

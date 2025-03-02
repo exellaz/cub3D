@@ -6,73 +6,20 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/02 19:10:54 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:17:26 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "graphics.h"
 
-int				apply_opacity(int color, float opacity);
+int				apply_opacity(int color, int opacity);
 void			init_ray(int x, t_player *player, t_ray *ray);
 void			find_step_and_dist(t_ray *ray, t_player *player);
 void			do_dda(t_ray *ray, t_map *map_data, char **map);
 void			get_wall_height(t_ray *ray);
 void			door_casting(t_vars *vars, int x);
-
-void	floor_casting(t_vars *vars)
-{
-	t_player	*player = vars->player;
-	t_map		*map_data = vars->map_data;
-	int			tex_width = map_data->tex_width;
-	int			tex_height = map_data->tex_height;
-
-	float	ray_dir_x0 = player->dir_x - player->plane_x;
-	float	ray_dir_y0 = player->dir_y - player->plane_y;
-	float	ray_dir_x1 = player->dir_x + player->plane_x;
-	float	ray_dir_y1 = player->dir_y + player->plane_y;
-
-	float	pos_z = 0.5 * WIN_HEIGHT;
-
-	for (int y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++)
-	{
-		int	p = y - WIN_HEIGHT / 2;
-		float	row_distance = pos_z / p;
-		float	floor_step_x = row_distance * (ray_dir_x1 - ray_dir_x0) / WIN_WIDTH;
-		float	floor_step_y = row_distance * (ray_dir_y1 - ray_dir_y0) / WIN_WIDTH;
-
-		float	floor_x = player->pos_x + row_distance * ray_dir_x0;
-		float	floor_y = player->pos_y + row_distance * ray_dir_y0;
-		float	opacity = fmax(0.0, 1.0 - (row_distance / (VISIBLE_RANGE))) * vars->max_brightness;
-		for (int x = 0; x < WIN_WIDTH; x++)
-		{
-			int	cell_x = (int)floor_x;
-			int	cell_y = (int)floor_y;
-
-			int	tx = (int)(tex_width * (floor_x - cell_x)) & (tex_width - 1);
-			int	ty = (int)(tex_height * (floor_y - cell_y)) & (tex_height - 1);
-
-			floor_x += floor_step_x;
-			floor_y += floor_step_y;
-
-			int	color;
-
-			if (map_data->texture_count < 6)
-				color = map_data->floor_color;
-			else
-				color = map_data->texture[FLOOR][tex_width * ty + tx];
-			color = apply_opacity(color, opacity);
-			put_pixel(x, y, color, &vars->img);
-			if (map_data->texture_count < 6)
-				color = map_data->ceiling_color;
-			else
-				color = map_data->texture[CEILING][tex_width * ty + tx];
-			color = (color >> 1) & 8355711;
-			color = apply_opacity(color, opacity);
-			put_pixel(x, WIN_HEIGHT - y - 1, color, &vars->img);
-		}
-	}
-}
+void			floor_casting(t_vars *vars);
 
 void update_doors(t_map *map_data)
 {
@@ -130,11 +77,11 @@ void	init_ray(int x, t_player *player, t_ray *ray)
 	if (ray->dir_x == 0)
 		ray->delta_dist_x = 1e7;
 	else
-		ray->delta_dist_x = fabs(1 / ray->dir_x);
+		ray->delta_dist_x = fabsf(1 / ray->dir_x);
 	if (ray->dir_y == 0)
 		ray->delta_dist_y = 1e7;
 	else
-		ray->delta_dist_y = fabs(1 / ray->dir_y);
+		ray->delta_dist_y = fabsf(1 / ray->dir_y);
 }
 
 void	find_step_and_dist(t_ray *ray, t_player *player)

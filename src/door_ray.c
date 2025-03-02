@@ -6,14 +6,14 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:51:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/25 11:08:52 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:22:43 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "defines.h"
 
-int	apply_opacity(int color, float opacity);
+int	apply_opacity(int color, int opacity);
 void		init_ray(int x, t_player *player, t_ray *ray);
 void		find_step_and_dist(t_ray *ray, t_player *player);
 void		do_dda(t_ray *ray, t_map *map_data, char **map);

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:29:17 by we                #+#    #+#             */
-/*   Updated: 2025/02/28 14:53:05 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:30:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,23 @@ static void	init_player_dir(t_player *player, char dir)
 {
 	if (dir == 'N')
 	{
-		player->dir_y = -1;
-		player->plane_x = 0.66;
+		player->dir_y = -1.0f;
+		player->plane_x = 0.66f;
 	}
 	else if (dir == 'S')
 	{
-		player->dir_y = 1;
-		player->plane_x = -0.66;
+		player->dir_y = 1.0f;
+		player->plane_x = -0.66f;
 	}
 	else if (dir == 'E')
 	{
-		player->dir_x = 1;
-		player->plane_y = 0.66;
+		player->dir_x = 1.0f;
+		player->plane_y = 0.66f;
 	}
 	else if (dir == 'W')
 	{
-		player->dir_x = -1;
-		player->plane_y = -0.66;
+		player->dir_x = -1.0f;
+		player->plane_y = -0.66f;
 	}
 }
 
