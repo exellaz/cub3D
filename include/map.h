@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/02/28 14:28:25 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:37:51 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	free_texture(t_texture *texture, void *mlx);
 void	valid_texture_path(t_texture *texture);
 void	valid_textures(t_texture *texture);
 void	valid_iden(t_list *map);
-void	valid_walls(t_list *map, int height);
+void	valid_walls(t_list *map, int height, int *spawn);
 
 void	count_cfg(t_list *raw, int count, char *msg);
 char	**split_cfg(char *line);

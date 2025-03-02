@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 14:23:53 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/01/16 11:28:31 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/02/26 21:20:28 by bazzite          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**lst_to_arr(t_list *lst)
 	i = -1;
 	while (lst)
 	{
-		arr[++i] = lst->content;
+		arr[++i] = ft_strdup(lst->content);
 		lst = lst->next;
 	}
 	arr[++i] = NULL;
