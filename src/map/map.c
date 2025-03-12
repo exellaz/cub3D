@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/26 21:31:54 by bazzite          ###   ########.fr       */
+/*   Updated: 2025/03/12 14:41:30 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include "error.h"
 #include "utils.h"
-#include "graphics.h"
 #include "map.h"
 
 static t_map	*init_map(void);
@@ -29,7 +28,8 @@ t_map	*parse_map(int file, void *mlx)
 
 	map_data = init_map();
 	raw = load_file(file);
-	remain = get_texture_path(raw, map_data->texture_data, &map_data->texture_count);
+	remain = get_texture_path(raw, map_data->texture_data, \
+					&map_data->texture_count);
 	remain = get_rgb(remain, &map_data->floor_color, &map_data->ceiling_color);
 	get_map(remain, &map_data->map_list, &map_data->width, &map_data->height);
 	get_spawn(map_data->map_list, map_data->spawn);
@@ -37,7 +37,7 @@ t_map	*parse_map(int file, void *mlx)
 	valid_texture_path(map_data->texture_data);
 	valid_iden(map_data->map_list);
 	valid_walls(map_data->map_list, map_data->height, map_data->spawn);
-	load_textures(map_data->texture_data, mlx);
+	load_textures(map_data->texture_data, mlx, MAX_TEX_COUNT);
 	valid_textures(map_data->texture_data);
 	map_data->map = lst_to_arr(map_data->map_list);
 	map_data->tex_width = map_data->texture_data->width;
@@ -49,7 +49,9 @@ static t_map	*init_map(void)
 {
 	t_map	*map_data;
 
-	map_data = mem_alloc(sizeof(t_map));
+	map_data = ft_calloc(1, sizeof(t_map));
+	map_data->texture_data = ft_calloc(7, sizeof(t_texture));
+	map_data->spawn = ft_calloc(3, sizeof(int));
 	map_data->map_list = NULL;
 	map_data->map = NULL;
 	map_data->doors = NULL;
