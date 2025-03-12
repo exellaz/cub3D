@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:33:06 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 12:53:16 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:43:27 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 # include <stdbool.h>
 
 typedef struct s_list		t_list;
-typedef struct s_vars		t_vars;
-typedef struct s_player		t_player;
-typedef struct s_fps		t_fps;
-typedef struct s_map		t_map;
-typedef struct s_sprite		t_sprite;
 
 typedef struct s_img
 {
@@ -40,6 +35,14 @@ typedef struct s_door
 	bool	is_open;
 	float	progress;
 }				t_door;
+
+typedef struct s_texture
+{
+	t_img	*img;
+	char	*path;
+	int		width;
+	int		height;
+}	t_texture;
 
 typedef struct s_ray
 {
@@ -83,13 +86,44 @@ typedef struct s_player
 	t_ray	ray;
 }	t_player;
 
-typedef struct s_texture
+typedef struct s_fps
 {
-	t_img	*img;
-	char	*path;
-	int		width;
-	int		height;
-}	t_texture;
+	int		frame_count;
+	float	frame_time;
+	float	fps;
+	clock_t	start_time;
+	clock_t	last_frame_time;
+}				t_fps;
+
+typedef struct s_map
+{
+	t_list		*map_list;
+	char		**map;
+	t_texture	*texture_data;
+	int			floor_color;
+	int			ceiling_color;
+	int			*spawn;
+	t_door		*doors;
+	int			texture_count;
+	int			door_count;
+	int			width;
+	int			height;
+	int			tile_size;
+	int			**texture;
+	int			tex_width;
+	int			tex_height;
+}	t_map;
+
+typedef struct s_sprite
+{
+	t_texture	*frame_data;
+	int			current_frame;
+	float		frame_time;
+	float		last_update;
+	float		frame_duration;
+	float		bob_offset;
+	float		sway_offset;
+}				t_sprite;
 
 typedef struct s_vars
 {
@@ -112,37 +146,6 @@ typedef struct s_vars
 	t_sprite	*sprite;
 }				t_vars;
 
-typedef struct s_map
-{
-	t_list		*map_list;
-	char		**map;
-	t_texture	texture_data[7];
-	int			floor_color;
-	int			ceiling_color;
-	int			spawn[3];
-	t_door		*doors;
-	int			texture_count;
-	int			door_count;
-	int			width;
-	int			height;
-	int			tile_size;
-	int			**texture;
-	int			tex_width;
-	int			tex_height;
-}	t_map;
-
-typedef struct s_sprite
-{
-	t_texture	frame_data[80];
-	int			*frames[80];
-	int			current_frame;
-	float		frame_time;
-	float		last_update;
-	float		frame_duration;
-	float		bob_offset;
-	float		sway_offset;
-}				t_sprite;
-
 typedef struct s_tex_data
 {
 	int		tex_num;
@@ -153,15 +156,6 @@ typedef struct s_tex_data
 	float	tex_pos;
 	float	base_opacity;
 }				t_tex_data;
-
-typedef struct s_fps
-{
-	int		frame_count;
-	float	frame_time;
-	float	fps;
-	clock_t	start_time;
-	clock_t	last_frame_time;
-}	t_fps;
 
 typedef struct s_fpoint
 {

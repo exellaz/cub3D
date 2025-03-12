@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/03/12 10:43:33 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:22:55 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
 void	get_doors(t_list *map, t_door **doors, int *count);
 void	load_textures(t_texture *texture, void *mlx, int count);
-void	free_texture(t_texture *texture, void *mlx);
+void	free_texture(t_texture *texture, void *mlx, int count);
 
 void	valid_texture_path(t_texture *texture);
 void	valid_textures(t_texture *texture);

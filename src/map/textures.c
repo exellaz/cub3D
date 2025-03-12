@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:10:13 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/03/12 09:58:13 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:22:45 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	load_textures(t_texture *texture, void *mlx, int count)
 	}
 }
 
-void	free_texture(t_texture *texture, void *mlx)
+void	free_texture(t_texture *texture, void *mlx, int count)
 {
 	int	i;
 
 	i = -1;
-	while (++i < 7)
+	while (++i < count)
 	{
 		if (!texture[i].path)
 			continue ;

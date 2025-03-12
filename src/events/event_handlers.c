@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:39:46 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:48:56 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:30:39 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	quit(int keycode, t_vars *vars)
 	(void)keycode;
 	mlx_destroy_window(vars->mlx, vars->win);
 	mlx_destroy_image(vars->mlx, vars->img.img);
-	free_texture(vars->map_data->texture_data, vars->mlx);
+	free_texture(vars->map_data->texture_data, vars->mlx, 7);
+	free_texture(vars->sprite->frame_data, vars->mlx, SPRITE_1_FRAME_COUNT);
 	mem_clean();
 	free(vars->mlx);
 	exit(0);

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 08:55:41 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:04:36 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:27:00 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_torch_sprites(t_vars *vars)
 	t_texture	*textures;
 
 	sprite = ft_calloc(1, sizeof(t_sprite));
+	sprite->frame_data = ft_calloc(SPRITE_1_FRAME_COUNT, sizeof(t_texture));
 	textures = sprite->frame_data;
 	sprite->frame_duration = 0.03f;
 	get_texture_paths(textures, TORCH_1_PATH, SPRITE_1_FRAME_COUNT);

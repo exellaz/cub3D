@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/03/12 09:58:05 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:41:30 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ static t_map	*init_map(void)
 {
 	t_map	*map_data;
 
-	map_data = mem_alloc(sizeof(t_map));
+	map_data = ft_calloc(1, sizeof(t_map));
+	map_data->texture_data = ft_calloc(7, sizeof(t_texture));
+	map_data->spawn = ft_calloc(3, sizeof(int));
 	map_data->map_list = NULL;
 	map_data->map = NULL;
 	map_data->doors = NULL;
