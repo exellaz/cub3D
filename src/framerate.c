@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:33:35 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/25 10:07:49 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:03:14 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,15 @@ void	init_fps(t_vars *vars)
 
 int	frame_counter(t_fps *fps)
 {
+	clock_t	current_time;
+	float	elapsed_time;
+
 	fps->frame_count++;
-
-	clock_t	current_time = clock();
-	float	elapsed_time = (float)(current_time - fps->start_time) / CLOCKS_PER_SEC;
-
-	fps->frame_time = (float)(current_time - fps->last_frame_time) / CLOCKS_PER_SEC;
+	current_time = clock();
+	elapsed_time = (float)(current_time - fps->start_time) / CLOCKS_PER_SEC;
+	fps->frame_time = (float)(current_time \
+			- fps->last_frame_time) / CLOCKS_PER_SEC;
 	fps->last_frame_time = current_time;
-
 	if (elapsed_time >= 1.0)
 	{
 		fps->fps = fps->frame_count / elapsed_time;

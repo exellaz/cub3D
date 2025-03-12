@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events.c                                           :+:      :+:    :+:   */
+/*   event_hooks.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:11:05 by we                #+#    #+#             */
-/*   Updated: 2025/03/02 19:13:05 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:41:25 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,9 @@
 #include "events.h"
 
 void	rotate_player(float angle, t_player *player);
-
-int	quit(int keycode, t_vars *m)
-{
-	(void)keycode;
-	mlx_destroy_window(m->mlx, m->win);
-	mlx_destroy_image(m->mlx, m->img.img);
-	free_texture(m->map_data->texture_data, m->mlx);
-	mem_clean();
-	free(m->mlx);
-	exit(0);
-	return (0);
-}
-
-void	handle_toggles(int keycode, t_player *player, t_vars *vars)
-{
-	if (keycode == XK_m && vars->minimap_toggle == false)
-		vars->minimap_toggle = true;
-	else if (keycode == XK_m)
-		vars->minimap_toggle = false;
-	if (keycode == XK_t && player->torch_toggle == false)
-		player->torch_toggle = true;
-	else if (keycode == XK_t)
-		player->torch_toggle = false;
-}
+void	handle_toggles(int keycode, t_player *player, t_vars *vars);
+void	handle_movement(int keycode, t_player *player, bool state);
+int		quit(int keycode, t_vars *m);
 
 int	key_press_hook(int keycode, t_vars *vars)
 {
@@ -49,20 +28,13 @@ int	key_press_hook(int keycode, t_vars *vars)
 	player = vars->player;
 	if (keycode == XK_Escape)
 		quit(keycode, vars);
-	if (keycode == XK_w)
-		player->move_forward = true;
-	if (keycode == XK_s)
-		player->move_backward = true;
-	if (keycode == XK_a)
-		player->move_left = true;
-	if (keycode == XK_d)
-		player->move_right = true;
 	if (keycode == XK_Left)
 		player->pan_left = true;
 	if (keycode == XK_Right)
 		player->pan_right = true;
 	if (keycode == XK_e)
 		player->interact = true;
+	handle_movement(keycode, player, true);
 	handle_toggles(keycode, player, vars);
 	return (0);
 }
@@ -72,14 +44,7 @@ int	key_release_hook(int keycode, t_vars *vars)
 	t_player	*player;
 
 	player = vars->player;
-	if (keycode == XK_w)
-		player->move_forward = false;
-	if (keycode == XK_s)
-		player->move_backward = false;
-	if (keycode == XK_a)
-		player->move_left = false;
-	if (keycode == XK_d)
-		player->move_right = false;
+	handle_movement(keycode, player, false);
 	if (keycode == XK_Left)
 		player->pan_left = false;
 	if (keycode == XK_Right)

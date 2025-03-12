@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:53:00 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/18 15:21:10 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 08:36:41 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,24 @@
 
 #include "map.h"
 
-static int	count_doors(t_list *map);
+static int		count_doors(t_list *map);
+static void		init_doors_in_row(t_door *doors, t_list *tmp, int y, int *i);
 
-void	get_doors(t_list *map, t_door **door, int *count)
+void	get_doors(t_list *map, t_door **doors, int *count)
 {
 	t_list	*tmp;
+	int		y;
 	int		i;
-	int		j;
-	int		k;
 
 	*count = count_doors(map);
-	*door = mem_alloc(sizeof(t_door) * *count);
+	*doors = mem_alloc(sizeof(t_door) * *count);
 	tmp = map;
+	y = 0;
 	i = 0;
-	k = -1;
 	while (tmp)
 	{
-		j = -1;
-		while (((char *)tmp->content)[++j])
-		{
-			if (((char *)tmp->content)[j] == 'D')
-			{
-				(*door)[++k].x = j;
-				(*door)[k].y = i;
-				(*door)[k].is_open = false;
-				(*door)[k].progress = 0;
-			}
-		}
-		i++;
+		init_doors_in_row(*doors, tmp, y, &i);
+		y++;
 		tmp = tmp->next;
 	}
 }
@@ -57,8 +47,6 @@ static int	count_doors(t_list *map)
 	i = 0;
 	while (tmp)
 	{
-		// if (ft_strchr(tmp->content, 'D'))
-		// 	i++;
 		j = 0;
 		str = tmp->content;
 		while (str[j])
@@ -70,4 +58,71 @@ static int	count_doors(t_list *map)
 		tmp = tmp->next;
 	}
 	return (i);
+}
+
+static void	init_doors_in_row(t_door *doors, t_list *tmp, int y, int *i)
+{
+	int	x;
+
+	x = -1;
+	while (((char *)tmp->content)[++x])
+	{
+		if (((char *)tmp->content)[x] == 'D')
+		{
+			doors[*i].x = x;
+			doors[*i].y = y;
+			doors[*i].is_open = false;
+			doors[*i].progress = 0;
+			(*i)++;
+		}
+	}
+}
+
+void	update_doors(t_map *map_data)
+{
+	t_door	*door;
+	int		i;
+
+	i = 0;
+	while (i < map_data->door_count)
+	{
+		door = &map_data->doors[i];
+		if (door->is_open && door->progress < 1.0)
+		{
+			door->progress += 0.05;
+			if (door->progress > 1.0)
+				door->progress = 1.0;
+		}
+		else if (!door->is_open && door->progress > 0.0)
+		{
+			door->progress -= 0.05;
+			if (door->progress < 0.0)
+				door->progress = 0.0;
+		}
+		if (door->is_open == true && door->progress == 1.0)
+			map_data->map[door->y][door->x] = '0';
+		else if (door->is_open == false)
+			map_data->map[door->y][door->x] = 'D';
+		i++;
+	}
+}
+
+t_door	*find_door(t_map *map_data, int x, int y)
+{
+	int		i;
+	t_door	*doors;
+	t_door	*door;
+
+	i = 0;
+	doors = map_data->doors;
+	while (i < map_data->door_count)
+	{
+		if (doors[i].x == x && doors[i].y == y)
+		{
+			door = &doors[i];
+			return (door);
+		}
+		i++;
+	}
+	return (NULL);
 }

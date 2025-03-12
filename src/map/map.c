@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bazzite <bazzite@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/02/26 21:31:54 by bazzite          ###   ########.fr       */
+/*   Updated: 2025/03/12 08:33:27 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_map	*parse_map(int file, void *mlx)
 
 	map_data = init_map();
 	raw = load_file(file);
-	remain = get_texture_path(raw, map_data->texture_data, &map_data->texture_count);
+	remain = get_texture_path(raw, map_data->texture_data, \
+					&map_data->texture_count);
 	remain = get_rgb(remain, &map_data->floor_color, &map_data->ceiling_color);
 	get_map(remain, &map_data->map_list, &map_data->width, &map_data->height);
 	get_spawn(map_data->map_list, map_data->spawn);
@@ -37,7 +38,7 @@ t_map	*parse_map(int file, void *mlx)
 	valid_texture_path(map_data->texture_data);
 	valid_iden(map_data->map_list);
 	valid_walls(map_data->map_list, map_data->height, map_data->spawn);
-	load_textures(map_data->texture_data, mlx);
+	load_textures(map_data->texture_data, mlx, MAX_TEX_COUNT);
 	valid_textures(map_data->texture_data);
 	map_data->map = lst_to_arr(map_data->map_list);
 	map_data->tex_width = map_data->texture_data->width;

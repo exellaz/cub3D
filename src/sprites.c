@@ -6,43 +6,42 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:31:39 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/28 16:02:37 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:24:56 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include "error.h"
 
-void	draw_square(int x, int y, int color, t_img *img);
+void		draw_square(int x, int y, int color, t_img *img);
+void		get_bobbing_offsets(t_player *player, t_fps *fps, t_sprite *sprite);
+int			get_frame_index(t_fps *fps, t_sprite *sprite);
 
-void	render_sprite(t_vars *vars)
+void	render_sprite(t_vars *vars, t_sprite *sprite)
 {
-	t_texture	texture;
-	int			*frame;
-	int			x;
-	int			y;
-	static int	frame_index = 0;
+	t_texture		texture;
+	unsigned int	*current_frame;
+	int				x;
+	int				y;
+	int				frame_index;
 
-	if (vars->fps->frame_count % 10 == 0)
-		frame_index++;
-	if (frame_index == 7)
-		frame_index = 0;
-	texture = vars->sprite->frame_data[frame_index];
-	frame = texture.img->addr;
-
-	y = 0;
-	x = 0;
-	while (y < texture.height)
+	frame_index = get_frame_index(vars->fps, sprite);
+	get_bobbing_offsets(vars->player, vars->fps, sprite);
+	texture = sprite->frame_data[frame_index];
+	current_frame = (unsigned int *)texture.img->addr;
+	y = -1;
+	while (++y < texture.height)
 	{
-		x = 0;
-		while (x < texture.width)
+		x = -1;
+		while (++x < texture.width)
 		{
-			if ((unsigned int)frame[y * texture.width + x] != 0xFF000000)
+			if (current_frame[y * texture.width + x] != 0xFF000000)
 			{
-				draw_square(x * SPRITE_SCALE, y * SPRITE_SCALE, frame[y * texture.width + x], &vars->img);
+				draw_square(x * SPRITE_SCALE + sprite->sway_offset,
+					y * SPRITE_SCALE + sprite->bob_offset,
+					current_frame[y * texture.width + x], &vars->img);
 			}
-			x++;
 		}
-		y++;
 	}
 }
 
@@ -62,25 +61,54 @@ void	draw_square(int x, int y, int color, t_img *img)
 		x = start_x;
 		while (x < end_x)
 		{
-			put_pixel(x + TORCH_X, y + TORCH_Y, color, img);
+			put_pixel(x + TORCH1_X, y + TORCH1_Y, color, img);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	init_torch_sprite(t_vars *vars)
+void	get_texture_paths(t_texture *textures, char *prefix, int max)
 {
-	t_texture	*textures;
+	char	*num;
+	char	*path;
+	int		i;
 
-	vars->sprite = ft_calloc(1, sizeof(t_sprite));
-	textures = vars->sprite->frame_data;
-	textures[0].path = TORCH_1;
-	textures[1].path = TORCH_2;
-	textures[2].path = TORCH_3;
-	textures[3].path = TORCH_4;
-	textures[4].path = TORCH_5;
-	textures[5].path = TORCH_6;
-	textures[6].path = TORCH_7;
-	load_textures(textures, vars->mlx);
+	i = 0;
+	while (i < max)
+	{
+		num = ft_itoa(i + 1);
+		path = ft_strjoin(prefix, num);
+		path = c_strjoin(&path, ".xpm");
+		textures[i].path = path;
+		i++;
+	}
+}
+
+void	get_bobbing_offsets(t_player *player, t_fps *fps, t_sprite *sprite)
+{
+	static float	bob_time = 0.0f;
+	float			frame_time;
+
+	frame_time = fps->frame_time;
+	if (player->is_moving == true)
+	{
+		bob_time += frame_time * BOB_SPEED;
+		sprite->bob_offset = sinf(bob_time) * (BOB_SPEED + frame_time);
+		sprite->sway_offset = cosf(bob_time * 0.5f) * BOB_SPEED;
+	}
+}
+
+int	get_frame_index(t_fps *fps, t_sprite *sprite)
+{
+	static float	animation_time = 0.0f;
+	static int		frame_index = 0;
+
+	animation_time += fps->frame_time;
+	if (animation_time >= sprite->frame_duration)
+	{
+		frame_index = (frame_index + 1) % SPRITE_FRAME_COUNT;
+		animation_time = 0.0f;
+	}
+	return (frame_index);
 }

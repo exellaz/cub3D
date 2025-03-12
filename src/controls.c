@@ -6,19 +6,22 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:31:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/02 19:09:24 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 07:18:07 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	rotate_player(float angle, t_player *player);
-void	move_player(float move_x, float move_y, t_player *player, t_map *map_data);
-void	get_moves(float *move_x, float *move_y, t_player *player, t_fps *fps);
-bool	is_passable(int x, int y, t_map *map_data);
-void	handle_interact(t_player *player, t_map *map_data);
+void		rotate_player(float angle, t_player *player);
+void		handle_interact(t_player *player, t_map *map_data);
+static void	move_player(float move_x, float move_y, \
+				t_player *player, t_map *map_data);
+static void	get_moves(float *move_x, float *move_y, \
+				t_player *player, t_fps *fps);
+static bool	is_passable(int x, int y, t_map *map_data);
 
-void	handle_player_controls(t_player *player, t_fps *fps, t_map *map_data, t_vars *vars)
+void	handle_player_controls(t_player *player, t_fps *fps, \
+			t_map *map_data, t_vars *vars)
 {
 	float	move_x;
 	float	move_y;
@@ -26,6 +29,7 @@ void	handle_player_controls(t_player *player, t_fps *fps, t_map *map_data, t_var
 
 	move_x = 0.0;
 	move_y = 0.0;
+	player->is_moving = false;
 	rot_speed = fps->frame_time * 2.5;
 	if (player->interact == true)
 		handle_interact(player, map_data);
@@ -41,46 +45,25 @@ void	handle_player_controls(t_player *player, t_fps *fps, t_map *map_data, t_var
 		vars->max_brightness = 0.4f;
 }
 
-void	update_door_status(t_map *map_data)
+void	rotate_player(float angle, t_player *player)
 {
-	int		i;
-	t_door	*doors;
+	float	old_dir_x;
+	float	old_dir_y;
+	float	old_plane_x;
+	float	old_plane_y;
 
-	i = 0;
-	doors = map_data->doors;
-	while (i < map_data->door_count)
-	{
-		if (doors[i].is_open == true)
-			map_data->map[doors[i].y][doors[i].x] = '0';
-		else if (doors[i].is_open == false)
-			map_data->map[doors[i].y][doors[i].x] = 'D';
-		i++;
-	}
+	old_dir_x = player->dir_x;
+	old_dir_y = player->dir_y;
+	old_plane_x = player->plane_x;
+	old_plane_y = player->plane_y;
+	player->dir_x = old_dir_x * cos(angle) - old_dir_y * sin(angle);
+	player->dir_y = old_dir_x * sin(angle) + old_dir_y * cos(angle);
+	player->plane_x = old_plane_x * cos(angle) - old_plane_y * sin(angle);
+	player->plane_y = old_plane_x * sin(angle) + old_plane_y * cos(angle);
 }
 
-void	handle_interact(t_player *player, t_map *map_data)
-{
-	int		interact_range;
-	int		i;
-	t_door	*doors;
-
-	interact_range = 1.0;
-	i = 0;
-	doors = map_data->doors;
-	while (i < map_data->door_count)
-	{
-		if ((int)(player->pos_x + (player->dir_x * interact_range)) == doors[i].x && \
-			(int)(player->pos_y + (player->dir_y * interact_range)) == doors[i].y)
-		{
-				doors[i].is_open = !doors[i].is_open;
-		}
-		i++;
-	}
-	// update_door_status(map_data);
-	player->interact = false;
-}
-
-void	get_moves(float *move_x, float *move_y, t_player *player, t_fps *fps)
+static void	get_moves(float *move_x, float *move_y, \
+				t_player *player, t_fps *fps)
 {
 	float	speed;
 
@@ -105,9 +88,12 @@ void	get_moves(float *move_x, float *move_y, t_player *player, t_fps *fps)
 		*move_x -= player->dir_x * speed;
 		*move_y -= player->dir_y * speed;
 	}
+	if (fabsf(*move_x + *move_y) > 0)
+		player->is_moving = true;
 }
 
-void	move_player(float move_x, float move_y, t_player *player, t_map *map_data)
+static void	move_player(float move_x, float move_y, \
+				t_player *player, t_map *map_data)
 {
 	float	new_x;
 	float	new_y;
@@ -120,7 +106,7 @@ void	move_player(float move_x, float move_y, t_player *player, t_map *map_data)
 		player->pos_y += move_y;
 }
 
-bool	is_passable(int x, int y, t_map *map_data)
+static bool	is_passable(int x, int y, t_map *map_data)
 {
 	int		i;
 	char	**map;
@@ -138,21 +124,4 @@ bool	is_passable(int x, int y, t_map *map_data)
 		i++;
 	}
 	return (true);
-}
-
-void	rotate_player(float angle, t_player *player)
-{
-	float	old_dir_x;
-	float	old_dir_y;
-	float	old_plane_x;
-	float	old_plane_y;
-
-	old_dir_x = player->dir_x;
-	old_dir_y = player->dir_y;
-	old_plane_x = player->plane_x;
-	old_plane_y = player->plane_y;
-	player->dir_x = old_dir_x * cos(angle) - old_dir_y * sin(angle);
-	player->dir_y = old_dir_x * sin(angle) + old_dir_y * cos(angle);
-	player->plane_x = old_plane_x * cos(angle) - old_plane_y * sin(angle);
-	player->plane_y = old_plane_x * sin(angle) + old_plane_y * cos(angle);
 }

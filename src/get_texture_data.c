@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_utils.c                                    :+:      :+:    :+:   */
+/*   get_texture_data.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:32:29 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/28 21:28:44 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:08:21 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 #include "graphics.h"
 #include <stdio.h>
 
-void			draw_textured_column(int x, t_ray *ray, \
-					t_tex_data *tex_data, t_vars *vars);
 static float	get_wall_x(t_ray *ray, t_player *player);
 static int		get_tex_x(float wall_x, t_ray *ray, int tex_width);
 static int		get_tex_num(t_ray *ray);
-static void		get_tex_step_and_pos(t_ray *ray, t_tex_data *tex_data, int tex_height);
+static void		get_tex_step_and_pos(t_ray *ray, \
+					t_tex_data *tex_data, int tex_height);
 
-void	get_textures(int x, t_ray *ray, t_player *player, t_vars *vars)
+t_tex_data	get_tex_data(int x, t_ray *ray, t_player *player, t_vars *vars)
 {
 	t_tex_data	tex_data;
 	t_map		*map_data;
@@ -33,7 +32,7 @@ void	get_textures(int x, t_ray *ray, t_player *player, t_vars *vars)
 	if (map_data->map[ray->map_y][ray->map_x] == 'D')
 		tex_data.tex_num = map_data->texture_count - 1;
 	get_tex_step_and_pos(ray, &tex_data, map_data->tex_height);
-	draw_textured_column(x, ray, &tex_data, vars);
+	return (tex_data);
 }
 
 static float	get_wall_x(t_ray *ray, t_player *player)
@@ -81,9 +80,10 @@ static int	get_tex_num(t_ray *ray)
 	return (tex_num);
 }
 
-static void	get_tex_step_and_pos(t_ray *ray, t_tex_data *tex_data, int tex_height)
+static void	get_tex_step_and_pos(t_ray *ray, \
+				t_tex_data *tex_data, int tex_height)
 {
-	tex_data->step = 1.0 *  tex_height / ray->line_height;
+	tex_data->step = 1.0 * tex_height / ray->line_height;
 	tex_data->tex_pos = (ray->draw_start - WIN_HEIGHT / 2 \
 						+ ray->line_height / 2) * tex_data->step;
 }

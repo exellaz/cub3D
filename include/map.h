@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/03/02 18:37:51 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 08:33:49 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,14 @@ typedef struct s_texture
 
 typedef struct s_sprite
 {
-	t_texture	frame_data[7];
-	int			*frames[7];
+	t_texture	frame_data[80];
+	int			*frames[80];
 	int			current_frame;
 	float		frame_time;
 	float		last_update;
+	float		frame_duration;
+	float		bob_offset;
+	float		sway_offset;
 }				t_sprite;
 
 typedef struct s_map
@@ -69,8 +72,8 @@ t_list	*get_texture_path(t_list *raw, t_texture *texture, int *count);
 t_list	*get_rgb(t_list *raw, int *floor_color, int *ceiling_color);
 void	get_map(t_list *raw, t_list **map, int *width, int *height);
 void	get_spawn(t_list *map, int *spawn);
-void	get_doors(t_list *map, t_door **door, int *count);
-void	load_textures(t_texture *texture, void *mlx);
+void	get_doors(t_list *map, t_door **doors, int *count);
+void	load_textures(t_texture *texture, void *mlx, int count);
 void	free_texture(t_texture *texture, void *mlx);
 
 void	valid_texture_path(t_texture *texture);

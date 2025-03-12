@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/12 07:20:41 by kkhai-ki          #+#    #+#             */
+/*   Updated: 2025/03/12 08:14:04 by kkhai-ki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <time.h>
 #include <math.h>
 
@@ -9,11 +21,7 @@
 #include "map.h"
 #include "cub3D.h"
 
-void	raycast(t_vars *vars);
-void	draw_line(t_point start, t_point end, int color, t_img *img);
-int		draw_loop(t_vars *vars);
-
-void	render_sprite(t_vars *vars);
+static int	draw_loop(t_vars *vars);
 
 int	main(int ac, char **av)
 {
@@ -27,70 +35,18 @@ int	main(int ac, char **av)
 	return (0);
 }
 
-int	draw_loop(t_vars *vars)
+static int	draw_loop(t_vars *vars)
 {
 	t_player	*player;
 
 	player = vars->player;
 	frame_counter(vars->fps);
 	handle_player_controls(player, vars->fps, vars->map_data, vars);
-	for (int y = 0; y < WIN_HEIGHT; y++)
-		for (int x = 0; x < WIN_WIDTH; x++)
-			put_pixel(x, y, 0x000000, &vars->img);
 	raycast(vars);
 	if (vars->minimap_toggle == true)
 		render_minimap(player, vars, vars->map_data);
 	if (player->torch_toggle == true)
-		render_sprite(vars);
+		render_sprite(vars, vars->sprite);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	return (0);
-}
-
-void	put_pixel(int x, int y, int color, t_img *img)
-{
-	int	index;
-
-	if(x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
-		return ;
-	index = (y * img->line_length / 4) + x;
-	((int *)img->addr)[index] = color;
-}
-
-void	draw_tile(int x, int y, int size, int color, t_img *img)
-{
-	int	draw_x;
-	int	draw_y;
-
-	draw_y = 0;
-	while (draw_y < size)
-	{
-		draw_x = 0;
-		while (draw_x < size)
-		{
-			put_pixel(x + draw_x, y + draw_y, color, img);
-			draw_x++;
-		}
-		draw_y++;
-	}
-}
-
-void	draw_border(int x, int y, int size, int border_thickness, int border_color, t_img *img)
-{
-	int	draw_x;
-	int	draw_y;
-	int	border_end;
-
-	border_end = size + (border_thickness * 2);
-	draw_y = 0;
-	while (draw_y < border_end)
-	{
-		draw_x = 0;
-		while (draw_x < border_end)
-		{
-			if (draw_y < border_thickness || draw_y >= size || draw_x < border_thickness || draw_x >= size)
-				put_pixel(x + draw_x, y + draw_y, border_color, img);
-			draw_x++;
-		}
-		draw_y++;
-	}
 }

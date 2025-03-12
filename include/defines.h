@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 09:42:39 by we                #+#    #+#             */
-/*   Updated: 2025/03/02 19:16:43 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/07 21:29:26 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@
 # define PI 3.14159
 # define MOUSE_SPEED 0.0005
 # define CURSOR_COLOR 0xFF000
-# define SPRITE_SCALE 16
+# define SPRITE_SCALE 4
 
-#define TORCH_X (WIN_WIDTH - 900)
-#define TORCH_Y (WIN_HEIGHT - 700)
-#define TORCH_1 "./assets/torch1.xpm"
-#define TORCH_2 "./assets/torch2.xpm"
-#define TORCH_3 "./assets/torch3.xpm"
-#define TORCH_4 "./assets/torch4.xpm"
-#define TORCH_5 "./assets/torch5.xpm"
-#define TORCH_6 "./assets/torch6.xpm"
-#define TORCH_7 "./assets/torch7.xpm"
+#define TORCH1_X (WIN_WIDTH - 800)
+#define TORCH1_Y (WIN_HEIGHT - 600)
+#define TORCH2_X (WIN_WIDTH - 600)
+#define TORCH2_Y (WIN_HEIGHT - 850)
+#define TORCH_PATH "./assets/minecraft-torch/Torch"
+#define TORCH_PATH2 "./assets/real-torch/torch"
+#define SPRITE_FRAME_COUNT 80
+#define MAX_TEX_COUNT 7
+#define BOB_SPEED 15.0f
 
 typedef struct s_list		t_list;
 typedef struct s_map		t_map;
@@ -99,6 +99,7 @@ typedef struct s_ray
 	int		draw_end;
 	int		line_height;
 	t_door	*door;
+	t_door	*first_door;
 }				t_ray;
 
 typedef struct s_player
@@ -118,6 +119,7 @@ typedef struct s_player
 	bool	interact;
 	bool	interact_held;
 	bool	torch_toggle;
+	bool	is_moving;
 	t_ray	ray;
 }				t_player;
 
@@ -162,6 +164,12 @@ typedef struct s_point
 	int	x;
 	int	y;
 }				t_point;
+
+typedef struct s_floor
+{
+	t_fpoint	pos;
+	t_fpoint	step;
+}				t_floor;
 
 enum e_keycode
 {
