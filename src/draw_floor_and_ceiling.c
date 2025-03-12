@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   floor_and_ceiling.c                                :+:      :+:    :+:   */
+/*   draw_floor_and_ceiling.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 21:41:37 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 07:26:53 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:24:07 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 static void		draw_floor_pixel(int opacity, t_vars *vars, \
-						t_point tex_coord, t_point window);
+					t_point tex_coord, t_point window);
 static void		draw_ceiling_pixel(int opacity, t_vars *vars, \
-						t_point tex_coord, t_point window);
+					t_point tex_coord, t_point window);
 static t_point	get_tex_coords(t_fpoint floor_pos, \
-						int tex_width, int tex_height);
+					int tex_width, int tex_height);
 
 void	draw_floor_and_ceiling_row(float row_distance, t_floor *floor, \
-						t_vars *vars, t_point window)
+			t_vars *vars, t_point window)
 {
 	t_point		tex_coord;
 	t_map		*map_data;
@@ -43,7 +43,7 @@ void	draw_floor_and_ceiling_row(float row_distance, t_floor *floor, \
 }
 
 static void	draw_floor_pixel(int opacity, t_vars *vars, \
-					t_point tex_coord, t_point window)
+				t_point tex_coord, t_point window)
 {
 	int		color;
 	int		texture_index;
@@ -60,7 +60,7 @@ static void	draw_floor_pixel(int opacity, t_vars *vars, \
 }
 
 static void	draw_ceiling_pixel(int opacity, t_vars *vars, \
-					t_point tex_coord, t_point window)
+				t_point tex_coord, t_point window)
 {
 	int		color;
 	int		texture_index;

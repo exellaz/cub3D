@@ -6,14 +6,12 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:31:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 07:18:07 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:24:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void		rotate_player(float angle, t_player *player);
-void		handle_interact(t_player *player, t_map *map_data);
 static void	move_player(float move_x, float move_y, \
 				t_player *player, t_map *map_data);
 static void	get_moves(float *move_x, float *move_y, \

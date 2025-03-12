@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:53:00 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/03/12 08:36:41 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 08:43:22 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 #include "map.h"
 
-static int		count_doors(t_list *map);
-static void		init_doors_in_row(t_door *doors, t_list *tmp, int y, int *i);
+static int	count_doors(t_list *map);
+static void	init_doors_in_row(t_door *doors, t_list *tmp, int y, int *i);
 
 void	get_doors(t_list *map, t_door **doors, int *count)
 {

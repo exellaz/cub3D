@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   door_ray.c                                         :+:      :+:    :+:   */
+/*   render_open_door.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:51:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 08:18:20 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:24:34 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include "defines.h"
 
-int			apply_opacity(int color, int opacity);
-void		init_ray(int x, t_player *player, t_ray *ray);
-void		find_step_and_dist(t_ray *ray, t_player *player);
-void		do_dda(t_ray *ray, t_map *map_data, char **map);
-void		render_walls(t_ray *ray);
-t_door		*find_door(t_map *map_data, int x, int y);
-t_tex_data	get_tex_data(int x, t_ray *ray, t_player *player, t_vars *vars);
-void		draw_textured_column(int x, t_ray *ray, \
-				t_tex_data *tex_data, t_vars *vars);
 static void	do_door_dda(t_ray *ray, t_map *map_data, char **map);
 static void	get_open_door_height(t_ray *ray);
-int			check_door_hit(t_ray *ray, t_map *map_data);
-void		get_closed_door_height(t_ray *ray);
 
 void	render_open_door(t_vars *vars, int x)
 {
@@ -95,37 +84,5 @@ static void	get_open_door_height(t_ray *ray)
 			ray->draw_start = 0;
 		if (ray->draw_end < 0)
 			ray->draw_end = 0;
-	}
-}
-
-int	check_door_hit(t_ray *ray, t_map *map_data)
-{
-	ray->door = find_door(map_data, ray->map_x, ray->map_y);
-	if (!ray->first_door)
-		ray->first_door = ray->door;
-	if (ray->door != ray->first_door && ray->door->is_open == false)
-		return (1);
-	return (0);
-}
-
-void	get_closed_door_height(t_ray *ray)
-{
-	float	door_depth;
-	int		door_height;
-	int		door_start;
-	int		door_end;
-
-	door_depth = ray->perp_wall_dist + (ray->door->progress * 0.5);
-	door_height = (int)(WIN_HEIGHT / door_depth);
-	door_start = -(door_height) / 2 + WIN_HEIGHT / 2;
-	door_end = door_height / 2 + WIN_HEIGHT / 2;
-	if (door_start < 0)
-		door_start = 0;
-	if (door_end >= WIN_HEIGHT)
-		door_end = WIN_HEIGHT - 1;
-	if (door_depth < ray->perp_wall_dist)
-	{
-		ray->draw_start = door_start;
-		ray->draw_end = door_end;
 	}
 }

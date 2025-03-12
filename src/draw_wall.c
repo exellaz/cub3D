@@ -6,12 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:07:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 07:24:57 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:55:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "graphics.h"
-#include "defines.h"
+#include "cub3D.h"
 
 static int	get_tex_color(int y, t_tex_data *tex_data, \
 				t_vars *vars, t_ray *ray);

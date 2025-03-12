@@ -6,46 +6,44 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 09:42:39 by we                #+#    #+#             */
-/*   Updated: 2025/03/07 21:29:26 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:05:08 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
 
-# include <stdbool.h>
-# include <time.h>
-# include "map.h"
 # include "utils.h"
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 
+# define PI 3.14159
+# define VISIBLE_RANGE 4
+# define MOUSE_SPEED 0.0005
+# define MAX_TEX_COUNT 7
+
+// Colors
 # define WHITE 0x00FFFFFF
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
 
-# define BLOCK_SIZE 32
-# define TEX_WIDTH 32
-# define TEX_HEIGHT 32
+// Minimap
 # define MINIMAP_SIZE 360
 # define MINIMAP_OFFSET 4
-# define VISIBLE_RANGE 4
-# define PI 3.14159
-# define MOUSE_SPEED 0.0005
-# define CURSOR_COLOR 0xFF000
-# define SPRITE_SCALE 4
+# define MARKER_COLOR 0xFF000
 
-#define TORCH1_X (WIN_WIDTH - 800)
-#define TORCH1_Y (WIN_HEIGHT - 600)
-#define TORCH2_X (WIN_WIDTH - 600)
-#define TORCH2_Y (WIN_HEIGHT - 850)
-#define TORCH_PATH "./assets/minecraft-torch/Torch"
-#define TORCH_PATH2 "./assets/real-torch/torch"
-#define SPRITE_FRAME_COUNT 80
-#define MAX_TEX_COUNT 7
-#define BOB_SPEED 15.0f
+// Sprites
+# define SPRITE_SCALE 4
+# define SPRITE_1_FRAME_COUNT 80
+# define TORCH_1_X 1120
+# define TORCH_1_Y 480
+# define TORCH_2_X 1320
+# define TORCH_2_Y 230
+# define TORCH_1_PATH "./assets/minecraft-torch/Torch"
+# define TORCH_2_PATH "./assets/real-torch/torch"
+# define BOB_SPEED 15.0f
 
 typedef struct s_list		t_list;
 typedef struct s_map		t_map;
@@ -62,6 +60,53 @@ typedef struct s_tex_data
 	float	base_opacity;
 }				t_tex_data;
 
+typedef struct s_texture
+{
+	t_img	*img;
+	char	*path;
+	int		width;
+	int		height;
+}	t_texture;
+
+typedef struct s_sprite
+{
+	t_texture	frame_data[80];
+	int			*frames[80];
+	int			current_frame;
+	float		frame_time;
+	float		last_update;
+	float		frame_duration;
+	float		bob_offset;
+	float		sway_offset;
+}				t_sprite;
+
+typedef struct s_door
+{
+	int		x;
+	int		y;
+	bool	is_open;
+	float	progress;
+}				t_door;
+
+typedef struct s_map
+{
+	t_list		*map_list;
+	char		**map;
+	t_texture	texture_data[7];
+	int			floor_color;
+	int			ceiling_color;
+	int			spawn[3];
+	t_door		*doors;
+	int			texture_count;
+	int			door_count;
+	int			width;
+	int			height;
+	int			tile_size;
+	int			**texture;
+	int			tex_width;
+	int			tex_height;
+}	t_map;
+
 typedef struct s_img
 {
 	void	*img;
@@ -71,14 +116,6 @@ typedef struct s_img
 	int		endian;
 	int		offset;
 }				t_img;
-
-typedef struct s_door
-{
-	int		x;
-	int		y;
-	bool	is_open;
-	float	progress;
-}				t_door;
 
 typedef struct s_ray
 {
@@ -117,7 +154,6 @@ typedef struct s_player
 	bool	pan_left;
 	bool	pan_right;
 	bool	interact;
-	bool	interact_held;
 	bool	torch_toggle;
 	bool	is_moving;
 	t_ray	ray;
@@ -155,8 +191,8 @@ typedef struct s_vars
 
 typedef struct s_fpoint
 {
-	float x;
-	float y;
+	float	x;
+	float	y;
 }				t_fpoint;
 
 typedef struct s_point
@@ -170,18 +206,6 @@ typedef struct s_floor
 	t_fpoint	pos;
 	t_fpoint	step;
 }				t_floor;
-
-enum e_keycode
-{
-	KEY_ESC = 0,
-	KEY_W = 1,
-	KEY_A = 2,
-	KEY_S = 3,
-	KEY_D = 4,
-	KEY_M = 5,
-	KEY_LEFT = 7,
-	KEY_RIGHT = 8
-};
 
 enum e_event
 {

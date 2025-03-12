@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:10:13 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/03/12 07:44:43 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:58:13 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include "error.h"
 #include "utils.h"
-#include "graphics.h"
 #include "map.h"
 
 void	load_textures(t_texture *texture, void *mlx, int count)

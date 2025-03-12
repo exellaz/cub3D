@@ -6,19 +6,10 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 07:20:41 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 08:14:04 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:56:31 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <time.h>
-#include <math.h>
-
-#include <mlx.h>
-
-#include "graphics.h"
-#include "events.h"
-#include "utils.h"
-#include "map.h"
 #include "cub3D.h"
 
 static int	draw_loop(t_vars *vars);
@@ -30,7 +21,7 @@ int	main(int ac, char **av)
 
 	fd = validate_arg(ac, av[1]);
 	init_vars(&vars, fd);
-	mlx_loop_hook(vars.mlx, draw_loop, &vars);
+	mlx_loop_hook(vars.mlx, &draw_loop, &vars);
 	mlx_loop(vars.mlx);
 	return (0);
 }
@@ -42,6 +33,7 @@ static int	draw_loop(t_vars *vars)
 	player = vars->player;
 	frame_counter(vars->fps);
 	handle_player_controls(player, vars->fps, vars->map_data, vars);
+	update_doors(vars->map_data);
 	raycast(vars);
 	if (vars->minimap_toggle == true)
 		render_minimap(player, vars, vars->map_data);

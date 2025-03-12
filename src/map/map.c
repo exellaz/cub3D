@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 22:17:08 by we                #+#    #+#             */
-/*   Updated: 2025/03/12 08:33:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:58:05 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include "error.h"
 #include "utils.h"
-#include "graphics.h"
 #include "map.h"
 
 static t_map	*init_map(void);

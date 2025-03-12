@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   floorcaster.c                                      :+:      :+:    :+:   */
+/*   render_floor_and_ceiling.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 13:40:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 07:20:29 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:24:32 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void		get_floor_pos(float row_distance, t_floor *floor, \
 					t_fpoint left_ray_dir, t_player *player);
 static float	get_row_distance(int y);
 
-void	floor_casting(t_vars *vars, t_player *player, t_map *map_data)
+void	render_floor_and_ceiling(t_vars *vars, \
+			t_player *player, t_map *map_data)
 {
 	t_point		window;
 	t_fpoint	left_ray_dir;

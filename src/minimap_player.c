@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:57:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/02/25 10:24:10 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:35:39 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	draw_filled_triangle(t_fpoint v0, t_fpoint v1, \
 		while (point.x <= max.x)
 		{
 			if (point_in_triangle(point, v0, v1, v2))
-				put_pixel(point.x, point.y, CURSOR_COLOR, img);
+				put_pixel(point.x, point.y, MARKER_COLOR, img);
 			point.x++;
 		}
 		point.y++;

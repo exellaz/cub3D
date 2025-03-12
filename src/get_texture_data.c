@@ -6,13 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:32:29 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/05 21:08:21 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:04:30 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "defines.h"
-#include "graphics.h"
-#include <stdio.h>
+#include "cub3D.h"
 
 static float	get_wall_x(t_ray *ray, t_player *player);
 static int		get_tex_x(float wall_x, t_ray *ray, int tex_width);

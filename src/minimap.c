@@ -6,22 +6,21 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 07:44:33 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:27:11 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3D.h>
 
+static void	draw_border(int x, int y, int border_color, t_img *img);
 static void	draw_minimap(t_fpoint map, int range, \
 				t_map *map_data, t_vars *vars);
 static int	get_pixel_color(t_point tile, t_fpoint pixel, \
 				t_map *map_data, t_player *player);
 int			get_minimap_range(t_map *map_data);
-int			apply_opacity(int color, int opacity);
+int			calculate_opacity(int tile_size, t_fpoint pixel, t_player *player);
 int			*get_tile_texture(t_point tile, char **map, \
 				int tex_count, int **textures);
-int			calculate_opacity(int tile_size, t_fpoint pixel, t_player *player);
-void		draw_border(int x, int y, int border_color, t_img *img);
 
 void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 {
@@ -45,7 +44,31 @@ void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 	draw_player(player, map.x, map.y, vars);
 }
 
-void	draw_minimap(t_fpoint map, int range, t_map *map_data, t_vars *vars)
+static void	draw_border(int x, int y, int border_color, t_img *img)
+{
+	int	draw_x;
+	int	draw_y;
+	int	border_end;
+
+	border_end = MINIMAP_SIZE + (MINIMAP_OFFSET * 2);
+	draw_y = 0;
+	while (draw_y < border_end)
+	{
+		draw_x = 0;
+		while (draw_x < border_end)
+		{
+			if (draw_y < MINIMAP_OFFSET || draw_y >= MINIMAP_SIZE || \
+				draw_x < MINIMAP_OFFSET || draw_x >= MINIMAP_SIZE)
+			{
+				put_pixel(x + draw_x, y + draw_y, border_color, img);
+			}
+			draw_x++;
+		}
+		draw_y++;
+	}
+}
+
+static void	draw_minimap(t_fpoint map, int range, t_map *map_data, t_vars *vars)
 {
 	t_point		screen;
 	t_fpoint	pixel;
@@ -72,7 +95,7 @@ void	draw_minimap(t_fpoint map, int range, t_map *map_data, t_vars *vars)
 	}
 }
 
-int	get_pixel_color(t_point tile, t_fpoint pixel, \
+static int	get_pixel_color(t_point tile, t_fpoint pixel, \
 		t_map *map_data, t_player *player)
 {
 	t_point	tex;
@@ -94,43 +117,4 @@ int	get_pixel_color(t_point tile, t_fpoint pixel, \
 		color = (color >> 1) & 8355711;
 	opacity = calculate_opacity(tile_size, pixel, player);
 	return (apply_opacity(color, opacity));
-}
-
-void	draw_border(int x, int y, int border_color, t_img *img)
-{
-	int	draw_x;
-	int	draw_y;
-	int	border_end;
-
-	border_end = MINIMAP_SIZE + (MINIMAP_OFFSET * 2);
-	draw_y = 0;
-	while (draw_y < border_end)
-	{
-		draw_x = 0;
-		while (draw_x < border_end)
-		{
-			if (draw_y < MINIMAP_OFFSET || draw_y >= MINIMAP_SIZE || \
-				draw_x < MINIMAP_OFFSET || draw_x >= MINIMAP_SIZE)
-			{
-				put_pixel(x + draw_x, y + draw_y, border_color, img);
-			}
-			draw_x++;
-		}
-		draw_y++;
-	}
-}
-
-int	apply_opacity(int color, int opacity_int)
-{
-	int	r;
-	int	g;
-	int	b;
-
-	r = (color >> 16) & 0xFF;
-	g = (color >> 8) & 0xFF;
-	b = color & 0xFF;
-	r = (r * opacity_int) >> 8;
-	g = (g * opacity_int) >> 8;
-	b = (b * opacity_int) >> 8;
-	return ((r << 16) | (g << 8) | b);
 }
