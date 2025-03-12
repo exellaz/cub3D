@@ -3,19 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:55:33 by we                #+#    #+#             */
-/*   Updated: 2025/02/04 10:19:38 by we               ###   ########.fr       */
+/*   Updated: 2025/03/12 11:01:33 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <stdbool.h>
-
-#include <Libft.h>
 
 #include "cub3D.h"
 

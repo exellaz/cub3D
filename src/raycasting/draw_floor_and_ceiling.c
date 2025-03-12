@@ -6,11 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 21:41:37 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 09:24:07 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:24:03 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "raycast.h"
 
 static void		draw_floor_pixel(int opacity, t_vars *vars, \
 					t_point tex_coord, t_point window);

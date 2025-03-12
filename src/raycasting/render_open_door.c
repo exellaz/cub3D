@@ -6,12 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:51:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 09:24:34 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:24:40 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
-#include "defines.h"
+#include "raycast.h"
 
 static void	do_door_dda(t_ray *ray, t_map *map_data, char **map);
 static void	get_open_door_height(t_ray *ray);

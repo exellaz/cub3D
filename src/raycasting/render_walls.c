@@ -6,11 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:03:35 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:04:42 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:24:43 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "raycast.h"
 
 static void	do_dda(t_ray *ray, t_map *map_data, char **map);
 static void	get_wall_height(t_ray *ray);

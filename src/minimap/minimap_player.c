@@ -6,11 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:57:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 09:35:39 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:46:48 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "minimap.h"
 
 static void		draw_filled_triangle(t_fpoint v0, t_fpoint v1, \
 					t_fpoint v2, t_img *img);

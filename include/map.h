@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:54:34 by we                #+#    #+#             */
-/*   Updated: 2025/03/12 09:54:23 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:43:33 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MAP_H
 
 # include "defines.h"
+# include "types.h"
+# include "utils.h"
 
 # define VALID_IDEN " 01NSEWD"
 # define SPAWN_IDEN "NSEW"

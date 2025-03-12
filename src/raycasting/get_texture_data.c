@@ -6,11 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:32:29 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:04:30 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:24:23 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "raycast.h"
 
 static float	get_wall_x(t_ray *ray, t_player *player);
 static int		get_tex_x(float wall_x, t_ray *ray, int tex_width);

@@ -6,12 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:39:46 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 09:47:54 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:48:56 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
-#include <X11/keysym.h>
+#include "events.h"
 
 int	quit(int keycode, t_vars *vars)
 {

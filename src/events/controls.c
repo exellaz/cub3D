@@ -6,11 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 14:31:18 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 09:24:10 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:48:49 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "events.h"
 
 static void	move_player(float move_x, float move_y, \
 				t_player *player, t_map *map_data);

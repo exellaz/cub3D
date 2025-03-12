@@ -6,11 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 13:40:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 09:24:32 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:24:32 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "raycast.h"
 
 void			draw_floor_and_ceiling_row(float row_distance, t_floor *floor, \
 					t_vars *vars, t_point window);

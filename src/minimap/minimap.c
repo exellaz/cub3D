@@ -6,11 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 09:27:11 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:47:04 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3D.h>
+#include "minimap.h"
 
 static void	draw_border(int x, int y, int border_color, t_img *img);
 static void	draw_minimap(t_fpoint map, int range, \

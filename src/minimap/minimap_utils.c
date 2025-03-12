@@ -6,11 +6,11 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:50:59 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 07:21:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:46:53 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "minimap.h"
 
 int	get_minimap_range(t_map *map_data)
 {
