@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 13:40:54 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:24:32 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:16:51 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		get_floor_pos(float row_distance, t_floor *floor, \
 static float	get_row_distance(int y);
 
 void	render_floor_and_ceiling(t_vars *vars, \
-			t_player *player, t_map *map_data)
+			t_player *player)
 {
 	t_point		window;
 	t_fpoint	left_ray_dir;

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 09:03:35 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:24:43 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:16:01 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	render_walls(t_vars *vars, t_player *player, t_map *map_data)
 		find_step_and_dist(&ray, player);
 		do_dda(&ray, map_data, map_data->map);
 		get_wall_height(&ray);
-		tex_data = get_tex_data(x, &ray, player, vars);
+		tex_data = get_tex_data(&ray, player, vars);
 		draw_textured_column(x, &ray, &tex_data, vars);
 		if (ray.door)
 			render_open_door(vars, x);

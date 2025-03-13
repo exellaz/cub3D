@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:47:04 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:09:24 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,7 @@ static int	get_pixel_color(t_point tile, t_fpoint pixel, \
 	if (map_data->map[tile.y][tile.x] == '0' && texture != NULL)
 		color = (color >> 1) & 8355711;
 	opacity = calculate_opacity(tile_size, pixel, player);
-	return (apply_opacity(color, opacity));
+	if (FULLBRIGHT == 0)
+		color = apply_opacity(color, opacity);
+	return (color);
 }

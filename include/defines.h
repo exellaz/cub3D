@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 09:42:39 by we                #+#    #+#             */
-/*   Updated: 2025/03/12 10:34:04 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:02:17 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # define VISIBLE_RANGE 4
 # define MOUSE_SPEED 0.0005
 # define MAX_TEX_COUNT 7
+
+// Default: 0.66f
+# define FOV 0.66f
 
 // Colors
 # define WHITE 0x00FFFFFF
@@ -42,5 +45,9 @@
 # define TORCH_1_PATH "./assets/minecraft-torch/Torch"
 # define TORCH_2_PATH "./assets/real-torch/torch"
 # define BOB_SPEED 15.0f
+
+# ifndef FULLBRIGHT
+#  define FULLBRIGHT 0
+# endif
 
 #endif
