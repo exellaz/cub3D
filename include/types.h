@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:33:06 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/13 13:54:19 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/03/13 14:05:38 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <time.h>
 # include <stdbool.h>
 
-typedef struct s_list		t_list;
+typedef struct s_list	t_list;
 
 typedef struct s_img
 {
@@ -34,7 +34,7 @@ typedef struct s_door
 	int		y;
 	bool	is_open;
 	float	progress;
-}				t_door;
+}	t_door;
 
 typedef struct s_texture
 {
@@ -64,7 +64,7 @@ typedef struct s_ray
 	int		line_height;
 	t_door	*door;
 	t_door	*first_door;
-}				t_ray;
+}	t_ray;
 
 typedef struct s_player
 {
@@ -92,7 +92,7 @@ typedef struct s_fps
 	float	fps;
 	clock_t	start_time;
 	clock_t	last_frame_time;
-}				t_fps;
+}	t_fps;
 
 typedef struct s_map
 {
@@ -122,7 +122,7 @@ typedef struct s_sprite
 	float		frame_duration;
 	float		bob_offset;
 	float		sway_offset;
-}				t_sprite;
+}	t_sprite;
 
 typedef struct s_vars
 {
@@ -143,7 +143,7 @@ typedef struct s_vars
 	float		max_brightness;
 	t_map		*map_data;
 	t_sprite	*sprite;
-}				t_vars;
+}	t_vars;
 
 typedef struct s_tex_data
 {
@@ -154,7 +154,7 @@ typedef struct s_tex_data
 	float	step;
 	float	tex_pos;
 	float	base_opacity;
-}				t_tex_data;
+}	t_tex_data;
 
 typedef struct s_fpoint
 {

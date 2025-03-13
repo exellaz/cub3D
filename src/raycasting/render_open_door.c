@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:51:22 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:24:40 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:17:16 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	render_open_door(t_vars *vars, int x)
 	find_step_and_dist(&ray, player);
 	do_door_dda(&ray, vars->map_data, vars->map_data->map);
 	get_open_door_height(&ray);
-	tex_data = get_tex_data(x, &ray, player, vars);
+	tex_data = get_tex_data(&ray, player, vars);
 	draw_textured_column(x, &ray, &tex_data, vars);
 	x++;
 }

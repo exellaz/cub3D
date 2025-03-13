@@ -6,11 +6,12 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 07:20:41 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 09:56:31 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:17:47 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include <strings.h>
 
 static int	draw_loop(t_vars *vars);
 

@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 16:32:29 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:24:23 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:15:12 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int		get_tex_num(t_ray *ray);
 static void		get_tex_step_and_pos(t_ray *ray, \
 					t_tex_data *tex_data, int tex_height);
 
-t_tex_data	get_tex_data(int x, t_ray *ray, t_player *player, t_vars *vars)
+t_tex_data	get_tex_data(t_ray *ray, t_player *player, t_vars *vars)
 {
 	t_tex_data	tex_data;
 	t_map		*map_data;

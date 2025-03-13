@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 21:41:37 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:24:03 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:10:44 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static void	draw_floor_pixel(int opacity, t_vars *vars, \
 		color = map_data->floor_color;
 	else
 		color = map_data->texture[FLOOR][texture_index];
-	color = apply_opacity(color, opacity);
+	if (FULLBRIGHT == 0)
+		color = apply_opacity(color, opacity);
 	put_pixel(window.x, window.y, color, &vars->img);
 }
 
@@ -72,8 +73,11 @@ static void	draw_ceiling_pixel(int opacity, t_vars *vars, \
 		color = map_data.ceiling_color;
 	else
 		color = map_data.texture[CEILING][texture_index];
-	color = (color >> 1) & 8355711;
-	color = apply_opacity(color, opacity);
+	if (FULLBRIGHT == 0)
+	{
+		color = (color >> 1) & 8355711;
+		color = apply_opacity(color, opacity);
+	}
 	put_pixel(window.x, WIN_HEIGHT - window.y - 1, color, &vars->img);
 }
 

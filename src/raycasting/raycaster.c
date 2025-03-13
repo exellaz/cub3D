@@ -6,18 +6,15 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:27:40 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:24:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:16:56 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raycast.h"
 
-static void		do_dda(t_ray *ray, t_map *map_data, char **map);
-static void		get_wall_height(t_ray *ray);
-
 void	raycast(t_vars *vars)
 {
-	render_floor_and_ceiling(vars, vars->player, vars->map_data);
+	render_floor_and_ceiling(vars, vars->player);
 	render_walls(vars, vars->player, vars->map_data);
 }
 
