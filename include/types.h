@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:33:06 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 14:43:27 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:54:19 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct s_player
 	bool	interact;
 	bool	torch_toggle;
 	bool	is_moving;
-	t_ray	ray;
 }	t_player;
 
 typedef struct s_fps
