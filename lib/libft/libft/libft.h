@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 09:49:25 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/01/03 11:17:57 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/03/13 14:11:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 
 # include "../libmem/libmem.h"
-# include "../Libft.h"
+# include "../c_libft.h"
 
 typedef struct s_list
 {

@@ -6,11 +6,11 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:58:42 by tjun-yu           #+#    #+#             */
-/*   Updated: 2025/02/13 14:16:01 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/03/13 14:11:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Libft.h>
+#include <c_libft.h>
 
 #include "error.h"
 #include "map.h"

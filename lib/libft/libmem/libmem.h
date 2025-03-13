@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libmem.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 10:51:40 by we                #+#    #+#             */
-/*   Updated: 2025/03/13 13:20:11 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:14:16 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdbool.h>
-
-# ifndef DEBUG
-#  define DEBUG printf
-# endif
 
 typedef struct s_mem
 {

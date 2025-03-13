@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: we <we@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:01:24 by tjun-yu           #+#    #+#             */
-/*   Updated: 2024/12/22 17:43:11 by we               ###   ########.fr       */
+/*   Updated: 2025/03/13 14:11:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# include "../Libft.h"
+# include "../c_libft.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1

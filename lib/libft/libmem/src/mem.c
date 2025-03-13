@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:23:14 by we                #+#    #+#             */
-/*   Updated: 2025/01/02 15:11:58 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/03/13 14:14:41 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,10 @@ void	mem_debug(void)
 	block = mem_init();
 	while (block)
 	{
-		DEBUG("block->id: %d\n", block->id);
-		DEBUG("block->address: %p\n", block->address);
-		DEBUG("block->isfreed: %d\n", block->isfreed);
-		DEBUG("block->next: %p\n", (void *)block->next);
+		printf("block->id: %d\n", block->id);
+		printf("block->address: %p\n", block->address);
+		printf("block->isfreed: %d\n", block->isfreed);
+		printf("block->next: %p\n", (void *)block->next);
 		block = block->next;
 	}
 }

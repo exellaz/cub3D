@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:48:07 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:53:17 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:11:35 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <X11/keysym.h>
 # include <mlx.h>
 # include <math.h>
-# include <Libft.h>
+# include <c_libft.h>
 # include "utils.h"
 # include "types.h"
 # include "defines.h"
