@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+         #
+#    By: we <we@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/16 14:09:15 by tjun-yu           #+#    #+#              #
-#    Updated: 2025/03/12 21:29:22 by kkhai-ki         ###   ########.fr        #
+#    Updated: 2025/03/14 00:44:44 by we               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #Flags
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -Wall -Wextra -Werror
 
 # Directories
 OBJ_DIR = ../obj
