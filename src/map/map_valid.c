@@ -6,7 +6,7 @@
 /*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/03/13 14:11:35 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/03/14 09:18:59 by tjun-yu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ void	valid_walls(t_list *map, int height, int *spawn)
 
 static void	flood_fill(int y, int x, char **map_arr, int height)
 {
-	if (x < 0 || x > (int)ft_strlen(map_arr[0]) || y < 0 || y >= height)
-		return ;
+	if (x < 0 || x >= (int)ft_strlen(map_arr[y]) || y < 0 || y >= height)
+		error_exit("Not enclosed by walls");
 	if (map_arr[y][x] == ' ')
 		error_exit("Invalid space");
 	if (map_arr[y][x] == '1' || map_arr[y][x] == 'D' || map_arr[y][x] == 'x')
