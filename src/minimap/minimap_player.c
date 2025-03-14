@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 13:57:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 10:46:48 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:00:31 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static int		point_in_triangle(t_fpoint point, t_fpoint v0, \
 					t_fpoint v1, t_fpoint v2);
 static float	sign(t_fpoint a, t_fpoint b, t_fpoint p);
 
-void	draw_player(t_player *player, float map_x, float map_y, t_vars *vars)
+void	draw_player(t_player *player, t_fpoint map, \
+			t_map *map_data, t_vars *vars)
 {
 	float		size;
 	float		angle;
@@ -26,10 +27,10 @@ void	draw_player(t_player *player, float map_x, float map_y, t_vars *vars)
 	float		player_y;
 	t_fpoint	points[3];
 
-	size = vars->tile_size * 0.6;
+	size = map_data->tile_size * 0.6;
 	angle = atan2(player->dir_y, player->dir_x);
-	player_x = (player->pos_x - map_x) * vars->tile_size + MINIMAP_OFFSET;
-	player_y = (player->pos_y - map_y) * vars->tile_size + MINIMAP_OFFSET;
+	player_x = (player->pos_x - map.x) * map_data->tile_size + MINIMAP_OFFSET;
+	player_y = (player->pos_y - map.y) * map_data->tile_size + MINIMAP_OFFSET;
 	points[0].x = player_x + cos(angle) * (size / 2);
 	points[0].y = player_y + sin(angle) * (size / 2);
 	points[1].x = player_x + cos(angle + 2.5) * size * 0.6;

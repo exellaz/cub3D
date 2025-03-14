@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:55:33 by we                #+#    #+#             */
-/*   Updated: 2025/03/14 09:21:01 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:58:30 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	validate_arg(int argc, char *file)
 			perror("ErroR");
 	}
 	if (!is_valid)
-		// printf("is_valid: %d\n", is_valid);
 		exit(EXIT_FAILURE);
 	return (fd);
 }

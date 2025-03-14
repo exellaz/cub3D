@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:07:26 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 15:09:24 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:58:52 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ void	render_minimap(t_player *player, t_vars *vars, t_map *map_data)
 	map.x = player->pos_x - (float)range / 2;
 	if (map.x < 0)
 		map.x = 0;
-	else if (map.x + range > map_data->width)
+	if (map.x + range > map_data->width)
 		map.x = map_data->width - range;
 	map.y = player->pos_y - (float)range / 2;
 	if (map.y < 0)
 		map.y = 0;
-	else if (map.y + range > map_data->height)
+	if (map.y + range > map_data->height)
 		map.y = map_data->height - range;
 	draw_border(0, 0, 0x808080, &vars->img);
 	draw_minimap(map, range, map_data, vars);
-	draw_player(player, map.x, map.y, vars);
+	draw_player(player, map, map_data, vars);
 }
 
 static void	draw_border(int x, int y, int border_color, t_img *img)

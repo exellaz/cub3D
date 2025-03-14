@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:44:58 by kkhai-ki          #+#    #+#             */
-/*   Updated: 2025/03/12 11:03:04 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:58:10 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include "utils.h"
 
 void		render_minimap(t_player *player, t_vars *vars, t_map *map_data);
-void		draw_player(t_player *player, float map_x, \
-				float map_y, t_vars *vars);
+void		draw_player(t_player *player, t_fpoint map, \
+				t_map *map_data, t_vars *vars);
 int			get_minimap_range(t_map *map_data);
 int			calculate_opacity(int tile_size, t_fpoint pixel, t_player *player);
 int			*get_tile_texture(t_point tile, char **map, \
