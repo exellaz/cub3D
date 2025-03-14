@@ -1,6 +1,6 @@
 # Compiler & Flags
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -O3
 INC = -Iinclude -I$(MLX_DIR) -I$(LIBFT_DIR)
 LIB = -L$(MLX_DIR) -L$(LIBFT_DIR) -lmlx -lft -lm -lX11 -lXext
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_valid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjun-yu <tjun-yu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 09:37:15 by we                #+#    #+#             */
-/*   Updated: 2025/03/14 09:18:59 by tjun-yu          ###   ########.fr       */
+/*   Updated: 2025/03/14 09:31:48 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	flood_fill(int x, int y, char **map_arr, int height);
 void	valid_texture_path(t_texture *texture)
 {
 	char	*path;
+	char	*err;
 	int		fd;
 	int		i;
 
@@ -36,7 +37,10 @@ void	valid_texture_path(t_texture *texture)
 			error_exit("Invalid texture extension");
 		fd = open(path, O_RDONLY);
 		if (fd < 0)
-			error_exit(strerror(errno));
+		{
+			err = ft_strjoin(path, ": ");
+			error_exit(ft_strjoin(err, (strerror(errno))));
+		}
 		close(fd);
 	}
 }

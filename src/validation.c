@@ -6,7 +6,7 @@
 /*   By: kkhai-ki <kkhai-ki@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 17:55:33 by we                #+#    #+#             */
-/*   Updated: 2025/03/12 11:01:33 by kkhai-ki         ###   ########.fr       */
+/*   Updated: 2025/03/14 09:21:01 by kkhai-ki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ int	validate_arg(int argc, char *file)
 		fd = open(file, O_RDONLY);
 		is_valid = fd != -1;
 		if (!is_valid)
-			perror("Error");
+			perror("ErroR");
 	}
 	if (!is_valid)
+		// printf("is_valid: %d\n", is_valid);
 		exit(EXIT_FAILURE);
 	return (fd);
 }
