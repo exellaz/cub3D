@@ -60,3 +60,10 @@ $ ./cub3D maps/valid/[map_name].cub
 # Example
 $ ./cub3D maps/valid/demo.cub
 ```
+To turn off the lighting effect, you can clean and compile with an optional target `fullbright`
+```sh
+make fclean
+make fullbright
+```
+Example:
+![Fullbright Demo](https://github.com/user-attachments/assets/0ca0c4c5-7775-457e-9c43-92f7f42a13d6)
